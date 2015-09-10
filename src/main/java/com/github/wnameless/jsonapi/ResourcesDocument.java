@@ -17,14 +17,6 @@
  */
 package com.github.wnameless.jsonapi;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class ResourcesDocument<R> extends Document<List<ResourceObject<R>>> {
-
-  public ResourcesDocument() {
-    super();
-    super.setData(new ArrayList<ResourceObject<R>>());
-  }
-
-}
+public class ResourcesDocument<R> extends Document<List<ResourceObject<R>>> {}

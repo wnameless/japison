@@ -17,7 +17,8 @@
  */
 package com.github.wnameless.jsonapi;
 
-import java.util.LinkedHashMap;
+import static com.google.common.collect.Maps.newLinkedHashMap;
+
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -33,8 +34,7 @@ public class ErrorObject {
   private String id;
 
   @Valid
-  private Map<String, LinkObject> links =
-      new LinkedHashMap<String, LinkObject>();
+  private Map<String, LinkObject> links = newLinkedHashMap();
 
   private String status;
 

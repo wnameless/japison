@@ -17,8 +17,9 @@
  */
 package com.github.wnameless.jsonapi;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Maps.newLinkedHashMap;
+
 import java.util.List;
 import java.util.Map;
 
@@ -42,15 +43,13 @@ public class ResourceObject<T> {
   private T attributes;
 
   @Valid
-  private Map<String, RelationshipObject<?>> relationships =
-      new LinkedHashMap<String, RelationshipObject<?>>();
+  private Map<String, RelationshipObject<?>> relationships = newLinkedHashMap();
 
   @Valid
-  private Map<String, LinkObject> links =
-      new LinkedHashMap<String, LinkObject>();
+  private Map<String, LinkObject> links = newLinkedHashMap();
 
   @Valid
-  private List<ResourceObject<?>> included = new ArrayList<ResourceObject<?>>();
+  private List<ResourceObject<?>> included = newArrayList();
 
   @Valid
   private Object meta;

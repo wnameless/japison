@@ -17,8 +17,9 @@
  */
 package com.github.wnameless.jsonapi;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Maps.newLinkedHashMap;
+
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +37,7 @@ public class Document<T> {
   private T data;
 
   @Valid
-  private List<ErrorObject> errors = new ArrayList<ErrorObject>();
+  private List<ErrorObject> errors = newArrayList();
 
   @Valid
   private Object meta;
@@ -44,10 +45,11 @@ public class Document<T> {
   @Valid
   private JsonApiObject jsonapi;
 
-  private Map<String, LinkObject> links =
-      new LinkedHashMap<String, LinkObject>();
+  @Valid
+  private Map<String, LinkObject> links = newLinkedHashMap();
 
-  private List<ResourceObject<?>> included = new ArrayList<ResourceObject<?>>();
+  @Valid
+  private List<ResourceObject<?>> included = newArrayList();
 
   public T getData() {
     return data;

@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.wnameless.jsonapi</groupId>
 	<artifactId>japison</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1.1-SNAPSHOT</version>
 
 	<name>japison</name>
 	<description>A JSON API (application/vnd.api+json) partial implementation which focuses on serialization and deserialization between API objects and Java objects</description>
