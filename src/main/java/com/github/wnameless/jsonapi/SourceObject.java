@@ -17,12 +17,13 @@
  */
 package com.github.wnameless.jsonapi;
 
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
-@JsonInclude(Include.NON_DEFAULT)
+@JsonInclude(NON_DEFAULT)
 public class SourceObject {
 
   private String pointer;

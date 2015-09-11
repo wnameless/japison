@@ -17,14 +17,15 @@
  */
 package com.github.wnameless.jsonapi;
 
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
+
 import javax.validation.Valid;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
-@JsonInclude(Include.NON_NULL)
+@JsonInclude(NON_NULL)
 public class JsonApiObject {
 
   private String version = "1.0";

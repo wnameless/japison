@@ -17,16 +17,17 @@
  */
 package com.github.wnameless.jsonapi;
 
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
+
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
-@JsonInclude(Include.NON_DEFAULT)
+@JsonInclude(NON_DEFAULT)
 public class RelationshipObject<T> {
 
   @Valid
