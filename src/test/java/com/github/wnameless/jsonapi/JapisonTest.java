@@ -33,13 +33,12 @@ public class JapisonTest {
 
   @Test
   public void test() throws Exception {
-    ResourceObject<JpaEntity> r = new ResourceObject<JpaEntity>()
-        .setAttributes(new JpaEntity()).setId("sas").setType("dfdg");
+    JpaEntity en = new JpaEntity();
+    en.setType("ddd");
+    ResourceObject<JpaEntity> r =
+        JsonApi.resource(en).setId("sas").setType("dfdg");
 
     System.out.println(mapper.writeValueAsString(r));
-    mapper.readValue(
-        "{\"type\":\"dfdg\",\"id\":\"sas\",\"attributes\":{\"id\":null,\"type\":null}}",
-        new TypeReference<ResourceObject<JpaEntity>>() {});
   }
 
   @Test
