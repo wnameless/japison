@@ -111,6 +111,7 @@ public class Document<T> {
     if (!(other instanceof Document)) return false;
     Document<?> castOther = (Document<?>) other;
     return Objects.equal(data, castOther.data)
+        && Objects.equal(errors, castOther.errors)
         && Objects.equal(meta, castOther.meta)
         && Objects.equal(jsonapi, castOther.jsonapi)
         && Objects.equal(links, castOther.links)
@@ -119,14 +120,14 @@ public class Document<T> {
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(data, meta, jsonapi, links, included);
+    return Objects.hashCode(data, errors, meta, jsonapi, links, included);
   }
 
   @Override
   public String toString() {
-    return MoreObjects.toStringHelper(this).add("data", data).add("meta", meta)
-        .add("jsonapi", jsonapi).add("links", links).add("included", included)
-        .toString();
+    return MoreObjects.toStringHelper(this).add("data", data)
+        .add("errors", errors).add("meta", meta).add("jsonapi", jsonapi)
+        .add("links", links).add("included", included).toString();
   }
 
 }

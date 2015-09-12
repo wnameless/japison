@@ -17,7 +17,7 @@
  */
 package com.github.wnameless.jsonapi;
 
-import java.util.List;
+import java.util.Arrays;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -41,12 +41,24 @@ public final class JsonApi {
     return new ResourceDocument<T>();
   }
 
-  public static <T> ResourcesDocument<T> resourcesDocument(List<T> attrList) {
+  public static <T> ResourcesDocument<T> resourcesDocument(
+      Iterable<T> attrList) {
     ResourcesDocument<T> document = new ResourcesDocument<T>();
     for (T attributes : attrList) {
       ResourceObject<T> resource = resource(attributes);
       document.getData().add(resource);
     }
+    return document;
+  }
+
+  public static <T> ResourcesDocument<T> resourcesDocument(T[] attrAry) {
+    return resourcesDocument(Arrays.asList(attrAry));
+  }
+
+  public static <T> ResourcesDocument<T> resourcesDocument(T attributes) {
+    ResourcesDocument<T> document = new ResourcesDocument<T>();
+    ResourceObject<T> resource = resource(attributes);
+    document.getData().add(resource);
     return document;
   }
 
@@ -98,6 +110,10 @@ public final class JsonApi {
 
   public static SourceObject source() {
     return new SourceObject();
+  }
+
+  public static JsonApiObject jsonApi() {
+    return new JsonApiObject();
   }
 
 }

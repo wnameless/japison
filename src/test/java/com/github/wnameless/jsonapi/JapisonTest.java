@@ -18,43 +18,91 @@
 package com.github.wnameless.jsonapi;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.lang.reflect.Field;
+import java.util.List;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
+import org.junit.Before;
 import org.junit.Test;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 
 public class JapisonTest {
 
   ObjectMapper mapper = new ObjectMapper();
 
-  @Test
-  public void test() throws Exception {
-    JpaEntity en = new JpaEntity();
-    en.setType("ddd");
-    ResourceObject<JpaEntity> r =
-        JsonApi.resource(en).setId("sas").setType("dfdg");
+  JpaEntity<String> entity;
 
-    System.out.println(mapper.writeValueAsString(r));
+  @Before
+  public void setUp() {
+    entity = new JpaEntity<String>();
+    entity.setData("hahaha");
   }
 
   @Test
   public void testWithJackson() throws Exception {
-    ResourceDocument<Map<String, String>> req =
-        new ResourceDocument<Map<String, String>>();
+    ResourceDocument<JpaEntity<String>> req = JsonApi.resourceDocument(entity);
 
-    req.setData(new ResourceObject<Map<String, String>>("map",
-        new HashMap<String, String>()));
-    req.getData().getAttributes().put("dd", "gg");
+    String actual = mapper.writeValueAsString(req);
+    assertEquals("{\"data\":{\"attributes\":{\"data\":\"hahaha\"}}}", actual);
+  }
 
-    String actual = mapper
-        .writerWithType(new TypeReference<Document<Map<String, String>>>() {})
-        .writeValueAsString(req);
-    assertEquals("{\"data\":{\"type\":\"map\",\"attributes\":{\"dd\":\"gg\"}}}",
-        actual);
+  private boolean toStringTestHelper(Object o) {
+    String str = o.toString();
+    if (!(str.contains(o.getClass().getSimpleName()))) {
+      System.err.println(o.getClass().getSimpleName() + " not in the string");
+      return false;
+    }
+    List<Field> fields = FieldUtils.getAllFieldsList(o.getClass());
+    for (Field f : fields) {
+      if (!(str.contains(f.getName()))) {
+        System.err.println(f.getName() + " not in the string");
+        return false;
+      }
+    }
+    return true;
+  }
+
+  @Test
+  public void testToString() {
+    assertTrue(toStringTestHelper(JsonApi.error()));
+    assertTrue(toStringTestHelper(JsonApi.errorsDocument()));
+    assertTrue(toStringTestHelper(JsonApi.jsonApi()));
+    assertTrue(toStringTestHelper(JsonApi.link()));
+    assertTrue(toStringTestHelper(JsonApi.relationship(entity)));
+    assertTrue(toStringTestHelper(JsonApi.resourceDocument(entity)));
+    assertTrue(toStringTestHelper(JsonApi.resource(entity)));
+    assertTrue(toStringTestHelper(JsonApi.resourcesDocument(entity)));
+    assertTrue(toStringTestHelper(JsonApi.source()));
+  }
+
+  @Test
+  public void equalsContract() {
+    EqualsVerifier.forClass(Document.class)
+        .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
+    EqualsVerifier.forClass(ErrorObject.class)
+        .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
+    EqualsVerifier.forClass(ErrorsDocument.class)
+        .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
+    EqualsVerifier.forClass(JsonApiObject.class)
+        .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
+    EqualsVerifier.forClass(LinkObject.class)
+        .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
+    EqualsVerifier.forClass(RelationshipObject.class)
+        .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
+    EqualsVerifier.forClass(ResourceDocument.class)
+        .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
+    EqualsVerifier.forClass(ResourceObject.class)
+        .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
+    EqualsVerifier.forClass(ResourcesDocument.class)
+        .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
+    EqualsVerifier.forClass(SourceObject.class)
+        .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
   }
 
 }

@@ -17,13 +17,27 @@
  */
 package com.github.wnameless.jsonapi;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Entity;
 
-public class ResourcesDocument<R> extends Document<List<ResourceObject<R>>> {
+import org.springframework.data.jpa.domain.AbstractPersistable;
 
-  public ResourcesDocument() {
-    setData(new ArrayList<ResourceObject<R>>());
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+@JsonInclude(Include.NON_DEFAULT)
+@Entity
+public class JpaEntity<T> extends AbstractPersistable<Long> {
+
+  private static final long serialVersionUID = 1L;
+
+  private T data;
+
+  public T getData() {
+    return data;
+  }
+
+  public void setData(T data) {
+    this.data = data;
   }
 
 }

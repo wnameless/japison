@@ -144,7 +144,8 @@ public class ResourceObject<T> {
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(type, id, attributes, relationships, links, meta);
+    return Objects.hashCode(type, id, attributes, relationships, links,
+        included, meta);
   }
 
   @Override
