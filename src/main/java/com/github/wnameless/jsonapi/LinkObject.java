@@ -45,16 +45,18 @@ public class LinkObject {
     return href;
   }
 
-  public void setHref(String href) {
+  public LinkObject setHref(String href) {
     this.href = href;
+    return this;
   }
 
   public Object getMeta() {
     return meta;
   }
 
-  public void setMeta(Object meta) {
+  public LinkObject setMeta(Object meta) {
     this.meta = meta;
+    return this;
   }
 
   @Override

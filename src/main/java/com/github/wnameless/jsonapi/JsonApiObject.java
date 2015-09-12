@@ -33,6 +33,24 @@ public class JsonApiObject {
   @Valid
   private Object meta;
 
+  public String getVersion() {
+    return version;
+  }
+
+  public JsonApiObject setVersion(String version) {
+    this.version = version;
+    return this;
+  }
+
+  public Object getMeta() {
+    return meta;
+  }
+
+  public JsonApiObject setMeta(Object meta) {
+    this.meta = meta;
+    return this;
+  }
+
   @Override
   public boolean equals(final Object other) {
     if (this == other) return true;

@@ -56,6 +56,10 @@ public class ResourceObject<T> {
 
   public ResourceObject() {}
 
+  public ResourceObject(String type) {
+    this.type = type;
+  }
+
   public ResourceObject(String type, T attributes) {
     this.type = type;
     this.attributes = attributes;
@@ -65,49 +69,55 @@ public class ResourceObject<T> {
     return type;
   }
 
-  public void setType(String type) {
+  public ResourceObject<T> setType(String type) {
     this.type = type;
+    return this;
   }
 
   public String getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public ResourceObject<T> setId(String id) {
     this.id = id;
+    return this;
   }
 
   public T getAttributes() {
     return attributes;
   }
 
-  public void setAttributes(T attributes) {
+  public ResourceObject<T> setAttributes(T attributes) {
     this.attributes = attributes;
+    return this;
   }
 
   public Map<String, RelationshipObject<?>> getRelationships() {
     return relationships;
   }
 
-  public void setRelationships(
+  public ResourceObject<T> setRelationships(
       Map<String, RelationshipObject<?>> relationships) {
     this.relationships = relationships;
+    return this;
   }
 
   public Map<String, LinkObject> getLinks() {
     return links;
   }
 
-  public void setLinks(Map<String, LinkObject> links) {
+  public ResourceObject<T> setLinks(Map<String, LinkObject> links) {
     this.links = links;
+    return this;
   }
 
   public List<ResourceObject<?>> getIncluded() {
     return included;
   }
 
-  public void setIncluded(List<ResourceObject<?>> included) {
+  public ResourceObject<T> setIncluded(List<ResourceObject<?>> included) {
     this.included = included;
+    return this;
   }
 
   public Object getMeta() {

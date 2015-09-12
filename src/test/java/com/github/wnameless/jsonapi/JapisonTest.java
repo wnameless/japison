@@ -32,6 +32,17 @@ public class JapisonTest {
   ObjectMapper mapper = new ObjectMapper();
 
   @Test
+  public void test() throws Exception {
+    ResourceObject<JpaEntity> r = new ResourceObject<JpaEntity>()
+        .setAttributes(new JpaEntity()).setId("sas").setType("dfdg");
+
+    System.out.println(mapper.writeValueAsString(r));
+    mapper.readValue(
+        "{\"type\":\"dfdg\",\"id\":\"sas\",\"attributes\":{\"id\":null,\"type\":null}}",
+        new TypeReference<ResourceObject<JpaEntity>>() {});
+  }
+
+  @Test
   public void testWithJackson() throws Exception {
     ResourceDocument<Map<String, String>> req =
         new ResourceDocument<Map<String, String>>();

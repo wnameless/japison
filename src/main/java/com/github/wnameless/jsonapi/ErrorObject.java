@@ -53,64 +53,72 @@ public class ErrorObject {
     return id;
   }
 
-  public void setId(String id) {
+  public ErrorObject setId(String id) {
     this.id = id;
+    return this;
   }
 
   public Map<String, LinkObject> getLinks() {
     return links;
   }
 
-  public void setLinks(Map<String, LinkObject> links) {
+  public ErrorObject setLinks(Map<String, LinkObject> links) {
     this.links = links;
+    return this;
   }
 
   public String getStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
+  public ErrorObject setStatus(String status) {
     this.status = status;
+    return this;
   }
 
   public String getCode() {
     return code;
   }
 
-  public void setCode(String code) {
+  public ErrorObject setCode(String code) {
     this.code = code;
+    return this;
   }
 
   public String getTitle() {
     return title;
   }
 
-  public void setTitle(String title) {
+  public ErrorObject setTitle(String title) {
     this.title = title;
+    return this;
   }
 
   public String getDetail() {
     return detail;
   }
 
-  public void setDetail(String detail) {
+  public ErrorObject setDetail(String detail) {
     this.detail = detail;
+    return this;
   }
 
   public SourceObject getSource() {
     return source;
   }
 
-  public void setSource(SourceObject source) {
+  public ErrorObject setSource(SourceObject source) {
     this.source = source;
+    return this;
   }
 
   public Object getMeta() {
     return meta;
   }
 
-  public void setMeta(Object meta) {
+  public ErrorObject setMeta(Object meta) {
     this.meta = meta;
+    return this;
   }
 
   @Override

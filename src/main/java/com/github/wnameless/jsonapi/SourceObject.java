@@ -34,16 +34,18 @@ public class SourceObject {
     return pointer;
   }
 
-  public void setPointer(String pointer) {
+  public SourceObject setPointer(String pointer) {
     this.pointer = pointer;
+    return this;
   }
 
   public String getParameter() {
     return parameter;
   }
 
-  public void setParameter(String parameter) {
+  public SourceObject setParameter(String parameter) {
     this.parameter = parameter;
+    return this;
   }
 
   @Override

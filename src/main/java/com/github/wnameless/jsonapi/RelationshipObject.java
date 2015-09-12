@@ -44,24 +44,27 @@ public class RelationshipObject<T> {
     return links;
   }
 
-  public void setLinks(Map<String, LinkObject> links) {
+  public RelationshipObject<T> setLinks(Map<String, LinkObject> links) {
     this.links = links;
+    return this;
   }
 
   public ResourceObject<T> getData() {
     return data;
   }
 
-  public void setData(ResourceObject<T> data) {
+  public RelationshipObject<T> setData(ResourceObject<T> data) {
     this.data = data;
+    return this;
   }
 
   public Object getMeta() {
     return meta;
   }
 
-  public void setMeta(Object meta) {
+  public RelationshipObject<T> setMeta(Object meta) {
     this.meta = meta;
+    return this;
   }
 
   @Override
