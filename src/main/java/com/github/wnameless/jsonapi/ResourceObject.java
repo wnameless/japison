@@ -17,6 +17,7 @@
  */
 package com.github.wnameless.jsonapi;
 
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.ALWAYS;
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newLinkedHashMap;
@@ -34,6 +35,7 @@ import com.google.common.base.Objects;
 @JsonInclude(NON_DEFAULT)
 public class ResourceObject<T> {
 
+  @JsonInclude(ALWAYS)
   @NotNull
   private String type;
 

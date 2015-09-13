@@ -25,11 +25,17 @@ import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetter
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Modifier;
+import java.util.Arrays;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Function;
 
 public class JapisonTest {
 
@@ -45,10 +51,13 @@ public class JapisonTest {
 
   @Test
   public void testWithJackson() throws Exception {
-    ResourceDocument<JpaEntity<String>> req = JsonApi.resourceDocument(entity);
+    ResourceDocument<JpaEntity<String>> req =
+        JsonApi.resourceDocument(entity, "entities");
 
     String actual = mapper.writeValueAsString(req);
-    assertEquals("{\"data\":{\"attributes\":{\"data\":\"hahaha\"}}}", actual);
+    assertEquals(
+        "{\"data\":{\"type\":\"entities\",\"attributes\":{\"data\":\"hahaha\"}}}",
+        actual);
   }
 
   @Test
@@ -98,6 +107,59 @@ public class JapisonTest {
         .withRelationships(null).withLinks(null).withIncluded(null)
         .withMeta(null);
     new SourceObject().withPointer(null).withParameter(null);
+  }
+
+  @SuppressWarnings({ "unchecked", "unused" })
+  @Test
+  public void testStaticMethods() {
+    ResourceDocument<JpaEntity<String>> rd;
+    rd = JsonApi.resourceDocument(new JpaEntity<String>(), "entities", "12");
+    assertEquals("entities", rd.getData().getType());
+    assertEquals("12", rd.getData().getId());
+    rd = JsonApi.resourceDocument(new JpaEntity<String>(), "entities");
+
+    ResourcesDocument<JpaEntity<String>> rsd;
+    rsd = JsonApi.resourcesDocument(Arrays.asList(new JpaEntity<String>()),
+        "entities", new Function<JpaEntity<String>, String>() {
+
+          @Override
+          public String apply(JpaEntity<String> input) {
+            return "34";
+          }
+
+        });
+    for (ResourceObject<JpaEntity<String>> ro : rsd.getData()) {
+      assertEquals("entities", ro.getType());
+      assertEquals("34", ro.getId());
+    }
+    rsd = JsonApi.resourcesDocument(Arrays.asList(new JpaEntity<String>()),
+        "entities");
+
+    ResourceObject<JpaEntity<String>> ro;
+    ro = JsonApi.resource(new JpaEntity<String>(), "entities", "56");
+    assertEquals("entities", ro.getType());
+    assertEquals("56", ro.getId());
+    ro = JsonApi.resource(new JpaEntity<String>(), "entities");
+
+    RelationshipObject<JpaEntity<String>> rel;
+    rel = JsonApi.relationship(new JpaEntity<String>(), "entities", "78");
+    assertEquals("entities", rel.getData().getType());
+    assertEquals("78", rel.getData().getId());
+    rel = JsonApi.relationship(new JpaEntity<String>(), "entities");
+
+    ErrorsDocument ed = JsonApi.errorsDocument();
+    ErrorObject eo = JsonApi.error();
+    LinkObject lo = JsonApi.link();
+    SourceObject so = JsonApi.source();
+    JsonApiObject jao = JsonApi.jsonApi();
+  }
+
+  @Test
+  public void testPrivateConstruct() throws Exception {
+    Constructor<JsonApi> c = JsonApi.class.getDeclaredConstructor();
+    assertTrue(Modifier.isPrivate(c.getModifiers()));
+    c.setAccessible(true);
+    c.newInstance();
   }
 
 }

@@ -17,10 +17,7 @@
  */
 package com.github.wnameless.jsonapi;
 
-import java.util.Arrays;
-
 import com.google.common.base.Function;
-import com.google.common.reflect.TypeToken;
 
 public final class JsonApi {
 
@@ -29,11 +26,10 @@ public final class JsonApi {
   private JsonApi() {}
 
   public static <T> ResourceDocument<T> resourceDocument(T attributes,
-      String type, Function<T, String> idProvider) {
+      String type, String id) {
     ResourceDocument<T> document = new ResourceDocument<T>();
-    ResourceObject<T> resource = resource(attributes);
-    if (type != null) resource.setType(type);
-    if (idProvider != null) resource.setId(idProvider.apply(attributes));
+    ResourceObject<T> resource = resource(attributes, type);
+    if (id != null) resource.setId(id);
     document.setData(resource);
     return document;
   }
@@ -43,24 +39,11 @@ public final class JsonApi {
     return resourceDocument(attributes, type, null);
   }
 
-  public static <T> ResourceDocument<T> resourceDocument(T attributes) {
-    return resourceDocument(attributes, null, null);
-  }
-
-  public static <T> ResourceDocument<T> resourceDocument(Class<T> klass) {
-    return new ResourceDocument<T>();
-  }
-
-  public static <T> ResourceDocument<T> resourceDocument(TypeToken<T> typeRef) {
-    return new ResourceDocument<T>();
-  }
-
   public static <T> ResourcesDocument<T> resourcesDocument(Iterable<T> attrList,
       String type, Function<T, String> idProvider) {
     ResourcesDocument<T> document = new ResourcesDocument<T>();
     for (T attributes : attrList) {
-      ResourceObject<T> resource = resource(attributes);
-      if (type != null) resource.setType(type);
+      ResourceObject<T> resource = resource(attributes, type);
       if (idProvider != null) resource.setId(idProvider.apply(attributes));
       document.getData().add(resource);
     }
@@ -72,39 +55,6 @@ public final class JsonApi {
     return resourcesDocument(attrList, type, null);
   }
 
-  public static <T> ResourcesDocument<T> resourcesDocument(T[] attrAry,
-      String type, Function<T, String> idProvider) {
-    return resourcesDocument(Arrays.asList(attrAry), type, idProvider);
-  }
-
-  public static <T> ResourcesDocument<T> resourcesDocument(T[] attrAry,
-      String type) {
-    return resourcesDocument(attrAry, type, null);
-  }
-
-  public static <T> ResourcesDocument<T> resourcesDocument(
-      Iterable<T> attrList) {
-    return resourcesDocument(attrList, null, null);
-  }
-
-  public static <T> ResourcesDocument<T> resourcesDocument(T[] attrAry) {
-    return resourcesDocument(Arrays.asList(attrAry));
-  }
-
-  @SuppressWarnings("unchecked")
-  public static <T> ResourcesDocument<T> resourcesDocument(T attributes) {
-    return resourcesDocument(Arrays.asList(attributes));
-  }
-
-  public static <T> ResourcesDocument<T> resourcesDocument(Class<T> klass) {
-    return new ResourcesDocument<T>();
-  }
-
-  public static <T> ResourcesDocument<T> resourcesDocument(
-      TypeToken<T> typeRef) {
-    return new ResourcesDocument<T>();
-  }
-
   public static ErrorsDocument errorsDocument() {
     return new ErrorsDocument();
   }
@@ -113,28 +63,24 @@ public final class JsonApi {
     return new ErrorObject();
   }
 
-  public static <T> ResourceObject<T> resource(T attributes) {
-    return new ResourceObject<T>().withAttributes(attributes);
+  public static <T> ResourceObject<T> resource(T attributes, String type,
+      String id) {
+    return new ResourceObject<T>().withAttributes(attributes).withType(type)
+        .withId(id);
   }
 
-  public static <T> ResourceObject<T> resource(Class<T> klass) {
-    return new ResourceObject<T>();
+  public static <T> ResourceObject<T> resource(T attributes, String type) {
+    return new ResourceObject<T>().withAttributes(attributes).withType(type);
   }
 
-  public static <T> ResourceObject<T> resource(TypeToken<T> typeRef) {
-    return new ResourceObject<T>();
+  public static <T> RelationshipObject<T> relationship(T attributes,
+      String type, String id) {
+    return new RelationshipObject<T>().withData(resource(attributes, type, id));
   }
 
-  public static <T> RelationshipObject<T> relationship(T attributes) {
-    return new RelationshipObject<T>().withData(resource(attributes));
-  }
-
-  public static <T> RelationshipObject<T> relationship(Class<T> klass) {
-    return new RelationshipObject<T>();
-  }
-
-  public static <T> RelationshipObject<T> relationship(TypeToken<T> typeRef) {
-    return new RelationshipObject<T>();
+  public static <T> RelationshipObject<T> relationship(T attributes,
+      String type) {
+    return new RelationshipObject<T>().withData(resource(attributes, type));
   }
 
   public static LinkObject link() {
