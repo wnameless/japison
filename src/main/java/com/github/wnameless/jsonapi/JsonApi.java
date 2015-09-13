@@ -24,6 +24,8 @@ import com.google.common.reflect.TypeToken;
 
 public final class JsonApi {
 
+  public static final String MEDIA_TYPE = "application/vnd.api+json";
+
   private JsonApi() {}
 
   public static <T> ResourceDocument<T> resourceDocument(T attributes,
@@ -112,7 +114,7 @@ public final class JsonApi {
   }
 
   public static <T> ResourceObject<T> resource(T attributes) {
-    return new ResourceObject<T>().setAttributes(attributes);
+    return new ResourceObject<T>().withAttributes(attributes);
   }
 
   public static <T> ResourceObject<T> resource(Class<T> klass) {
@@ -124,7 +126,7 @@ public final class JsonApi {
   }
 
   public static <T> RelationshipObject<T> relationship(T attributes) {
-    return new RelationshipObject<T>().setData(resource(attributes));
+    return new RelationshipObject<T>().withData(resource(attributes));
   }
 
   public static <T> RelationshipObject<T> relationship(Class<T> klass) {

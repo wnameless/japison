@@ -34,8 +34,12 @@ public class SourceObject {
     return pointer;
   }
 
-  public SourceObject setPointer(String pointer) {
+  public void setPointer(String pointer) {
     this.pointer = pointer;
+  }
+
+  public SourceObject withPointer(String pointer) {
+    setPointer(pointer);
     return this;
   }
 
@@ -43,8 +47,12 @@ public class SourceObject {
     return parameter;
   }
 
-  public SourceObject setParameter(String parameter) {
+  public void setParameter(String parameter) {
     this.parameter = parameter;
+  }
+
+  public SourceObject withParameter(String parameter) {
+    setParameter(parameter);
     return this;
   }
 

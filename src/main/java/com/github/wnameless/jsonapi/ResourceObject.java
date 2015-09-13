@@ -56,21 +56,16 @@ public class ResourceObject<T> {
 
   public ResourceObject() {}
 
-  public ResourceObject(String type) {
-    this.type = type;
-  }
-
-  public ResourceObject(String type, T attributes) {
-    this.type = type;
-    this.attributes = attributes;
-  }
-
   public String getType() {
     return type;
   }
 
-  public ResourceObject<T> setType(String type) {
+  public void setType(String type) {
     this.type = type;
+  }
+
+  public ResourceObject<T> withType(String type) {
+    setType(type);
     return this;
   }
 
@@ -78,8 +73,12 @@ public class ResourceObject<T> {
     return id;
   }
 
-  public ResourceObject<T> setId(String id) {
+  public void setId(String id) {
     this.id = id;
+  }
+
+  public ResourceObject<T> withId(String id) {
+    setId(id);
     return this;
   }
 
@@ -87,8 +86,12 @@ public class ResourceObject<T> {
     return attributes;
   }
 
-  public ResourceObject<T> setAttributes(T attributes) {
+  public void setAttributes(T attributes) {
     this.attributes = attributes;
+  }
+
+  public ResourceObject<T> withAttributes(T attributes) {
+    setAttributes(attributes);
     return this;
   }
 
@@ -96,9 +99,14 @@ public class ResourceObject<T> {
     return relationships;
   }
 
-  public ResourceObject<T> setRelationships(
+  public void setRelationships(
       Map<String, RelationshipObject<?>> relationships) {
     this.relationships = relationships;
+  }
+
+  public ResourceObject<T> withRelationships(
+      Map<String, RelationshipObject<?>> relationships) {
+    setRelationships(relationships);
     return this;
   }
 
@@ -106,8 +114,12 @@ public class ResourceObject<T> {
     return links;
   }
 
-  public ResourceObject<T> setLinks(Map<String, LinkObject> links) {
+  public void setLinks(Map<String, LinkObject> links) {
     this.links = links;
+  }
+
+  public ResourceObject<T> withLinks(Map<String, LinkObject> links) {
+    setLinks(links);
     return this;
   }
 
@@ -115,8 +127,12 @@ public class ResourceObject<T> {
     return included;
   }
 
-  public ResourceObject<T> setIncluded(List<ResourceObject<?>> included) {
+  public void setIncluded(List<ResourceObject<?>> included) {
     this.included = included;
+  }
+
+  public ResourceObject<T> withIncluded(List<ResourceObject<?>> included) {
+    setIncluded(included);
     return this;
   }
 
@@ -126,6 +142,11 @@ public class ResourceObject<T> {
 
   public void setMeta(Object meta) {
     this.meta = meta;
+  }
+
+  public ResourceObject<T> withMeta(Object meta) {
+    setMeta(meta);
+    return this;
   }
 
   @Override

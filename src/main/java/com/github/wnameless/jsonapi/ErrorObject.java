@@ -53,8 +53,12 @@ public class ErrorObject {
     return id;
   }
 
-  public ErrorObject setId(String id) {
+  public void setId(String id) {
     this.id = id;
+  }
+
+  public ErrorObject withId(String id) {
+    setId(id);
     return this;
   }
 
@@ -62,8 +66,12 @@ public class ErrorObject {
     return links;
   }
 
-  public ErrorObject setLinks(Map<String, LinkObject> links) {
+  public void setLinks(Map<String, LinkObject> links) {
     this.links = links;
+  }
+
+  public ErrorObject withLinks(Map<String, LinkObject> links) {
+    setLinks(links);
     return this;
   }
 
@@ -71,8 +79,12 @@ public class ErrorObject {
     return status;
   }
 
-  public ErrorObject setStatus(String status) {
+  public void setStatus(String status) {
     this.status = status;
+  }
+
+  public ErrorObject withStatus(String status) {
+    setStatus(status);
     return this;
   }
 
@@ -80,8 +92,12 @@ public class ErrorObject {
     return code;
   }
 
-  public ErrorObject setCode(String code) {
+  public void setCode(String code) {
     this.code = code;
+  }
+
+  public ErrorObject withCode(String code) {
+    setCode(code);
     return this;
   }
 
@@ -89,8 +105,12 @@ public class ErrorObject {
     return title;
   }
 
-  public ErrorObject setTitle(String title) {
+  public void setTitle(String title) {
     this.title = title;
+  }
+
+  public ErrorObject withTitle(String title) {
+    setTitle(title);
     return this;
   }
 
@@ -98,8 +118,12 @@ public class ErrorObject {
     return detail;
   }
 
-  public ErrorObject setDetail(String detail) {
+  public void setDetail(String detail) {
     this.detail = detail;
+  }
+
+  public ErrorObject withDetail(String detail) {
+    setDetail(detail);
     return this;
   }
 
@@ -107,8 +131,12 @@ public class ErrorObject {
     return source;
   }
 
-  public ErrorObject setSource(SourceObject source) {
+  public void setSource(SourceObject source) {
     this.source = source;
+  }
+
+  public ErrorObject withSource(SourceObject source) {
+    setSource(source);
     return this;
   }
 
@@ -116,8 +144,12 @@ public class ErrorObject {
     return meta;
   }
 
-  public ErrorObject setMeta(Object meta) {
+  public void setMeta(Object meta) {
     this.meta = meta;
+  }
+
+  public ErrorObject withMeta(Object meta) {
+    setMeta(meta);
     return this;
   }
 

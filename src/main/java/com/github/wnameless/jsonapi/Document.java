@@ -55,8 +55,12 @@ public class Document<T> {
     return data;
   }
 
-  public Document<T> setData(T data) {
+  public void setData(T data) {
     this.data = data;
+  }
+
+  public Document<T> withData(T data) {
+    setData(data);
     return this;
   }
 
@@ -64,8 +68,12 @@ public class Document<T> {
     return errors;
   }
 
-  public Document<T> setErrors(List<ErrorObject> errors) {
+  public void setErrors(List<ErrorObject> errors) {
     this.errors = errors;
+  }
+
+  public Document<T> withErrors(List<ErrorObject> errors) {
+    setErrors(errors);
     return this;
   }
 
@@ -73,8 +81,12 @@ public class Document<T> {
     return meta;
   }
 
-  public Document<T> setMeta(Object meta) {
+  public void setMeta(Object meta) {
     this.meta = meta;
+  }
+
+  public Document<T> withMeta(Object meta) {
+    setMeta(meta);
     return this;
   }
 
@@ -82,8 +94,12 @@ public class Document<T> {
     return jsonapi;
   }
 
-  public Document<T> setJsonapi(JsonApiObject jsonapi) {
+  public void setJsonapi(JsonApiObject jsonapi) {
     this.jsonapi = jsonapi;
+  }
+
+  public Document<T> withJsonapi(JsonApiObject jsonapi) {
+    setJsonapi(jsonapi);
     return this;
   }
 
@@ -91,8 +107,12 @@ public class Document<T> {
     return links;
   }
 
-  public Document<T> setLinks(Map<String, LinkObject> links) {
+  public void setLinks(Map<String, LinkObject> links) {
     this.links = links;
+  }
+
+  public Document<T> withLinks(Map<String, LinkObject> links) {
+    setLinks(links);
     return this;
   }
 
@@ -100,8 +120,12 @@ public class Document<T> {
     return included;
   }
 
-  public Document<T> setIncluded(List<ResourceObject<?>> included) {
+  public void setIncluded(List<ResourceObject<?>> included) {
     this.included = included;
+  }
+
+  public Document<T> withIncluded(List<ResourceObject<?>> included) {
+    setIncluded(included);
     return this;
   }
 

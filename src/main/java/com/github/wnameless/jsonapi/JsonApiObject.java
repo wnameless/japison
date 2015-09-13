@@ -37,8 +37,12 @@ public class JsonApiObject {
     return version;
   }
 
-  public JsonApiObject setVersion(String version) {
+  public void setVersion(String version) {
     this.version = version;
+  }
+
+  public JsonApiObject withVersion(String version) {
+    setVersion(version);
     return this;
   }
 
@@ -46,8 +50,12 @@ public class JsonApiObject {
     return meta;
   }
 
-  public JsonApiObject setMeta(Object meta) {
+  public void setMeta(Object meta) {
     this.meta = meta;
+  }
+
+  public JsonApiObject withMeta(Object meta) {
+    setMeta(meta);
     return this;
   }
 

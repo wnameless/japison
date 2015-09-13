@@ -37,16 +37,16 @@ public class LinkObject {
 
   public LinkObject() {}
 
-  public LinkObject(String href) {
-    this.href = href;
-  }
-
   public String getHref() {
     return href;
   }
 
-  public LinkObject setHref(String href) {
+  public void setHref(String href) {
     this.href = href;
+  }
+
+  public LinkObject withHref(String href) {
+    setHref(href);
     return this;
   }
 
@@ -54,8 +54,12 @@ public class LinkObject {
     return meta;
   }
 
-  public LinkObject setMeta(Object meta) {
+  public void setMeta(Object meta) {
     this.meta = meta;
+  }
+
+  public LinkObject withMeta(Object meta) {
+    setMeta(meta);
     return this;
   }
 

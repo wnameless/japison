@@ -44,8 +44,12 @@ public class RelationshipObject<T> {
     return links;
   }
 
-  public RelationshipObject<T> setLinks(Map<String, LinkObject> links) {
+  public void setLinks(Map<String, LinkObject> links) {
     this.links = links;
+  }
+
+  public RelationshipObject<T> withLinks(Map<String, LinkObject> links) {
+    setLinks(links);
     return this;
   }
 
@@ -53,8 +57,12 @@ public class RelationshipObject<T> {
     return data;
   }
 
-  public RelationshipObject<T> setData(ResourceObject<T> data) {
+  public void setData(ResourceObject<T> data) {
     this.data = data;
+  }
+
+  public RelationshipObject<T> withData(ResourceObject<T> data) {
+    setData(data);
     return this;
   }
 
@@ -62,8 +70,12 @@ public class RelationshipObject<T> {
     return meta;
   }
 
-  public RelationshipObject<T> setMeta(Object meta) {
+  public void setMeta(Object meta) {
     this.meta = meta;
+  }
+
+  public RelationshipObject<T> withMeta(Object meta) {
+    setMeta(meta);
     return this;
   }
 
