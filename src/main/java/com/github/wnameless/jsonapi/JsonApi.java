@@ -19,47 +19,79 @@ package com.github.wnameless.jsonapi;
 
 import java.util.Arrays;
 
-import com.fasterxml.jackson.core.type.TypeReference;
+import com.google.common.base.Function;
+import com.google.common.reflect.TypeToken;
 
 public final class JsonApi {
 
   private JsonApi() {}
 
-  public static <T> ResourceDocument<T> resourceDocument(T attributes) {
+  public static <T> ResourceDocument<T> resourceDocument(T attributes,
+      String type, Function<T, String> idProvider) {
     ResourceDocument<T> document = new ResourceDocument<T>();
     ResourceObject<T> resource = resource(attributes);
+    if (type != null) resource.setType(type);
+    if (idProvider != null) resource.setId(idProvider.apply(attributes));
     document.setData(resource);
     return document;
+  }
+
+  public static <T> ResourceDocument<T> resourceDocument(T attributes,
+      String type) {
+    return resourceDocument(attributes, type, null);
+  }
+
+  public static <T> ResourceDocument<T> resourceDocument(T attributes) {
+    return resourceDocument(attributes, null, null);
   }
 
   public static <T> ResourceDocument<T> resourceDocument(Class<T> klass) {
     return new ResourceDocument<T>();
   }
 
-  public static <T> ResourceDocument<T> resourceDocument(
-      TypeReference<T> typeRef) {
+  public static <T> ResourceDocument<T> resourceDocument(TypeToken<T> typeRef) {
     return new ResourceDocument<T>();
+  }
+
+  public static <T> ResourcesDocument<T> resourcesDocument(Iterable<T> attrList,
+      String type, Function<T, String> idProvider) {
+    ResourcesDocument<T> document = new ResourcesDocument<T>();
+    for (T attributes : attrList) {
+      ResourceObject<T> resource = resource(attributes);
+      if (type != null) resource.setType(type);
+      if (idProvider != null) resource.setId(idProvider.apply(attributes));
+      document.getData().add(resource);
+    }
+    return document;
+  }
+
+  public static <T> ResourcesDocument<T> resourcesDocument(Iterable<T> attrList,
+      String type) {
+    return resourcesDocument(attrList, type);
+  }
+
+  public static <T> ResourcesDocument<T> resourcesDocument(T[] attrAry,
+      String type, Function<T, String> idProvider) {
+    return resourcesDocument(Arrays.asList(attrAry), type, idProvider);
+  }
+
+  public static <T> ResourcesDocument<T> resourcesDocument(T[] attrAry,
+      String type) {
+    return resourcesDocument(Arrays.asList(attrAry), type);
   }
 
   public static <T> ResourcesDocument<T> resourcesDocument(
       Iterable<T> attrList) {
-    ResourcesDocument<T> document = new ResourcesDocument<T>();
-    for (T attributes : attrList) {
-      ResourceObject<T> resource = resource(attributes);
-      document.getData().add(resource);
-    }
-    return document;
+    return resourcesDocument(attrList, null);
   }
 
   public static <T> ResourcesDocument<T> resourcesDocument(T[] attrAry) {
     return resourcesDocument(Arrays.asList(attrAry));
   }
 
+  @SuppressWarnings("unchecked")
   public static <T> ResourcesDocument<T> resourcesDocument(T attributes) {
-    ResourcesDocument<T> document = new ResourcesDocument<T>();
-    ResourceObject<T> resource = resource(attributes);
-    document.getData().add(resource);
-    return document;
+    return resourcesDocument(Arrays.asList(attributes));
   }
 
   public static <T> ResourcesDocument<T> resourcesDocument(Class<T> klass) {
@@ -67,7 +99,7 @@ public final class JsonApi {
   }
 
   public static <T> ResourcesDocument<T> resourcesDocument(
-      TypeReference<T> typeRef) {
+      TypeToken<T> typeRef) {
     return new ResourcesDocument<T>();
   }
 
@@ -87,7 +119,7 @@ public final class JsonApi {
     return new ResourceObject<T>();
   }
 
-  public static <T> ResourceObject<T> resource(TypeReference<T> typeRef) {
+  public static <T> ResourceObject<T> resource(TypeToken<T> typeRef) {
     return new ResourceObject<T>();
   }
 
@@ -99,8 +131,7 @@ public final class JsonApi {
     return new RelationshipObject<T>();
   }
 
-  public static <T> RelationshipObject<T> relationship(
-      TypeReference<T> typeRef) {
+  public static <T> RelationshipObject<T> relationship(TypeToken<T> typeRef) {
     return new RelationshipObject<T>();
   }
 
