@@ -67,7 +67,7 @@ public final class JsonApi {
 
   public static <T> ResourcesDocument<T> resourcesDocument(Iterable<T> attrList,
       String type) {
-    return resourcesDocument(attrList, type);
+    return resourcesDocument(attrList, type, null);
   }
 
   public static <T> ResourcesDocument<T> resourcesDocument(T[] attrAry,
@@ -77,12 +77,12 @@ public final class JsonApi {
 
   public static <T> ResourcesDocument<T> resourcesDocument(T[] attrAry,
       String type) {
-    return resourcesDocument(Arrays.asList(attrAry), type);
+    return resourcesDocument(attrAry, type, null);
   }
 
   public static <T> ResourcesDocument<T> resourcesDocument(
       Iterable<T> attrList) {
-    return resourcesDocument(attrList, null);
+    return resourcesDocument(attrList, null, null);
   }
 
   public static <T> ResourcesDocument<T> resourcesDocument(T[] attrAry) {
