@@ -147,6 +147,10 @@ public class JapisonTest {
     assertEquals("78", rel.getData().getId());
     rel = JsonApi.relationship(new JpaEntity<String>(), "entities");
 
+    rd = JsonApi.resourceDocument();
+    rsd = JsonApi.resourcesDocument();
+    ro = JsonApi.resource();
+    rel = JsonApi.relationship();
     ErrorsDocument ed = JsonApi.errorsDocument();
     ErrorObject eo = JsonApi.error();
     LinkObject lo = JsonApi.link();

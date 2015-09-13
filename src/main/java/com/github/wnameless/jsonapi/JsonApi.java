@@ -25,6 +25,10 @@ public final class JsonApi {
 
   private JsonApi() {}
 
+  public static <T> ResourceDocument<T> resourceDocument() {
+    return new ResourceDocument<T>();
+  }
+
   public static <T> ResourceDocument<T> resourceDocument(T attributes,
       String type, String id) {
     ResourceDocument<T> document = new ResourceDocument<T>();
@@ -37,6 +41,10 @@ public final class JsonApi {
   public static <T> ResourceDocument<T> resourceDocument(T attributes,
       String type) {
     return resourceDocument(attributes, type, null);
+  }
+
+  public static <T> ResourcesDocument<T> resourcesDocument() {
+    return new ResourcesDocument<T>();
   }
 
   public static <T> ResourcesDocument<T> resourcesDocument(Iterable<T> attrList,
@@ -63,6 +71,10 @@ public final class JsonApi {
     return new ErrorObject();
   }
 
+  public static <T> ResourceObject<T> resource() {
+    return new ResourceObject<T>();
+  }
+
   public static <T> ResourceObject<T> resource(T attributes, String type,
       String id) {
     return new ResourceObject<T>().withAttributes(attributes).withType(type)
@@ -71,6 +83,10 @@ public final class JsonApi {
 
   public static <T> ResourceObject<T> resource(T attributes, String type) {
     return new ResourceObject<T>().withAttributes(attributes).withType(type);
+  }
+
+  public static <T> RelationshipObject<T> relationship() {
+    return new RelationshipObject<T>();
   }
 
   public static <T> RelationshipObject<T> relationship(T attributes,
