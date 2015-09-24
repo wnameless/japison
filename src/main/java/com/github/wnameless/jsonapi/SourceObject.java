@@ -19,12 +19,20 @@ package com.github.wnameless.jsonapi;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
 
+import java.io.IOException;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.wnameless.json.Jsonable;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
 @JsonInclude(NON_DEFAULT)
-public class SourceObject {
+public class SourceObject implements Jsonable<SourceObject> {
 
   private String pointer;
 
@@ -74,6 +82,33 @@ public class SourceObject {
   public String toString() {
     return MoreObjects.toStringHelper(this).add("pointer", pointer)
         .add("parameter", parameter).toString();
+  }
+
+  @Override
+  public String toJson() {
+    String json = null;
+    try {
+      json = new ObjectMapper().writeValueAsString(this);
+    } catch (JsonProcessingException e) {
+      throw new RuntimeException(e);
+    }
+    return json;
+  }
+
+  @Override
+  public SourceObject fromJson(String json) {
+    SourceObject obj = null;
+    try {
+      obj = new ObjectMapper().readValue(json,
+          new TypeReference<SourceObject>() {});
+    } catch (JsonParseException e) {
+      throw new RuntimeException(e);
+    } catch (JsonMappingException e) {
+      throw new RuntimeException(e);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+    return obj;
   }
 
 }

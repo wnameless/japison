@@ -21,17 +21,24 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newLinkedHashMap;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.wnameless.json.Jsonable;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
 @JsonInclude(NON_DEFAULT)
-public class Document<T> {
+public class Document<T> implements Jsonable<Document<T>> {
 
   @Valid
   private T data;
@@ -152,6 +159,33 @@ public class Document<T> {
     return MoreObjects.toStringHelper(this).add("data", data)
         .add("errors", errors).add("meta", meta).add("jsonapi", jsonapi)
         .add("links", links).add("included", included).toString();
+  }
+
+  @Override
+  public String toJson() {
+    String json = null;
+    try {
+      json = new ObjectMapper().writeValueAsString(this);
+    } catch (JsonProcessingException e) {
+      throw new RuntimeException(e);
+    }
+    return json;
+  }
+
+  @Override
+  public Document<T> fromJson(String json) {
+    Document<T> obj = null;
+    try {
+      obj = new ObjectMapper().readValue(json,
+          new TypeReference<Document<T>>() {});
+    } catch (JsonParseException e) {
+      throw new RuntimeException(e);
+    } catch (JsonMappingException e) {
+      throw new RuntimeException(e);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+    return obj;
   }
 
 }

@@ -19,15 +19,23 @@ package com.github.wnameless.jsonapi;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
 
+import java.io.IOException;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.wnameless.json.Jsonable;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
 @JsonInclude(NON_DEFAULT)
-public class LinkObject {
+public class LinkObject implements Jsonable<LinkObject> {
 
   @NotNull
   private String href;
@@ -81,6 +89,33 @@ public class LinkObject {
   public String toString() {
     return MoreObjects.toStringHelper(this).add("href", href).add("meta", meta)
         .toString();
+  }
+
+  @Override
+  public String toJson() {
+    String json = null;
+    try {
+      json = new ObjectMapper().writeValueAsString(this);
+    } catch (JsonProcessingException e) {
+      throw new RuntimeException(e);
+    }
+    return json;
+  }
+
+  @Override
+  public LinkObject fromJson(String json) {
+    LinkObject obj = null;
+    try {
+      obj = new ObjectMapper().readValue(json,
+          new TypeReference<LinkObject>() {});
+    } catch (JsonParseException e) {
+      throw new RuntimeException(e);
+    } catch (JsonMappingException e) {
+      throw new RuntimeException(e);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+    return obj;
   }
 
 }
