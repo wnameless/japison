@@ -37,6 +37,9 @@ import org.junit.Test;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Function;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
+
 public class JapisonTest {
 
   ObjectMapper mapper = new ObjectMapper();
@@ -62,10 +65,13 @@ public class JapisonTest {
 
   @Test
   public void testBeans() {
-    assertThat(Document.class,
-        allOf(hasValidBeanConstructor(), hasValidGettersAndSetters(),
-            hasValidBeanHashCode(), hasValidBeanEquals(),
-            hasValidBeanToString()));
+    EqualsVerifier.forClass(ResourceDocument.class)
+        .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
+    EqualsVerifier.forClass(ResourcesDocument.class)
+        .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
+    EqualsVerifier.forClass(ErrorsDocument.class)
+        .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
+
     assertThat(ErrorObject.class,
         allOf(hasValidBeanConstructor(), hasValidGettersAndSetters(),
             hasValidBeanHashCode(), hasValidBeanEquals(),
@@ -94,8 +100,12 @@ public class JapisonTest {
 
   @Test
   public void testFluentMethods() {
-    new Document<Void>().withData(null).withErrors(null).withMeta(null)
+    new ResourceDocument<Void>().withData(null).withMeta(null).withJsonapi(null)
+        .withLinks(null).withIncluded(null);
+    new ResourcesDocument<Void>().withData(null).withMeta(null)
         .withJsonapi(null).withLinks(null).withIncluded(null);
+    new ErrorsDocument().withErrors(null).withMeta(null).withJsonapi(null)
+        .withLinks(null).withIncluded(null);
     new ErrorObject().withId(null).withLinks(null).withStatus(null)
         .withCode(null).withTitle(null).withDetail(null).withSource(null)
         .withMeta(null);
@@ -170,8 +180,8 @@ public class JapisonTest {
   public void testJsonable() throws Exception {
     ResourceDocument<JpaEntity<Long>> rd;
     ResourcesDocument<JpaEntity<Long>> rsd;
-    ErrorObject er;
     ErrorsDocument ed;
+    ErrorObject er;
     JsonApiObject jao;
     LinkObject lo;
     RelationshipObject<JpaEntity<Long>> relo;
@@ -184,15 +194,15 @@ public class JapisonTest {
 
     rsd = new ResourcesDocument<JpaEntity<Long>>();
     assertEquals(rsd.toJson(), mapper.writeValueAsString(rsd));
-    // assertEquals(rsd, rsd.fromJson(rsd.toJson()));
-
-    er = new ErrorObject();
-    assertEquals(er.toJson(), mapper.writeValueAsString(er));
-    assertEquals(er, er.fromJson(er.toJson()));
+    assertEquals(rsd, rsd.fromJson(rsd.toJson()));
 
     ed = new ErrorsDocument();
     assertEquals(ed.toJson(), mapper.writeValueAsString(ed));
     assertEquals(ed, ed.fromJson(ed.toJson()));
+
+    er = new ErrorObject();
+    assertEquals(er.toJson(), mapper.writeValueAsString(er));
+    assertEquals(er, er.fromJson(er.toJson()));
 
     jao = new JsonApiObject();
     assertEquals(jao.toJson(), mapper.writeValueAsString(jao));

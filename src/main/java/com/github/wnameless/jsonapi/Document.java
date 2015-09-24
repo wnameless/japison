@@ -17,175 +17,33 @@
  */
 package com.github.wnameless.jsonapi;
 
-import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
-import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Maps.newLinkedHashMap;
-
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import javax.validation.Valid;
+public interface Document<T> {
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.wnameless.json.Jsonable;
-import com.google.common.base.MoreObjects;
-import com.google.common.base.Objects;
+  public T getData();
 
-@JsonInclude(NON_DEFAULT)
-public class Document<T> implements Jsonable<Document<T>> {
+  public void setData(T data);
 
-  @Valid
-  private T data;
+  public List<ErrorObject> getErrors();
 
-  @Valid
-  private List<ErrorObject> errors = newArrayList();
+  public void setErrors(List<ErrorObject> errors);
 
-  @Valid
-  private Object meta;
+  public Object getMeta();
 
-  @Valid
-  private JsonApiObject jsonapi;
+  public void setMeta(Object meta);
 
-  @Valid
-  private Map<String, LinkObject> links = newLinkedHashMap();
+  public JsonApiObject getJsonapi();
 
-  @Valid
-  private List<ResourceObject<?>> included = newArrayList();
+  public void setJsonapi(JsonApiObject jsonapi);
 
-  public T getData() {
-    return data;
-  }
+  public Map<String, LinkObject> getLinks();
 
-  public void setData(T data) {
-    this.data = data;
-  }
+  public void setLinks(Map<String, LinkObject> links);
 
-  public Document<T> withData(T data) {
-    setData(data);
-    return this;
-  }
+  public List<ResourceObject<?>> getIncluded();
 
-  public List<ErrorObject> getErrors() {
-    return errors;
-  }
-
-  public void setErrors(List<ErrorObject> errors) {
-    this.errors = errors;
-  }
-
-  public Document<T> withErrors(List<ErrorObject> errors) {
-    setErrors(errors);
-    return this;
-  }
-
-  public Object getMeta() {
-    return meta;
-  }
-
-  public void setMeta(Object meta) {
-    this.meta = meta;
-  }
-
-  public Document<T> withMeta(Object meta) {
-    setMeta(meta);
-    return this;
-  }
-
-  public JsonApiObject getJsonapi() {
-    return jsonapi;
-  }
-
-  public void setJsonapi(JsonApiObject jsonapi) {
-    this.jsonapi = jsonapi;
-  }
-
-  public Document<T> withJsonapi(JsonApiObject jsonapi) {
-    setJsonapi(jsonapi);
-    return this;
-  }
-
-  public Map<String, LinkObject> getLinks() {
-    return links;
-  }
-
-  public void setLinks(Map<String, LinkObject> links) {
-    this.links = links;
-  }
-
-  public Document<T> withLinks(Map<String, LinkObject> links) {
-    setLinks(links);
-    return this;
-  }
-
-  public List<ResourceObject<?>> getIncluded() {
-    return included;
-  }
-
-  public void setIncluded(List<ResourceObject<?>> included) {
-    this.included = included;
-  }
-
-  public Document<T> withIncluded(List<ResourceObject<?>> included) {
-    setIncluded(included);
-    return this;
-  }
-
-  @Override
-  public boolean equals(final Object other) {
-    if (this == other) return true;
-    if (!(other instanceof Document)) return false;
-    Document<?> castOther = (Document<?>) other;
-    return Objects.equal(data, castOther.data)
-        && Objects.equal(errors, castOther.errors)
-        && Objects.equal(meta, castOther.meta)
-        && Objects.equal(jsonapi, castOther.jsonapi)
-        && Objects.equal(links, castOther.links)
-        && Objects.equal(included, castOther.included);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hashCode(data, errors, meta, jsonapi, links, included);
-  }
-
-  @Override
-  public String toString() {
-    return MoreObjects.toStringHelper(this).add("data", data)
-        .add("errors", errors).add("meta", meta).add("jsonapi", jsonapi)
-        .add("links", links).add("included", included).toString();
-  }
-
-  @Override
-  public String toJson() {
-    String json = null;
-    try {
-      json = new ObjectMapper().writeValueAsString(this);
-    } catch (JsonProcessingException e) {
-      throw new RuntimeException(e);
-    }
-    return json;
-  }
-
-  @Override
-  public Document<T> fromJson(String json) {
-    Document<T> obj = null;
-    try {
-      obj = new ObjectMapper().readValue(json,
-          new TypeReference<Document<T>>() {});
-    } catch (JsonParseException e) {
-      throw new RuntimeException(e);
-    } catch (JsonMappingException e) {
-      throw new RuntimeException(e);
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-    return obj;
-  }
+  public void setIncluded(List<ResourceObject<?>> included);
 
 }
