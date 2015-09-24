@@ -190,39 +190,30 @@ public class JapisonTest {
 
     rd = new ResourceDocument<JpaEntity<Long>>();
     assertEquals(rd.toJson(), mapper.writeValueAsString(rd));
-    assertEquals(rd, rd.fromJson(rd.toJson()));
 
     rsd = new ResourcesDocument<JpaEntity<Long>>();
     assertEquals(rsd.toJson(), mapper.writeValueAsString(rsd));
-    assertEquals(rsd, rsd.fromJson(rsd.toJson()));
 
     ed = new ErrorsDocument();
     assertEquals(ed.toJson(), mapper.writeValueAsString(ed));
-    assertEquals(ed, ed.fromJson(ed.toJson()));
 
     er = new ErrorObject();
     assertEquals(er.toJson(), mapper.writeValueAsString(er));
-    assertEquals(er, er.fromJson(er.toJson()));
 
     jao = new JsonApiObject();
     assertEquals(jao.toJson(), mapper.writeValueAsString(jao));
-    assertEquals(jao, jao.fromJson(jao.toJson()));
 
     lo = new LinkObject();
     assertEquals(lo.toJson(), mapper.writeValueAsString(lo));
-    assertEquals(lo, lo.fromJson(lo.toJson()));
 
     relo = new RelationshipObject<JpaEntity<Long>>();
     assertEquals(relo.toJson(), mapper.writeValueAsString(relo));
-    assertEquals(relo, relo.fromJson(relo.toJson()));
 
     ro = new ResourceObject<JpaEntity<Long>>();
     assertEquals(ro.toJson(), mapper.writeValueAsString(ro));
-    assertEquals(ro, ro.fromJson(ro.toJson()));
 
     so = new SourceObject();
     assertEquals(so.toJson(), mapper.writeValueAsString(so));
-    assertEquals(so, so.fromJson(so.toJson()));
   }
 
 }

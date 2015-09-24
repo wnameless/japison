@@ -19,16 +19,11 @@ package com.github.wnameless.jsonapi;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
 
-import java.io.IOException;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.wnameless.json.Jsonable;
 import com.google.common.base.MoreObjects;
@@ -100,22 +95,6 @@ public class LinkObject implements Jsonable<LinkObject> {
       throw new RuntimeException(e);
     }
     return json;
-  }
-
-  @Override
-  public LinkObject fromJson(String json) {
-    LinkObject obj = null;
-    try {
-      obj = new ObjectMapper().readValue(json,
-          new TypeReference<LinkObject>() {});
-    } catch (JsonParseException e) {
-      throw new RuntimeException(e);
-    } catch (JsonMappingException e) {
-      throw new RuntimeException(e);
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-    return obj;
   }
 
 }

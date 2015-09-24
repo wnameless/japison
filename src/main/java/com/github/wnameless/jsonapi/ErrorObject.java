@@ -20,16 +20,12 @@ package com.github.wnameless.jsonapi;
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
 import static com.google.common.collect.Maps.newLinkedHashMap;
 
-import java.io.IOException;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.wnameless.json.Jsonable;
 import com.google.common.base.MoreObjects;
@@ -198,22 +194,6 @@ public class ErrorObject implements Jsonable<ErrorObject> {
       throw new RuntimeException(e);
     }
     return json;
-  }
-
-  @Override
-  public ErrorObject fromJson(String json) {
-    ErrorObject obj = null;
-    try {
-      obj = new ObjectMapper().readValue(json,
-          new TypeReference<ErrorObject>() {});
-    } catch (JsonParseException e) {
-      throw new RuntimeException(e);
-    } catch (JsonMappingException e) {
-      throw new RuntimeException(e);
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-    return obj;
   }
 
 }

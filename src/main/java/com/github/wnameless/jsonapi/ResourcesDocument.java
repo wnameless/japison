@@ -22,17 +22,13 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newLinkedHashMap;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.wnameless.json.Jsonable;
 import com.google.common.base.MoreObjects;
@@ -174,22 +170,6 @@ public class ResourcesDocument<T> implements Document<List<ResourceObject<T>>>,
       throw new RuntimeException(e);
     }
     return json;
-  }
-
-  @Override
-  public ResourcesDocument<T> fromJson(String json) {
-    ResourcesDocument<T> obj = null;
-    try {
-      obj = new ObjectMapper().readValue(json,
-          new TypeReference<ResourcesDocument<T>>() {});
-    } catch (JsonParseException e) {
-      throw new RuntimeException(e);
-    } catch (JsonMappingException e) {
-      throw new RuntimeException(e);
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-    return obj;
   }
 
 }
