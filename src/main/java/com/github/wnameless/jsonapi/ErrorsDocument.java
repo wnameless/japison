@@ -34,6 +34,16 @@ import com.github.wnameless.json.Jsonable;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
+/**
+ * 
+ * {@link ErrorsDocument} is designed by the errors document in JSON API
+ * specification.
+ * 
+ * @see JSON API Specification (v1.0)
+ *      <a href="http://jsonapi.org/format/#document-structure">Document
+ *      Structure</a>
+ *
+ */
 @JsonInclude(NON_DEFAULT)
 public class ErrorsDocument
     implements Document<Void>, Jsonable<ErrorsDocument> {

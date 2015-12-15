@@ -19,6 +19,12 @@ package com.github.wnameless.jsonapi;
 
 import com.google.common.base.Function;
 
+/**
+ * 
+ * {@link JsonApi} is a helper class which provides convenient methods to build
+ * up JSON API requests or responses.
+ *
+ */
 public final class JsonApi {
 
   public static final String MEDIA_TYPE = "application/vnd.api+json";

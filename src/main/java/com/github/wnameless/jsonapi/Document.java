@@ -20,6 +20,20 @@ package com.github.wnameless.jsonapi;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 
+ * {@link Document} defines a super type of {@link ResourceDocument},
+ * {@link ResourcesDocument} and {@link ErrorsDocument}. <br>
+ * <br>
+ * {@link Document} is designed by the document in JSON API specification.
+ * 
+ * @see JSON API Specification (v1.0)
+ *      <a href="http://jsonapi.org/format/#document-structure">Document
+ *      Structure</a>
+ *
+ * @param <T>
+ *          the type of document data
+ */
 public interface Document<T> {
 
   public T getData();

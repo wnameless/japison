@@ -34,6 +34,16 @@ import com.github.wnameless.json.Jsonable;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
+/**
+ * 
+ * {@link ResourcesDocument} is designed by the resources document in JSON API
+ * specification.
+ * 
+ * @see JSON API Specification (v1.0)
+ *      <a href="http://jsonapi.org/format/#document-structure">Document
+ *      Structure</a>
+ *
+ */
 @JsonInclude(NON_DEFAULT)
 public class ResourcesDocument<T> implements Document<List<ResourceObject<T>>>,
     Jsonable<ResourcesDocument<T>> {

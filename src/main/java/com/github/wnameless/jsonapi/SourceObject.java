@@ -26,6 +26,15 @@ import com.github.wnameless.json.Jsonable;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
+/**
+ * 
+ * {@link SourceObject} is designed by the source object in JSON API
+ * specification.
+ * 
+ * @see JSON API Specification (v1.0)
+ *      <a href= "http://jsonapi.org/format/#error-objects">Error Objects</a>
+ *
+ */
 @JsonInclude(NON_DEFAULT)
 public class SourceObject implements Jsonable<SourceObject> {
 

@@ -28,6 +28,16 @@ import com.github.wnameless.json.Jsonable;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
+/**
+ * 
+ * {@link JsonApiObject} is designed by the JSON API object in JSON API
+ * specification.
+ * 
+ * @see JSON API Specification (v1.0)
+ *      <a href="http://jsonapi.org/format/#document-jsonapi-object">JSON API
+ *      Object</a>
+ *
+ */
 @JsonInclude(NON_NULL)
 public class JsonApiObject implements Jsonable<JsonApiObject> {
 

@@ -17,6 +17,14 @@
  */
 package com.github.wnameless.json;
 
+/**
+ * 
+ * {@link Jsonable} is an interface which allows implementing class to be
+ * converted to JSON string.
+ *
+ * @param <T>
+ *          the type of jsonable object
+ */
 public interface Jsonable<T> {
 
   public String toJson();

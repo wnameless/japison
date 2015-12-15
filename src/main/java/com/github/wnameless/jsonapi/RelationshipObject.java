@@ -30,6 +30,16 @@ import com.github.wnameless.json.Jsonable;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
+/**
+ * 
+ * {@link RelationshipObject} is designed by the relationship object in JSON API
+ * specification.
+ * 
+ * @see JSON API Specification (v1.0) <a href=
+ *      "http://jsonapi.org/format/#document-resource-object-relationships">
+ *      Relationships</a>
+ *
+ */
 @JsonInclude(NON_DEFAULT)
 public class RelationshipObject<T> implements Jsonable<RelationshipObject<T>> {
 
