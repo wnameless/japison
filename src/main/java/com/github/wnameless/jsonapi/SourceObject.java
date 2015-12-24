@@ -42,27 +42,62 @@ public class SourceObject implements Jsonable<SourceObject> {
 
   private String parameter;
 
+  /**
+   * Returns a JSON Pointer to the associated entity in the request document.
+   * 
+   * @return a JSON Pointer
+   */
   public String getPointer() {
     return pointer;
   }
 
+  /**
+   * Sets a JSON Pointer
+   * 
+   * @param pointer
+   */
   public void setPointer(String pointer) {
     this.pointer = pointer;
   }
 
+  /**
+   * A chaining method for {@link #setPointer}.
+   * 
+   * @param pointer
+   *          a JSON Pointer
+   * @return this {@link SourceObject}
+   */
   public SourceObject withPointer(String pointer) {
     setPointer(pointer);
     return this;
   }
 
+  /**
+   * Returns a string indicating which URI query parameter caused the error.
+   * 
+   * @return an error string
+   */
   public String getParameter() {
     return parameter;
   }
 
+  /**
+   * Set a string indicating which URI query parameter caused the error.
+   * 
+   * @param parameter
+   *          an error string
+   */
   public void setParameter(String parameter) {
     this.parameter = parameter;
   }
 
+  /**
+   * A chaining method for {@link #setParameter}.
+   * 
+   * @param parameter
+   *          an error string
+   * @return this {@link SourceObject}
+   */
   public SourceObject withParameter(String parameter) {
     setParameter(parameter);
     return this;

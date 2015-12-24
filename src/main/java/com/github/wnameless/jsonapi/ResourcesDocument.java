@@ -74,6 +74,13 @@ public class ResourcesDocument<T> implements Document<List<ResourceObject<T>>>,
     this.data = data;
   }
 
+  /**
+   * A chaining method for {@link #setData}.
+   * 
+   * @param data
+   *          the document's "primary data"
+   * @return {@link ResourcesDocument}
+   */
   public ResourcesDocument<T> withData(List<ResourceObject<T>> data) {
     setData(data);
     return this;
@@ -97,6 +104,13 @@ public class ResourcesDocument<T> implements Document<List<ResourceObject<T>>>,
     this.meta = meta;
   }
 
+  /**
+   * A chaining method for {@link #setMeta}.
+   * 
+   * @param meta
+   *          a meta object
+   * @return this {@link ResourcesDocument}
+   */
   public ResourcesDocument<T> withMeta(Object meta) {
     setMeta(meta);
     return this;
@@ -112,6 +126,13 @@ public class ResourcesDocument<T> implements Document<List<ResourceObject<T>>>,
     this.jsonapi = jsonapi;
   }
 
+  /**
+   * A chaining method for {@link #setJsonapi}.
+   * 
+   * @param jsonapi
+   *          a {@link JsonApiObject} describing the server's implementation
+   * @return this {@link ResourcesDocument}
+   */
   public ResourcesDocument<T> withJsonapi(JsonApiObject jsonapi) {
     setJsonapi(jsonapi);
     return this;
@@ -127,6 +148,13 @@ public class ResourcesDocument<T> implements Document<List<ResourceObject<T>>>,
     this.links = links;
   }
 
+  /**
+   * A chaining method for {@link #setLinks}.
+   * 
+   * @param links
+   *          {@link LinkObject}s
+   * @return this {@link ResourcesDocument}
+   */
   public ResourcesDocument<T> withLinks(Map<String, LinkObject> links) {
     setLinks(links);
     return this;

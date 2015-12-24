@@ -36,28 +36,96 @@ import java.util.Map;
  */
 public interface Document<T> {
 
+  /**
+   * Returns the document's "primary data".
+   * 
+   * @return the document's "primary data"
+   */
   public T getData();
 
+  /**
+   * Sets the document's "primary data".
+   * 
+   * @param data
+   *          the document's "primary data".
+   */
   public void setData(T data);
 
+  /**
+   * Returns a list of error objects
+   * 
+   * @return a list of error objects
+   */
   public List<ErrorObject> getErrors();
 
+  /**
+   * Sets a list of error objects.
+   * 
+   * @param errors
+   *          a list of error objects.
+   */
   public void setErrors(List<ErrorObject> errors);
 
+  /**
+   * Returns a meta object that contains non-standard meta-information.
+   * 
+   * @return a meta object
+   */
   public Object getMeta();
 
+  /**
+   * Sets a meta object that contains non-standard meta-information.
+   * 
+   * @param meta
+   *          a meta object
+   */
   public void setMeta(Object meta);
 
+  /**
+   * Returns a {@link JsonApiObject} describing the server's implementation.
+   * 
+   * @return a {@link JsonApiObject} describing the server's implementation
+   */
   public JsonApiObject getJsonapi();
 
+  /**
+   * Sets a {@link JsonApiObject} describing the server's implementation.
+   * 
+   * @param jsonapi
+   *          a {@link JsonApiObject} describing the server's implementation
+   */
   public void setJsonapi(JsonApiObject jsonapi);
 
+  /**
+   * Returns {@link LinkObject}s related to the primary data.
+   * 
+   * @return {@link LinkObject}s
+   */
   public Map<String, LinkObject> getLinks();
 
+  /**
+   * Sets {@link LinkObject}s related to the primary data.
+   * 
+   * @param links
+   *          {@link LinkObject}s
+   */
   public void setLinks(Map<String, LinkObject> links);
 
+  /**
+   * Returns a list of {@link ResourceObject}s that are related to the primary
+   * data and/or each other.
+   * 
+   * @return a list of {@link ResourceObject}s
+   */
   public List<ResourceObject<?>> getIncluded();
 
+  /**
+   * Sets a list of {@link ResourceObject}s that are related to the primary data
+   * and/or each other.
+   * 
+   * @param included
+   *          a list of {@link ResourceObject}s
+   */
   public void setIncluded(List<ResourceObject<?>> included);
 
 }

@@ -48,27 +48,64 @@ public class LinkObject implements Jsonable<LinkObject> {
 
   public LinkObject() {}
 
+  /**
+   * Returns a string containing the link's URL.
+   * 
+   * @return a string containing the link's URL
+   */
   public String getHref() {
     return href;
   }
 
+  /**
+   * Sets a string containing the link's URL.
+   * 
+   * @param href
+   *          a string containing the link's URL
+   */
   public void setHref(String href) {
     this.href = href;
   }
 
+  /**
+   * A chaining method for {@link #setHref}.
+   * 
+   * @param href
+   *          a string containing the link's URL
+   * @return this {@link LinkObject}
+   */
   public LinkObject withHref(String href) {
     setHref(href);
     return this;
   }
 
+  /**
+   * Returns a meta object containing non-standard meta-information about the
+   * link.
+   * 
+   * @return a meta object
+   */
   public Object getMeta() {
     return meta;
   }
 
+  /**
+   * Sets a meta object containing non-standard meta-information about the link.
+   * 
+   * @param meta
+   *          a meta object
+   */
   public void setMeta(Object meta) {
     this.meta = meta;
   }
 
+  /**
+   * A chaining method for {@link #setMeta}.
+   * 
+   * @param meta
+   *          a meta object
+   * @return this {@link LinkObject}
+   */
   public LinkObject withMeta(Object meta) {
     setMeta(meta);
     return this;

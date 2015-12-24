@@ -74,6 +74,13 @@ public class ResourceDocument<T>
     this.data = data;
   }
 
+  /**
+   * A chaining method for {@link #setData}.
+   * 
+   * @param meta
+   *          the document's "primary data".
+   * @return this {@link ResourceDocument}
+   */
   public ResourceDocument<T> withData(ResourceObject<T> data) {
     setData(data);
     return this;
@@ -97,6 +104,13 @@ public class ResourceDocument<T>
     this.meta = meta;
   }
 
+  /**
+   * A chaining method for {@link #setMeta}.
+   * 
+   * @param meta
+   *          a meta object
+   * @return this {@link ErrorsDocument}
+   */
   public ResourceDocument<T> withMeta(Object meta) {
     setMeta(meta);
     return this;
@@ -112,6 +126,13 @@ public class ResourceDocument<T>
     this.jsonapi = jsonapi;
   }
 
+  /**
+   * A chaining method for {@link #setJsonapi}.
+   * 
+   * @param jsonapi
+   *          a {@link JsonApiObject} describing the server's implementation
+   * @return this {@link ErrorsDocument}
+   */
   public ResourceDocument<T> withJsonapi(JsonApiObject jsonapi) {
     setJsonapi(jsonapi);
     return this;
@@ -127,6 +148,13 @@ public class ResourceDocument<T>
     this.links = links;
   }
 
+  /**
+   * A chaining method for {@link #setLinks}.
+   * 
+   * @param links
+   *          {@link LinkObject}s
+   * @return this {@link ErrorsDocument}
+   */
   public ResourceDocument<T> withLinks(Map<String, LinkObject> links) {
     setLinks(links);
     return this;
@@ -142,6 +170,13 @@ public class ResourceDocument<T>
     this.included = included;
   }
 
+  /**
+   * A chaining method for {@link setIncluded}.
+   * 
+   * @param included
+   *          a list of {@link ResourceObject}s
+   * @return this {@link ErrorsDocument}
+   */
   public ResourceDocument<T> withIncluded(List<ResourceObject<?>> included) {
     setIncluded(included);
     return this;

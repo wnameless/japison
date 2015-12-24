@@ -27,6 +27,11 @@ package com.github.wnameless.json;
  */
 public interface Jsonable<T> {
 
+  /**
+   * Returns a JSON string which represents this object.
+   * 
+   * @return a JSON string
+   */
   public String toJson();
 
 }

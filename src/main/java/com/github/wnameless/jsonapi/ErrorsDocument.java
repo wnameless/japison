@@ -82,6 +82,13 @@ public class ErrorsDocument
     this.errors = errors;
   }
 
+  /**
+   * A chaining method for {@link setErrors}.
+   * 
+   * @param errors
+   *          a list of error objects
+   * @return this {@link ErrorsDocument}
+   */
   public ErrorsDocument withErrors(List<ErrorObject> errors) {
     setErrors(errors);
     return this;
@@ -97,6 +104,13 @@ public class ErrorsDocument
     this.meta = meta;
   }
 
+  /**
+   * A chaining method for {@link #setMeta}.
+   * 
+   * @param meta
+   *          a meta object
+   * @return this {@link ErrorsDocument}
+   */
   public ErrorsDocument withMeta(Object meta) {
     setMeta(meta);
     return this;
@@ -112,6 +126,13 @@ public class ErrorsDocument
     this.jsonapi = jsonapi;
   }
 
+  /**
+   * A chaining method for {@link #setJsonapi}.
+   * 
+   * @param jsonapi
+   *          a {@link JsonApiObject} describing the server's implementation
+   * @return this {@link ErrorsDocument}
+   */
   public ErrorsDocument withJsonapi(JsonApiObject jsonapi) {
     setJsonapi(jsonapi);
     return this;
@@ -127,6 +148,13 @@ public class ErrorsDocument
     this.links = links;
   }
 
+  /**
+   * A chaining method for {@link #setLinks}.
+   * 
+   * @param links
+   *          {@link LinkObject}s
+   * @return this {@link ErrorsDocument}
+   */
   public ErrorsDocument withLinks(Map<String, LinkObject> links) {
     setLinks(links);
     return this;
@@ -142,6 +170,13 @@ public class ErrorsDocument
     this.included = included;
   }
 
+  /**
+   * A chaining method for {@link setIncluded}.
+   * 
+   * @param included
+   *          a list of {@link ResourceObject}s
+   * @return this {@link ErrorsDocument}
+   */
   public ErrorsDocument withIncluded(List<ResourceObject<?>> included) {
     setIncluded(included);
     return this;

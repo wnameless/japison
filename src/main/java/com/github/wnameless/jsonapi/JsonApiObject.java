@@ -46,27 +46,63 @@ public class JsonApiObject implements Jsonable<JsonApiObject> {
   @Valid
   private Object meta;
 
+  /**
+   * Returns a string indicating the highest JSON API version supported.
+   * 
+   * @return a string indicating the highest JSON API version supported.
+   */
   public String getVersion() {
     return version;
   }
 
+  /**
+   * Sets a string indicating the highest JSON API version supported.
+   * 
+   * @param version
+   *          the highest JSON API version
+   */
   public void setVersion(String version) {
     this.version = version;
   }
 
+  /**
+   * A chaining method for {@link #setVersion}.
+   * 
+   * @param version
+   *          the highest JSON API version
+   * @return this {@link JsonApiObject}
+   */
   public JsonApiObject withVersion(String version) {
     setVersion(version);
     return this;
   }
 
+  /**
+   * Returns a meta object that contains non-standard meta-information.
+   * 
+   * @return a meta object
+   */
   public Object getMeta() {
     return meta;
   }
 
+  /**
+   * Sets a meta object that contains non-standard meta-information.
+   * 
+   * @param meta
+   *          a meta object
+   */
   public void setMeta(Object meta) {
     this.meta = meta;
   }
 
+  /**
+   * A chaining method for {@link #setMeta}.
+   * 
+   * @param meta
+   *          a meta object
+   * @return this {@link JsonApiObject}
+   */
   public JsonApiObject withMeta(Object meta) {
     setMeta(meta);
     return this;

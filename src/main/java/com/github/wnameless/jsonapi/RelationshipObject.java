@@ -52,41 +52,97 @@ public class RelationshipObject<T> implements Jsonable<RelationshipObject<T>> {
   @Valid
   private Object meta;
 
+  /**
+   * Returns {@link LinkObject}s.
+   * 
+   * @return {@link LinkObject}s, keys are the names of links
+   */
   @Valid
   public Map<String, LinkObject> getLinks() {
     return links;
   }
 
+  /**
+   * Sets {@link LinkObject}s.
+   * 
+   * @param links
+   *          {@link LinkObject}s, keys are the names of links
+   */
   public void setLinks(Map<String, LinkObject> links) {
     this.links = links;
   }
 
+  /**
+   * A chaining method for {@link setLinks}.
+   * 
+   * @param links
+   *          {@link LinkObject}s, keys are the names of links
+   * @return this {@link RelationshipObject}
+   */
   public RelationshipObject<T> withLinks(Map<String, LinkObject> links) {
     setLinks(links);
     return this;
   }
 
+  /**
+   * Returns a {@link ResourceObject}.
+   * 
+   * @return a {@link ResourceObject}
+   */
   public ResourceObject<T> getData() {
     return data;
   }
 
+  /**
+   * Sets a {@link ResourceObject}.
+   * 
+   * @param data
+   *          a {@link ResourceObject}
+   */
   public void setData(ResourceObject<T> data) {
     this.data = data;
   }
 
+  /**
+   * A chaining method for {@link setData}.
+   * 
+   * @param data
+   *          a {@link ResourceObject}
+   * @return this {@link RelationshipObject}
+   */
   public RelationshipObject<T> withData(ResourceObject<T> data) {
     setData(data);
     return this;
   }
 
+  /**
+   * Returns a meta object that contains non-standard meta-information about the
+   * relationship.
+   * 
+   * @return a meta object
+   */
   public Object getMeta() {
     return meta;
   }
 
+  /**
+   * Sets a meta object that contains non-standard meta-information about the
+   * relationship.
+   * 
+   * @param meta
+   *          a meta object
+   */
   public void setMeta(Object meta) {
     this.meta = meta;
   }
 
+  /**
+   * A chaining method for {@link #setMeta}.
+   * 
+   * @param meta
+   *          a meta object
+   * @return this {@link RelationshipObject}
+   */
   public RelationshipObject<T> withMeta(Object meta) {
     setMeta(meta);
     return this;
