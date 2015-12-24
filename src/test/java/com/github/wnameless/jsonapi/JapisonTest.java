@@ -17,13 +17,6 @@
  */
 package com.github.wnameless.jsonapi;
 
-import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
-import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanEquals;
-import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanHashCode;
-import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanToString;
-import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
-import static org.hamcrest.CoreMatchers.allOf;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -33,6 +26,9 @@ import java.util.Arrays;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.meanbean.test.BeanTester;
+import org.meanbean.test.Configuration;
+import org.meanbean.test.ConfigurationBuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Function;
@@ -65,37 +61,42 @@ public class JapisonTest {
 
   @Test
   public void testBeans() {
-    EqualsVerifier.forClass(ResourceDocument.class)
-        .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
-    EqualsVerifier.forClass(ResourcesDocument.class)
+    BeanTester beanTester = new BeanTester();
+    Configuration config1 =
+        new ConfigurationBuilder().ignoreProperty("data").build();
+    beanTester.addCustomConfiguration(ErrorsDocument.class, config1);
+    Configuration config2 =
+        new ConfigurationBuilder().ignoreProperty("errors").build();
+    beanTester.addCustomConfiguration(ResourceDocument.class, config2);
+    beanTester.addCustomConfiguration(ResourcesDocument.class, config2);
+    beanTester.testBean(ErrorObject.class);
+    beanTester.testBean(ErrorsDocument.class);
+    beanTester.testBean(JsonApiObject.class);
+    beanTester.testBean(LinkObject.class);
+    beanTester.testBean(RelationshipObject.class);
+    beanTester.testBean(ResourceDocument.class);
+    beanTester.testBean(ResourceObject.class);
+    beanTester.testBean(ResourcesDocument.class);
+    beanTester.testBean(SourceObject.class);
+
+    EqualsVerifier.forClass(ErrorObject.class)
         .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
     EqualsVerifier.forClass(ErrorsDocument.class)
         .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
-
-    assertThat(ErrorObject.class,
-        allOf(hasValidBeanConstructor(), hasValidGettersAndSetters(),
-            hasValidBeanHashCode(), hasValidBeanEquals(),
-            hasValidBeanToString()));
-    assertThat(JsonApiObject.class,
-        allOf(hasValidBeanConstructor(), hasValidGettersAndSetters(),
-            hasValidBeanHashCode(), hasValidBeanEquals(),
-            hasValidBeanToString()));
-    assertThat(LinkObject.class,
-        allOf(hasValidBeanConstructor(), hasValidGettersAndSetters(),
-            hasValidBeanHashCode(), hasValidBeanEquals(),
-            hasValidBeanToString()));
-    assertThat(RelationshipObject.class,
-        allOf(hasValidBeanConstructor(), hasValidGettersAndSetters(),
-            hasValidBeanHashCode(), hasValidBeanEquals(),
-            hasValidBeanToString()));
-    assertThat(ResourceObject.class,
-        allOf(hasValidBeanConstructor(), hasValidGettersAndSetters(),
-            hasValidBeanHashCode(), hasValidBeanEquals(),
-            hasValidBeanToString()));
-    assertThat(SourceObject.class,
-        allOf(hasValidBeanConstructor(), hasValidGettersAndSetters(),
-            hasValidBeanHashCode(), hasValidBeanEquals(),
-            hasValidBeanToString()));
+    EqualsVerifier.forClass(JsonApiObject.class)
+        .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
+    EqualsVerifier.forClass(LinkObject.class)
+        .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
+    EqualsVerifier.forClass(RelationshipObject.class)
+        .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
+    EqualsVerifier.forClass(ResourceDocument.class)
+        .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
+    EqualsVerifier.forClass(ResourceObject.class)
+        .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
+    EqualsVerifier.forClass(ResourcesDocument.class)
+        .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
+    EqualsVerifier.forClass(SourceObject.class)
+        .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
   }
 
   @Test
