@@ -55,6 +55,7 @@ public class SourceObject implements Jsonable<SourceObject> {
    * Sets a JSON Pointer
    * 
    * @param pointer
+   *          a JSON Pointer
    */
   public void setPointer(String pointer) {
     this.pointer = pointer;
