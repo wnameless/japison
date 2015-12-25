@@ -219,6 +219,7 @@ public class ResourceObject<T> implements Jsonable<ResourceObject<T>> {
    * 
    * @param {@link
    *          setLinks}
+   * @return this {@link ResourceObject}
    */
   public ResourceObject<T> withLinks(Map<String, LinkObject> links) {
     setLinks(links);
