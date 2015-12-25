@@ -123,6 +123,7 @@ public class ResourceObject<T> implements Jsonable<ResourceObject<T>> {
    * 
    * @param id
    *          the id of resource
+   * @return this {@link ResourceObject}
    */
   public ResourceObject<T> withId(String id) {
     setId(id);
@@ -217,8 +218,8 @@ public class ResourceObject<T> implements Jsonable<ResourceObject<T>> {
   /**
    * A chaining method for {@link setLinks}.
    * 
-   * @param {@link
-   *          setLinks}
+   * @param links
+   *          {@link LinkObject}s
    * @return this {@link ResourceObject}
    */
   public ResourceObject<T> withLinks(Map<String, LinkObject> links) {

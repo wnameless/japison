@@ -76,7 +76,7 @@ public class ResourceDocument<T>
   /**
    * A chaining method for {@link #setData}.
    * 
-   * @param meta
+   * @param data
    *          the document's "primary data".
    * @return this {@link ResourceDocument}
    */

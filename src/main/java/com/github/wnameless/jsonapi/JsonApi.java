@@ -34,6 +34,8 @@ public final class JsonApi {
   /**
    * Creates a {@link ResourceDocument}.
    * 
+   * @param <T>
+   *          the type of attributes
    * @return a {@link ResourceDocument}
    */
   public static <T> ResourceDocument<T> resourceDocument() {
@@ -44,6 +46,8 @@ public final class JsonApi {
    * Creates a {@link ResourceDocument} by given data attributes with its type
    * and id.
    * 
+   * @param <T>
+   *          the type of attributes
    * @param attributes
    *          the data object
    * @param type
@@ -64,6 +68,8 @@ public final class JsonApi {
   /**
    * Creates a {@link ResourceDocument} by given data attributes with its type.
    * 
+   * @param <T>
+   *          the type of attributes
    * @param attributes
    *          the data object
    * @param type
@@ -78,6 +84,8 @@ public final class JsonApi {
   /**
    * Creates a {@link ResourcesDocument}.
    * 
+   * @param <T>
+   *          the type of attributes
    * @return a {@link ResourcesDocument}
    */
   public static <T> ResourcesDocument<T> resourcesDocument() {
@@ -88,6 +96,8 @@ public final class JsonApi {
    * Creates a {@link ResourceDocument} by given list of data attributes with
    * its type and ids.
    * 
+   * @param <T>
+   *          the type of attributes
    * @param attrList
    *          an {@link Iterable} of data
    * @param type
@@ -111,6 +121,8 @@ public final class JsonApi {
    * Creates a {@link ResourceDocument} by given list of data attributes with
    * its type.
    * 
+   * @param <T>
+   *          the type of attributes
    * @param attrList
    *          an {@link Iterable} of data
    * @param type
@@ -143,6 +155,8 @@ public final class JsonApi {
   /**
    * Creates a {@link ResourceObject}.
    * 
+   * @param <T>
+   *          the type of attributes
    * @return a {@link ResourceObject}
    */
   public static <T> ResourceObject<T> resource() {
@@ -153,6 +167,8 @@ public final class JsonApi {
    * Creates a {@link ResourceObject} by given data attributes with its type and
    * id.
    * 
+   * @param <T>
+   *          the type of attributes
    * @param attributes
    *          the data object
    * @param type
@@ -170,6 +186,8 @@ public final class JsonApi {
   /**
    * Creates a {@link ResourceObject} by given data attributes with its type.
    * 
+   * @param <T>
+   *          the type of attributes
    * @param attributes
    *          the data object
    * @param type
@@ -183,6 +201,8 @@ public final class JsonApi {
   /**
    * Creates a {@link RelationshipObject}.
    * 
+   * @param <T>
+   *          the type of attributes
    * @return a {@link RelationshipObject}
    */
   public static <T> RelationshipObject<T> relationship() {
@@ -193,6 +213,8 @@ public final class JsonApi {
    * Creates a {@link RelationshipObject} by given data attributes and its type
    * and id.
    * 
+   * @param <T>
+   *          the type of attributes
    * @param attributes
    *          the data object
    * @param type
@@ -210,6 +232,8 @@ public final class JsonApi {
    * Creates a {@link RelationshipObject} by given data attributes and its type.
    * 
    * 
+   * @param <T>
+   *          the type of attributes
    * @param attributes
    *          the data object
    * @param type
