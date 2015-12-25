@@ -36,8 +36,8 @@ import com.google.common.base.Objects;
  * {@link ErrorObject} is designed by the error object in JSON API
  * specification.
  * 
- * @see JSON API Specification (v1.0)
- *      <a href="http://jsonapi.org/format/#error-objects">Error Objects</a>
+ * @see <a href="http://jsonapi.org/format/#error-objects">JSON API
+ *      Specification (v1.0) Error Objects</a>
  *
  */
 @JsonInclude(NON_DEFAULT)

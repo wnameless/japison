@@ -35,9 +35,9 @@ import com.google.common.base.Objects;
  * {@link RelationshipObject} is designed by the relationship object in JSON API
  * specification.
  * 
- * @see JSON API Specification (v1.0) <a href=
- *      "http://jsonapi.org/format/#document-resource-object-relationships">
- *      Relationships</a>
+ * @see <a href=
+ *      "http://jsonapi.org/format/#document-resource-object-relationships">JSON
+ *      API Specification (v1.0) Relationships</a>
  *
  */
 @JsonInclude(NON_DEFAULT)

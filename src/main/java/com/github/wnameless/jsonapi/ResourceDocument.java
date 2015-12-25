@@ -39,9 +39,8 @@ import com.google.common.base.Objects;
  * {@link ResourceDocument} is designed by the resource document in JSON API
  * specification.
  * 
- * @see JSON API Specification (v1.0)
- *      <a href="http://jsonapi.org/format/#document-structure">Document
- *      Structure</a>
+ * @see <a href="http://jsonapi.org/format/#document-structure">JSON API
+ *      Specification (v1.0) Document Structure</a>
  *
  */
 @JsonInclude(NON_DEFAULT)

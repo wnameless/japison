@@ -40,9 +40,8 @@ import com.google.common.base.Objects;
  * {@link ResourceObject} is designed by the resource object in JSON API
  * specification.
  * 
- * @see JSON API Specification (v1.0)
- *      <a href= "http://jsonapi.org/format/#document-resource-objects">
- *      Resource Objects</a>
+ * @see <a href= "http://jsonapi.org/format/#document-resource-objects">JSON API
+ *      Specification (v1.0) Resource Objects</a>
  *
  */
 @JsonInclude(NON_DEFAULT)

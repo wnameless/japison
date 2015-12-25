@@ -33,8 +33,8 @@ import com.google.common.base.Objects;
  * 
  * {@link LinkObject} is designed by the link object in JSON API specification.
  * 
- * @see JSON API Specification (v1.0)
- *      <a href="http://jsonapi.org/format/#document-links">Links</a>
+ * @see <a href="http://jsonapi.org/format/#document-links">JSON API
+ *      Specification (v1.0) Links</a>
  *
  */
 @JsonInclude(NON_DEFAULT)
