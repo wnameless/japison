@@ -112,7 +112,7 @@ public class ErrorObject implements Jsonable<ErrorObject> {
   }
 
   /**
-   * A chaining method for {@link @setLinks}.
+   * A chaining method for {@link #setLinks}.
    * 
    * @param links
    *          a map of link names and {@link LinkObject}s
