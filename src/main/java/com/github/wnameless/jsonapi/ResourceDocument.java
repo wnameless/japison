@@ -29,7 +29,6 @@ import javax.validation.Valid;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.wnameless.json.Jsonable;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
@@ -209,7 +208,7 @@ public class ResourceDocument<T>
   public String toJson() {
     String json = null;
     try {
-      json = new ObjectMapper().writeValueAsString(this);
+      json = ObjectMapperFactory.getObjectMapper().writeValueAsString(this);
     } catch (JsonProcessingException e) {
       throw new RuntimeException(e);
     }

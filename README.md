@@ -9,7 +9,7 @@ A lightweight implementation of JSON API specification(http://jsonapi.org/).
 <dependency>
     <groupId>com.github.wnameless.jsonapi</groupId>
     <artifactId>japison</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
 </dependency>
 ```
 
@@ -57,3 +57,9 @@ errors.setErrors(Arrays.asList(error().withStatus("500").withTitle("Oops!").with
 System.out.println(errors.toJson());
 # {"errors":[{"status":"500","title":"Oops!","detail":"Unknown?"}]}
 ```
+
+Since v0.2.0, users can use ObjectMapperFactory to set their own Jackson ObjectMapper
+```java
+ObjectMapperFactory.setObjectMapper(customObjectMapper);
+```
+It will take affect globally within the entire Japison library

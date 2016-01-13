@@ -21,7 +21,6 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.wnameless.json.Jsonable;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
@@ -128,7 +127,7 @@ public class SourceObject implements Jsonable<SourceObject> {
   public String toJson() {
     String json = null;
     try {
-      json = new ObjectMapper().writeValueAsString(this);
+      json = ObjectMapperFactory.getObjectMapper().writeValueAsString(this);
     } catch (JsonProcessingException e) {
       throw new RuntimeException(e);
     }
