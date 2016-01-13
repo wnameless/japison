@@ -58,8 +58,8 @@ System.out.println(errors.toJson());
 # {"errors":[{"status":"500","title":"Oops!","detail":"Unknown?"}]}
 ```
 
-Since v0.2.0, users can use ObjectMapperFactory to set their own Jackson ObjectMapper
+Since v0.2.0, users can use ObjectMapperFactory to set their own Jackson ObjectMapper<br/>
+It will take affect globally within the entire Japison library
 ```java
 ObjectMapperFactory.setObjectMapper(customObjectMapper);
 ```
-It will take affect globally within the entire Japison library
