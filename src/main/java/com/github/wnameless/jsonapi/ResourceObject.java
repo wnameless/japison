@@ -22,15 +22,23 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newLinkedHashMap;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
+import org.apache.commons.lang3.reflect.MethodUtils;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.wnameless.json.Jsonable;
+import com.github.wnameless.jsonapi.annotation.JsonApiId;
+import com.github.wnameless.jsonapi.annotation.JsonApiType;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
@@ -44,7 +52,8 @@ import com.google.common.base.Objects;
  *
  */
 @JsonInclude(NON_DEFAULT)
-public class ResourceObject<T> implements Jsonable<ResourceObject<T>> {
+public class ResourceObject<T>
+    implements ResourceIdentifier, Jsonable<ResourceObject<T>> {
 
   @JsonInclude(ALWAYS)
   @NotNull
@@ -146,6 +155,45 @@ public class ResourceObject<T> implements Jsonable<ResourceObject<T>> {
    */
   public void setAttributes(T attributes) {
     this.attributes = attributes;
+    if (type == null && attributes != null) {
+      JsonApiType jsonApiType =
+          attributes.getClass().getAnnotation(JsonApiType.class);
+      type = jsonApiType != null ? jsonApiType.value()
+          : attributes.getClass().getSimpleName();
+    }
+    if (id == null && attributes != null) {
+      Field[] idFields = FieldUtils
+          .getFieldsWithAnnotation(attributes.getClass(), JsonApiId.class);
+      if (idFields.length != 0) {
+        Field idField = idFields[0];
+        JsonApiId jsonApiId = idField.getAnnotation(JsonApiId.class);
+        idField.setAccessible(true);
+        try {
+          Object idObj = idField.get(attributes);
+          if (jsonApiId.getterName().isEmpty()) {
+            id = stringify(idObj);
+          } else {
+            Object idVal =
+                MethodUtils.invokeMethod(idObj, jsonApiId.getterName());
+            id = stringify(idVal);
+          }
+        } catch (Exception e) {
+          Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, e);
+        }
+      }
+    }
+  }
+
+  private String stringify(Object obj) {
+    if (obj == null) return null;
+
+    if (obj instanceof String) {
+      return (String) obj;
+    } else if (obj instanceof CharSequence) {
+      return new StringBuilder((CharSequence) obj).toString();
+    } else {
+      return obj.toString();
+    }
   }
 
   /**

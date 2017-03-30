@@ -17,6 +17,8 @@
  */
 package com.github.wnameless.jsonapi;
 
+import java.util.List;
+
 import com.google.common.base.Function;
 
 /**
@@ -196,6 +198,27 @@ public final class JsonApi {
    */
   public static <T> ResourceObject<T> resource(T attributes, String type) {
     return new ResourceObject<T>().withAttributes(attributes).withType(type);
+  }
+
+  /**
+   * Creates a {@link CompoundResource}.
+   * 
+   * @return a {@link CompoundResource}
+   */
+  public static <T> CompoundResource<T> compoundResource() {
+    return new CompoundResource<T>();
+  }
+
+  /**
+   * Creates a {@link CompoundResource} by given data list.
+   * 
+   * @param data
+   *          a list of {@link ResourceObject}s
+   * @return a {@link CompoundResource}
+   */
+  public static <T> CompoundResource<T> compoundResource(
+      List<ResourceObject<T>> data) {
+    return new CompoundResource<T>().withData(data);
   }
 
   /**

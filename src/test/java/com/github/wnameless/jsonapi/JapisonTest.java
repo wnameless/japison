@@ -26,10 +26,8 @@ import java.util.Arrays;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.meanbean.test.BeanTester;
-import org.meanbean.test.Configuration;
-import org.meanbean.test.ConfigurationBuilder;
 
+import com.codebox.bean.JavaBeanTester;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Function;
 
@@ -61,24 +59,22 @@ public class JapisonTest {
 
   @Test
   public void testBeans() {
-    BeanTester beanTester = new BeanTester();
-    Configuration config1 =
-        new ConfigurationBuilder().ignoreProperty("data").build();
-    beanTester.addCustomConfiguration(ErrorsDocument.class, config1);
-    Configuration config2 =
-        new ConfigurationBuilder().ignoreProperty("errors").build();
-    beanTester.addCustomConfiguration(ResourceDocument.class, config2);
-    beanTester.addCustomConfiguration(ResourcesDocument.class, config2);
-    beanTester.testBean(ErrorObject.class);
-    beanTester.testBean(ErrorsDocument.class);
-    beanTester.testBean(JsonApiObject.class);
-    beanTester.testBean(LinkObject.class);
-    beanTester.testBean(RelationshipObject.class);
-    beanTester.testBean(ResourceDocument.class);
-    beanTester.testBean(ResourceObject.class);
-    beanTester.testBean(ResourcesDocument.class);
-    beanTester.testBean(SourceObject.class);
+    JavaBeanTester.builder(CompoundResource.class).loadData().test();
+    JavaBeanTester.builder(ErrorObject.class).loadData().test();
+    JavaBeanTester.builder(ErrorsDocument.class).loadData().skip("data").test();
+    JavaBeanTester.builder(JsonApiObject.class).loadData().test();
+    JavaBeanTester.builder(LinkObject.class).loadData().test();
+    JavaBeanTester.builder(RelationshipObject.class).loadData().test();
+    JavaBeanTester.builder(ResourceDocument.class).loadData().skip("errors")
+        .test();
+    JavaBeanTester.builder(ResourceIdentifierObject.class).loadData().test();
+    JavaBeanTester.builder(ResourceObject.class).loadData().test();
+    JavaBeanTester.builder(ResourcesDocument.class).loadData().skip("errors")
+        .test();
+    JavaBeanTester.builder(SourceObject.class).loadData().test();
 
+    EqualsVerifier.forClass(CompoundResource.class)
+        .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
     EqualsVerifier.forClass(ErrorObject.class)
         .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
     EqualsVerifier.forClass(ErrorsDocument.class)
@@ -91,6 +87,8 @@ public class JapisonTest {
         .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
     EqualsVerifier.forClass(ResourceDocument.class)
         .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
+    EqualsVerifier.forClass(ResourceIdentifierObject.class)
+        .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
     EqualsVerifier.forClass(ResourceObject.class)
         .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
     EqualsVerifier.forClass(ResourcesDocument.class)
@@ -101,10 +99,13 @@ public class JapisonTest {
 
   @Test
   public void testFluentMethods() {
+    new CompoundResource<Void>().withData(null).withIncluded(null);
     new ResourceDocument<Void>().withData(null).withMeta(null).withJsonapi(null)
         .withLinks(null).withIncluded(null);
     new ResourcesDocument<Void>().withData(null).withMeta(null)
         .withJsonapi(null).withLinks(null).withIncluded(null);
+    new ResourceIdentifierObject<Void>().withType(null).withId(null)
+        .withMeta(null);
     new ErrorsDocument().withErrors(null).withMeta(null).withJsonapi(null)
         .withLinks(null).withIncluded(null);
     new ErrorObject().withId(null).withLinks(null).withStatus(null)

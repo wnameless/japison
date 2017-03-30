@@ -18,17 +18,17 @@
 package com.github.wnameless.jsonapi;
 
 import javax.persistence.Entity;
-
-import org.springframework.data.jpa.domain.AbstractPersistable;
+import javax.persistence.Id;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @JsonInclude(Include.NON_DEFAULT)
 @Entity
-public class JpaEntity<T> extends AbstractPersistable<Long> {
+public class JpaEntity<T> {
 
-  private static final long serialVersionUID = 1L;
+  @Id
+  private Long id;
 
   private T data;
 
