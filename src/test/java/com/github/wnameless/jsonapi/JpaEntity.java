@@ -22,15 +22,23 @@ import javax.persistence.Id;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.github.wnameless.jsonapi.annotation.JsonApiId;
 
 @JsonInclude(Include.NON_DEFAULT)
 @Entity
 public class JpaEntity<T> {
 
+  @JsonApiId
   @Id
   private Long id;
 
   private T data;
+
+  public JpaEntity() {}
+
+  public JpaEntity(Long id) {
+    this.id = id;
+  }
 
   public T getData() {
     return data;

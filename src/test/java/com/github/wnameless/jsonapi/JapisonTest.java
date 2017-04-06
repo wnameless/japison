@@ -52,8 +52,7 @@ public class JapisonTest {
 
   @Test
   public void testWithJackson() throws Exception {
-    ResourceDocument<JpaEntity<String>> req =
-        JsonApi.resourceDocument(entity, "entities");
+    ResourceDocument<JpaEntity<String>> req = JsonApi.resourceDocument(entity);
 
     String actual = mapper.writeValueAsString(req);
     assertEquals(
@@ -96,8 +95,8 @@ public class JapisonTest {
 
   @Test
   public void testFluentMethods() {
-    new ResourceDocument<Void>().withData(null).withMeta(null).withJsonapi(null)
-        .withLinks(null).withIncluded(null);
+    new ResourceDocument<Void>().withData((ResourceObject<Void>) null)
+        .withMeta(null).withJsonapi(null).withLinks(null).withIncluded(null);
     new ResourceIdentifierObject().withType(null).withId(null).withMeta(null);
     new ErrorsDocument().withErrors(null).withMeta(null).withJsonapi(null)
         .withLinks(null).withIncluded(null);
@@ -106,31 +105,30 @@ public class JapisonTest {
         .withMeta(null);
     new JsonApiObject().withVersion(null).withMeta(null);
     new LinkObject().withHref(null).withMeta(null);
-    new RelationshipObject().withLinks(null).withData((ResourceIdentifier) null)
-        .withMeta(null);
+    new RelationshipObject().withLinks(null).withData(null).withMeta(null);
     new ResourceObject<Void>().withType(null).withId(null).withAttributes(null)
         .withRelationships(null).withLinks(null).withIncluded(null)
         .withMeta(null);
     new SourceObject().withPointer(null).withParameter(null);
   }
 
-  @SuppressWarnings({ "unchecked", "unused" })
+  @SuppressWarnings({ "unused" })
   @Test
   public void testStaticMethods() {
     ResourceDocument<JpaEntity<String>> rd;
-    rd = JsonApi.resourceDocument(new JpaEntity<String>(), "entities", "12");
+    rd = JsonApi.resourceDocument(new JpaEntity<String>(12L));
     assertEquals("entities", rd.getData().get(0).getType());
     assertEquals("12", rd.getData().get(0).getId());
-    rd = JsonApi.resourceDocument(new JpaEntity<String>(), "entities");
+    rd = JsonApi.resourceDocument(new JpaEntity<String>());
 
     ResourceObject<JpaEntity<String>> ro;
-    ro = JsonApi.resource(new JpaEntity<String>(), "entities", "56");
+    ro = JsonApi.resource(new JpaEntity<String>());
     assertEquals("entities", ro.getType());
     assertEquals("56", ro.getId());
-    ro = JsonApi.resource(new JpaEntity<String>(), "entities");
+    ro = JsonApi.resource(new JpaEntity<String>());
 
     RelationshipObject rel;
-    rel = JsonApi.relationship(new JpaEntity<String>(), "entities", "78");
+    rel = JsonApi.relationship(JsonApi.resourceIdentifier("entities", "78"));
     assertEquals("entities", rel.getData().get(0).getType());
     assertEquals("78", rel.getData().get(0).getId());
 
@@ -163,6 +161,7 @@ public class JapisonTest {
 
     rd = new ResourceDocument<JpaEntity<Long>>();
     assertEquals(rd.toJson(), mapper.writeValueAsString(rd));
+    rd.withData(JsonApi.resource(new JpaEntity<Long>()));
 
     rio = new ResourceIdentifierObject();
     assertEquals(rio.toJson(), mapper.writeValueAsString(rio));

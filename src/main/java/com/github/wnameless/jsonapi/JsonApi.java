@@ -20,6 +20,7 @@ package com.github.wnameless.jsonapi;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Sets.newHashSet;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -60,12 +61,22 @@ public final class JsonApi {
    *          the id of data
    * @return a {@link ResourceDocument}
    */
-  public static <T> ResourceDocument<T> resourceDocument(T attributes,
-      String type, String id) {
+  public static <T> ResourceDocument<T> resourceDocument(
+      Collection<T> attributes) {
     ResourceDocument<T> document = new ResourceDocument<T>();
-    ResourceObject<T> resource = resource(attributes, type);
-    if (id != null) resource.setId(id);
     List<ResourceObject<T>> resources = newArrayList();
+    for (T attr : attributes) {
+      ResourceObject<T> resource = resource(attr);
+      resources.add(resource);
+    }
+    document.setData(resources);
+    return document;
+  }
+
+  public static <T> ResourceDocument<T> resourceDocument(T attributes) {
+    ResourceDocument<T> document = new ResourceDocument<T>();
+    List<ResourceObject<T>> resources = newArrayList();
+    ResourceObject<T> resource = resource(attributes);
     resources.add(resource);
     document.setData(resources);
     return document;
@@ -82,9 +93,15 @@ public final class JsonApi {
    *          the type of data
    * @return a {@link ResourceDocument}
    */
-  public static <T> ResourceDocument<T> resourceDocument(T attributes,
-      String type) {
-    return resourceDocument(attributes, type, null);
+  public static <T> ResourceDocument<T> resourceDocument(T... attributes) {
+    ResourceDocument<T> document = new ResourceDocument<T>();
+    List<ResourceObject<T>> resources = newArrayList();
+    for (T attr : attributes) {
+      ResourceObject<T> resource = resource(attr);
+      resources.add(resource);
+    }
+    document.setData(resources);
+    return document;
   }
 
   /**
@@ -117,38 +134,16 @@ public final class JsonApi {
   }
 
   /**
-   * Creates a {@link ResourceObject} by given data attributes with its type and
-   * id.
+   * Creates a {@link ResourceObject} by given data attributes.
    * 
    * @param <T>
    *          the type of attributes
    * @param attributes
    *          the data object
-   * @param type
-   *          the type of data
-   * @param id
-   *          the id of data
    * @return a {@link ResourceObject}
    */
-  public static <T> ResourceObject<T> resource(T attributes, String type,
-      String id) {
-    return new ResourceObject<T>().withType(type).withId(id)
-        .withAttributes(attributes);
-  }
-
-  /**
-   * Creates a {@link ResourceObject} by given data attributes with its type.
-   * 
-   * @param <T>
-   *          the type of attributes
-   * @param attributes
-   *          the data object
-   * @param type
-   *          the type of data
-   * @return a {@link ResourceObject}
-   */
-  public static <T> ResourceObject<T> resource(T attributes, String type) {
-    return new ResourceObject<T>().withType(type).withAttributes(attributes);
+  public static <T> ResourceObject<T> resource(T attributes) {
+    return new ResourceObject<T>().withAttributes(attributes);
   }
 
   public static ResourceIdentifierObject resourceIdentifier(String type,
@@ -168,22 +163,35 @@ public final class JsonApi {
   }
 
   /**
-   * Creates a {@link RelationshipObject} by given data attributes and its type
-   * and id.
+   * Creates a {@link RelationshipObject} by given {@link ResourceIdentifier}s.
    * 
    * @param <T>
    *          the type of attributes
-   * @param attributes
-   *          the data object
-   * @param type
-   *          the type of data
-   * @param id
-   *          the id of data
+   * @param data
+   *          an array of {@link ResourceIdentifier}s
    * @return a {@link RelationshipObject}
    */
-  public static <T> RelationshipObject relationship(T attributes, String type,
-      String id) {
-    return new RelationshipObject().withData(resourceIdentifier(type, id));
+  public static <T> RelationshipObject relationship(
+      Collection<ResourceIdentifier> data) {
+    return new RelationshipObject().withData(newArrayList(data));
+  }
+
+  public static <T> RelationshipObject relationship(ResourceIdentifier data) {
+    return new RelationshipObject().withData(newArrayList(data));
+  }
+
+  /**
+   * Creates a {@link RelationshipObject} by given {@link ResourceIdentifier}s.
+   * 
+   * @param <T>
+   *          the type of attributes
+   * @param data
+   *          an array of {@link ResourceIdentifier}s
+   * @return a {@link RelationshipObject}
+   */
+  public static <T> RelationshipObject relationship(
+      ResourceIdentifier... data) {
+    return new RelationshipObject().withData(newArrayList(data));
   }
 
   /**

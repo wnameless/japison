@@ -18,7 +18,6 @@
 package com.github.wnameless.jsonapi;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
-import static com.google.common.collect.Lists.newArrayList;
 
 import java.util.List;
 import java.util.Map;
@@ -27,9 +26,9 @@ import javax.validation.Valid;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.github.wnameless.json.Jsonable;
-import com.github.wnameless.jsonapi.jackson.JsonApiListSerializer;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
@@ -49,7 +48,9 @@ public class RelationshipObject implements Jsonable<RelationshipObject> {
   @Valid
   private Map<String, LinkObject> links;
 
-  @JsonSerialize(using = JsonApiListSerializer.class)
+  @JsonSerialize(using = CollectionSerializer.class,
+      contentAs = ResourceIdentifier.class)
+  @JsonDeserialize(using = CollectionDeserializer.class)
   @Valid
   private List<ResourceIdentifier> data;
 
@@ -114,8 +115,8 @@ public class RelationshipObject implements Jsonable<RelationshipObject> {
    *          an array of {@link ResourceObject}
    * @return this {@link RelationshipObject}
    */
-  public RelationshipObject withData(ResourceIdentifier... data) {
-    setData(newArrayList(data));
+  public RelationshipObject withData(List<ResourceIdentifier> data) {
+    setData(data);
     return this;
   }
 

@@ -15,30 +15,29 @@
  * the License.
  *
  */
-package com.github.wnameless.jsonapi.jackson;
+package com.github.wnameless.jsonapi;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Collection;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import com.github.wnameless.jsonapi.ObjectMapperFactory;
 
-public class JsonApiListSerializer<T> extends StdSerializer<List<T>> {
+public class CollectionSerializer<T> extends StdSerializer<Collection<T>> {
 
   private static final long serialVersionUID = 1L;
 
-  public JsonApiListSerializer() {
-    super(List.class, true);
+  public CollectionSerializer() {
+    super(Collection.class, true);
   }
 
   @Override
-  public void serialize(List<T> value, JsonGenerator gen,
+  public void serialize(Collection<T> value, JsonGenerator gen,
       SerializerProvider provider) throws IOException {
     if (value != null && value.size() == 1) {
       gen.writeRawValue(ObjectMapperFactory.getObjectMapper()
-          .writeValueAsString(value.get(0)));
+          .writeValueAsString(value.iterator().next()));
     } else {
       gen.writeRawValue(
           ObjectMapperFactory.getObjectMapper().writeValueAsString(value));

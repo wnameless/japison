@@ -22,6 +22,7 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newLinkedHashMap;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -29,9 +30,9 @@ import javax.validation.Valid;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.github.wnameless.json.Jsonable;
-import com.github.wnameless.jsonapi.jackson.JsonApiListSerializer;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
@@ -48,7 +49,8 @@ import com.google.common.base.Objects;
 public class ResourceDocument<T>
     implements Document<T>, Jsonable<ResourceDocument<T>> {
 
-  @JsonSerialize(using = JsonApiListSerializer.class)
+  @JsonSerialize(using = CollectionSerializer.class)
+  @JsonDeserialize(using = CollectionDeserializer.class)
   @JsonInclude(ALWAYS)
   @Valid
   private List<ResourceObject<T>> data = newArrayList();
@@ -82,7 +84,21 @@ public class ResourceDocument<T>
    *          the document's "primary data".
    * @return this {@link ResourceDocument}
    */
-  public ResourceDocument<T> withData(ResourceObject<T>... data) {
+  public ResourceDocument<T> withData(ResourceObject<T> data) {
+    List<ResourceObject<T>> list = newArrayList();
+    list.add(data);
+    setData(list);
+    return this;
+  }
+
+  /**
+   * A chaining method for {@link #setData}.
+   * 
+   * @param data
+   *          the document's "primary data".
+   * @return this {@link ResourceDocument}
+   */
+  public ResourceDocument<T> withData(Collection<ResourceObject<T>> data) {
     setData(newArrayList(data));
     return this;
   }
