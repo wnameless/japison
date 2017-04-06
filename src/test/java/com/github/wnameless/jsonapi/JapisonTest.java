@@ -128,7 +128,8 @@ public class JapisonTest {
     ro = JsonApi.resource(new JpaEntity<String>());
 
     RelationshipObject rel;
-    rel = JsonApi.relationship(JsonApi.resourceIdentifier("entities", "78"));
+    rel = JsonApi.relationship(
+        JsonApi.resourceIdentifier().withType("entities").withId("78"));
     assertEquals("entities", rel.getData().get(0).getType());
     assertEquals("78", rel.getData().get(0).getId());
 

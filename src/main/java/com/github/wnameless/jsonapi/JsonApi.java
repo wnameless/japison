@@ -146,9 +146,8 @@ public final class JsonApi {
     return new ResourceObject<T>().withAttributes(attributes);
   }
 
-  public static ResourceIdentifierObject resourceIdentifier(String type,
-      String id) {
-    return new ResourceIdentifierObject().withType(type).withId(id);
+  public static ResourceIdentifierObject resourceIdentifier() {
+    return new ResourceIdentifierObject();
   }
 
   /**
@@ -173,10 +172,6 @@ public final class JsonApi {
    */
   public static <T> RelationshipObject relationship(
       Collection<ResourceIdentifier> data) {
-    return new RelationshipObject().withData(newArrayList(data));
-  }
-
-  public static <T> RelationshipObject relationship(ResourceIdentifier data) {
     return new RelationshipObject().withData(newArrayList(data));
   }
 
