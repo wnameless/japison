@@ -63,12 +63,12 @@ public class ErrorsDocument
   private List<ResourceObject<?>> included = newArrayList();
 
   @Override
-  public Void getData() {
+  public List<ResourceObject<Void>> getData() {
     return null;
   }
 
   @Override
-  public void setData(Void data) {}
+  public void setData(List<ResourceObject<Void>> data) {}
 
   @Override
   public List<ErrorObject> getErrors() {

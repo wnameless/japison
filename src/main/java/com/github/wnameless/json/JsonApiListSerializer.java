@@ -18,31 +18,30 @@
 package com.github.wnameless.json;
 
 import java.io.IOException;
+import java.util.List;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.github.wnameless.jsonapi.ObjectMapperFactory;
 
-public final class AutoArrayifyValueSerializer<T>
-    extends StdSerializer<AutoArrayifyValue<T>> {
+public class JsonApiListSerializer<T> extends StdSerializer<List<T>> {
 
   private static final long serialVersionUID = 1L;
 
-  public AutoArrayifyValueSerializer() {
-    super(AutoArrayifyValue.class, true);
+  public JsonApiListSerializer() {
+    super(List.class, true);
   }
 
   @Override
-  public void serialize(AutoArrayifyValue<T> value, JsonGenerator jgen,
-      SerializerProvider provider) throws IOException, JsonProcessingException {
-    if (value.isArrayify()) {
-      jgen.writeRawValue(ObjectMapperFactory.getObjectMapper()
-          .writeValueAsString(value.getValues()));
+  public void serialize(List<T> value, JsonGenerator gen,
+      SerializerProvider provider) throws IOException {
+    if (value != null && value.size() == 1) {
+      gen.writeRawValue(ObjectMapperFactory.getObjectMapper()
+          .writeValueAsString(value.get(0)));
     } else {
-      jgen.writeRawValue(ObjectMapperFactory.getObjectMapper()
-          .writeValueAsString(value.getValues().get(0)));
+      gen.writeRawValue(
+          ObjectMapperFactory.getObjectMapper().writeValueAsString(value));
     }
   }
 

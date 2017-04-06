@@ -19,15 +19,12 @@ package com.github.wnameless.jsonapi;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Arrays;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import com.codebox.bean.JavaBeanTester;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.base.Function;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
@@ -75,8 +72,6 @@ public class JapisonTest {
         .test();
     JavaBeanTester.builder(ResourceIdentifierObject.class).loadData().test();
     JavaBeanTester.builder(ResourceObject.class).loadData().test();
-    JavaBeanTester.builder(ResourcesDocument.class).loadData().skip("errors")
-        .test();
     JavaBeanTester.builder(SourceObject.class).loadData().test();
 
     EqualsVerifier.forClass(ErrorObject.class)
@@ -95,8 +90,6 @@ public class JapisonTest {
         .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
     EqualsVerifier.forClass(ResourceObject.class)
         .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
-    EqualsVerifier.forClass(ResourcesDocument.class)
-        .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
     EqualsVerifier.forClass(SourceObject.class)
         .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
   }
@@ -105,8 +98,6 @@ public class JapisonTest {
   public void testFluentMethods() {
     new ResourceDocument<Void>().withData(null).withMeta(null).withJsonapi(null)
         .withLinks(null).withIncluded(null);
-    new ResourcesDocument<Void>().withData(null).withMeta(null)
-        .withJsonapi(null).withLinks(null).withIncluded(null);
     new ResourceIdentifierObject().withType(null).withId(null).withMeta(null);
     new ErrorsDocument().withErrors(null).withMeta(null).withJsonapi(null)
         .withLinks(null).withIncluded(null);
@@ -128,26 +119,9 @@ public class JapisonTest {
   public void testStaticMethods() {
     ResourceDocument<JpaEntity<String>> rd;
     rd = JsonApi.resourceDocument(new JpaEntity<String>(), "entities", "12");
-    assertEquals("entities", rd.getData().getType());
-    assertEquals("12", rd.getData().getId());
+    assertEquals("entities", rd.getData().get(0).getType());
+    assertEquals("12", rd.getData().get(0).getId());
     rd = JsonApi.resourceDocument(new JpaEntity<String>(), "entities");
-
-    ResourcesDocument<JpaEntity<String>> rsd;
-    rsd = JsonApi.resourcesDocument(Arrays.asList(new JpaEntity<String>()),
-        "entities", new Function<JpaEntity<String>, String>() {
-
-          @Override
-          public String apply(JpaEntity<String> input) {
-            return "34";
-          }
-
-        });
-    for (ResourceObject<JpaEntity<String>> ro : rsd.getData()) {
-      assertEquals("entities", ro.getType());
-      assertEquals("34", ro.getId());
-    }
-    rsd = JsonApi.resourcesDocument(Arrays.asList(new JpaEntity<String>()),
-        "entities");
 
     ResourceObject<JpaEntity<String>> ro;
     ro = JsonApi.resource(new JpaEntity<String>(), "entities", "56");
@@ -157,11 +131,10 @@ public class JapisonTest {
 
     RelationshipObject rel;
     rel = JsonApi.relationship(new JpaEntity<String>(), "entities", "78");
-    assertEquals("entities", rel.getData().getValue().getType());
-    assertEquals("78", rel.getData().getValue().getId());
+    assertEquals("entities", rel.getData().get(0).getType());
+    assertEquals("78", rel.getData().get(0).getId());
 
     rd = JsonApi.resourceDocument();
-    rsd = JsonApi.resourcesDocument();
     ro = JsonApi.resource();
     rel = JsonApi.relationship();
     ErrorsDocument ed = JsonApi.errorsDocument();
@@ -179,7 +152,6 @@ public class JapisonTest {
   @Test
   public void testJsonable() throws Exception {
     ResourceDocument<JpaEntity<Long>> rd;
-    ResourcesDocument<JpaEntity<Long>> rsd;
     ResourceIdentifierObject rio;
     ErrorsDocument ed;
     ErrorObject er;
@@ -191,9 +163,6 @@ public class JapisonTest {
 
     rd = new ResourceDocument<JpaEntity<Long>>();
     assertEquals(rd.toJson(), mapper.writeValueAsString(rd));
-
-    rsd = new ResourcesDocument<JpaEntity<Long>>();
-    assertEquals(rsd.toJson(), mapper.writeValueAsString(rsd));
 
     rio = new ResourceIdentifierObject();
     assertEquals(rio.toJson(), mapper.writeValueAsString(rio));

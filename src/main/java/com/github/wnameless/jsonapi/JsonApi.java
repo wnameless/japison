@@ -23,9 +23,6 @@ import static com.google.common.collect.Sets.newHashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.github.wnameless.json.AutoArrayifyValue;
-import com.google.common.base.Function;
-
 /**
  * 
  * {@link JsonApi} is a helper class which provides convenient methods to build
@@ -68,7 +65,9 @@ public final class JsonApi {
     ResourceDocument<T> document = new ResourceDocument<T>();
     ResourceObject<T> resource = resource(attributes, type);
     if (id != null) resource.setId(id);
-    document.setData(resource);
+    List<ResourceObject<T>> resources = newArrayList();
+    resources.add(resource);
+    document.setData(resources);
     return document;
   }
 
@@ -86,59 +85,6 @@ public final class JsonApi {
   public static <T> ResourceDocument<T> resourceDocument(T attributes,
       String type) {
     return resourceDocument(attributes, type, null);
-  }
-
-  /**
-   * Creates a {@link ResourcesDocument}.
-   * 
-   * @param <T>
-   *          the type of attributes
-   * @return a {@link ResourcesDocument}
-   */
-  public static <T> ResourcesDocument<T> resourcesDocument() {
-    return new ResourcesDocument<T>();
-  }
-
-  /**
-   * Creates a {@link ResourceDocument} by given list of data attributes with
-   * its type and ids.
-   * 
-   * @param <T>
-   *          the type of attributes
-   * @param attrList
-   *          an {@link Iterable} of data
-   * @param type
-   *          of data
-   * @param idProvider
-   *          function to compute the id of data
-   * @return a {@link ResourcesDocument}
-   */
-  public static <T> ResourcesDocument<T> resourcesDocument(Iterable<T> attrList,
-      String type, Function<T, String> idProvider) {
-    ResourcesDocument<T> document = new ResourcesDocument<T>();
-    for (T attributes : attrList) {
-      ResourceObject<T> resource = resource(attributes, type);
-      if (idProvider != null) resource.setId(idProvider.apply(attributes));
-      document.getData().add(resource);
-    }
-    return document;
-  }
-
-  /**
-   * Creates a {@link ResourceDocument} by given list of data attributes with
-   * its type.
-   * 
-   * @param <T>
-   *          the type of attributes
-   * @param attrList
-   *          an {@link Iterable} of data
-   * @param type
-   *          of data
-   * @return a {@link ResourcesDocument}
-   */
-  public static <T> ResourcesDocument<T> resourcesDocument(Iterable<T> attrList,
-      String type) {
-    return resourcesDocument(attrList, type, null);
   }
 
   /**
@@ -237,9 +183,7 @@ public final class JsonApi {
    */
   public static <T> RelationshipObject relationship(T attributes, String type,
       String id) {
-    return new RelationshipObject()
-        .withData(new AutoArrayifyValue<ResourceIdentifier>(
-            resourceIdentifier(type, id)));
+    return new RelationshipObject().withData(resourceIdentifier(type, id));
   }
 
   /**

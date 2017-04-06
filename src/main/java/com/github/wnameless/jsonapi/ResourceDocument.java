@@ -29,6 +29,8 @@ import javax.validation.Valid;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.github.wnameless.json.JsonApiListSerializer;
 import com.github.wnameless.json.Jsonable;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
@@ -44,11 +46,12 @@ import com.google.common.base.Objects;
  */
 @JsonInclude(NON_DEFAULT)
 public class ResourceDocument<T>
-    implements Document<ResourceObject<T>>, Jsonable<ResourceDocument<T>> {
+    implements Document<T>, Jsonable<ResourceDocument<T>> {
 
+  @JsonSerialize(using = JsonApiListSerializer.class)
   @JsonInclude(ALWAYS)
   @Valid
-  private ResourceObject<T> data;
+  private List<ResourceObject<T>> data = newArrayList();
 
   @Valid
   private Object meta;
@@ -63,12 +66,12 @@ public class ResourceDocument<T>
   private List<ResourceObject<?>> included = newArrayList();
 
   @Override
-  public ResourceObject<T> getData() {
+  public List<ResourceObject<T>> getData() {
     return data;
   }
 
   @Override
-  public void setData(ResourceObject<T> data) {
+  public void setData(List<ResourceObject<T>> data) {
     this.data = data;
   }
 
@@ -79,8 +82,8 @@ public class ResourceDocument<T>
    *          the document's "primary data".
    * @return this {@link ResourceDocument}
    */
-  public ResourceDocument<T> withData(ResourceObject<T> data) {
-    setData(data);
+  public ResourceDocument<T> withData(ResourceObject<T>... data) {
+    setData(newArrayList(data));
     return this;
   }
 

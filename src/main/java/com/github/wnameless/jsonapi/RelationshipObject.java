@@ -18,15 +18,17 @@
 package com.github.wnameless.jsonapi;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
+import static com.google.common.collect.Lists.newArrayList;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.github.wnameless.json.AutoArrayifyValue;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.github.wnameless.json.JsonApiListSerializer;
 import com.github.wnameless.json.Jsonable;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
@@ -47,8 +49,9 @@ public class RelationshipObject implements Jsonable<RelationshipObject> {
   @Valid
   private Map<String, LinkObject> links;
 
+  @JsonSerialize(using = JsonApiListSerializer.class)
   @Valid
-  private AutoArrayifyValue<ResourceIdentifier> data;
+  private List<ResourceIdentifier> data;
 
   @Valid
   private Object meta;
@@ -90,7 +93,7 @@ public class RelationshipObject implements Jsonable<RelationshipObject> {
    * 
    * @return a {@link ResourceObject}
    */
-  public AutoArrayifyValue<ResourceIdentifier> getData() {
+  public List<ResourceIdentifier> getData() {
     return data;
   }
 
@@ -100,7 +103,7 @@ public class RelationshipObject implements Jsonable<RelationshipObject> {
    * @param data
    *          a {@link ResourceObject}
    */
-  public void setData(AutoArrayifyValue<ResourceIdentifier> data) {
+  public void setData(List<ResourceIdentifier> data) {
     this.data = data;
   }
 
@@ -108,22 +111,11 @@ public class RelationshipObject implements Jsonable<RelationshipObject> {
    * A chaining method for {@link setData}.
    * 
    * @param data
-   *          a {@link ResourceObject}
+   *          an array of {@link ResourceObject}
    * @return this {@link RelationshipObject}
    */
-  public RelationshipObject withData(
-      AutoArrayifyValue<ResourceIdentifier> data) {
-    setData(data);
-    return this;
-  }
-
-  public RelationshipObject withData(ResourceIdentifier data) {
-    setData(new AutoArrayifyValue<ResourceIdentifier>(data));
-    return this;
-  }
-
-  public RelationshipObject withData(Collection<ResourceIdentifier> data) {
-    setData(new AutoArrayifyValue<ResourceIdentifier>(data));
+  public RelationshipObject withData(ResourceIdentifier... data) {
+    setData(newArrayList(data));
     return this;
   }
 
