@@ -30,8 +30,8 @@ import javax.validation.Valid;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.github.wnameless.json.JsonApiListSerializer;
 import com.github.wnameless.json.Jsonable;
+import com.github.wnameless.jsonapi.jackson.JsonApiListSerializer;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 

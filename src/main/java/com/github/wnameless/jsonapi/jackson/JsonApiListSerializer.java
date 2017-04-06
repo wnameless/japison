@@ -15,7 +15,7 @@
  * the License.
  *
  */
-package com.github.wnameless.json;
+package com.github.wnameless.jsonapi.jackson;
 
 import java.io.IOException;
 import java.util.List;
