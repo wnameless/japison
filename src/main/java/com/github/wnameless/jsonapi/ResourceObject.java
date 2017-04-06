@@ -65,7 +65,7 @@ public class ResourceObject<T>
   private T attributes;
 
   @Valid
-  private Map<String, RelationshipObject<?>> relationships = newLinkedHashMap();
+  private Map<String, RelationshipObject> relationships = newLinkedHashMap();
 
   @Valid
   private Map<String, LinkObject> links = newLinkedHashMap();
@@ -214,7 +214,7 @@ public class ResourceObject<T>
    * 
    * @return {@link RelationshipObject}s
    */
-  public Map<String, RelationshipObject<?>> getRelationships() {
+  public Map<String, RelationshipObject> getRelationships() {
     return relationships;
   }
 
@@ -225,8 +225,7 @@ public class ResourceObject<T>
    * @param relationships
    *          {@link RelationshipObject}s
    */
-  public void setRelationships(
-      Map<String, RelationshipObject<?>> relationships) {
+  public void setRelationships(Map<String, RelationshipObject> relationships) {
     this.relationships = relationships;
   }
 
@@ -238,7 +237,7 @@ public class ResourceObject<T>
    * @return this {@link ResourceObject}
    */
   public ResourceObject<T> withRelationships(
-      Map<String, RelationshipObject<?>> relationships) {
+      Map<String, RelationshipObject> relationships) {
     setRelationships(relationships);
     return this;
   }

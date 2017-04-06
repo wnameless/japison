@@ -18,16 +18,14 @@
 package com.github.wnameless.jsonapi;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Modifier;
 import java.util.Arrays;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import com.codebox.bean.JavaBeanTester;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Function;
 
@@ -47,6 +45,15 @@ public class JapisonTest {
   }
 
   @Test
+  public void testResourceObjectSetAttributes() throws JsonProcessingException {
+    ResourceObject<AnnotatedEntity> ro = new ResourceObject<AnnotatedEntity>();
+    ro.setAttributes(new AnnotatedEntity("ABC"));
+
+    String actual = mapper.writeValueAsString(ro);
+    assertEquals("{\"type\":\"AE\",\"id\":\"ABC\",\"attributes\":{}}", actual);
+  }
+
+  @Test
   public void testWithJackson() throws Exception {
     ResourceDocument<JpaEntity<String>> req =
         JsonApi.resourceDocument(entity, "entities");
@@ -59,7 +66,6 @@ public class JapisonTest {
 
   @Test
   public void testBeans() {
-    JavaBeanTester.builder(CompoundResource.class).loadData().test();
     JavaBeanTester.builder(ErrorObject.class).loadData().test();
     JavaBeanTester.builder(ErrorsDocument.class).loadData().skip("data").test();
     JavaBeanTester.builder(JsonApiObject.class).loadData().test();
@@ -73,8 +79,6 @@ public class JapisonTest {
         .test();
     JavaBeanTester.builder(SourceObject.class).loadData().test();
 
-    EqualsVerifier.forClass(CompoundResource.class)
-        .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
     EqualsVerifier.forClass(ErrorObject.class)
         .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
     EqualsVerifier.forClass(ErrorsDocument.class)
@@ -99,13 +103,11 @@ public class JapisonTest {
 
   @Test
   public void testFluentMethods() {
-    new CompoundResource<Void>().withData(null).withIncluded(null);
     new ResourceDocument<Void>().withData(null).withMeta(null).withJsonapi(null)
         .withLinks(null).withIncluded(null);
     new ResourcesDocument<Void>().withData(null).withMeta(null)
         .withJsonapi(null).withLinks(null).withIncluded(null);
-    new ResourceIdentifierObject<Void>().withType(null).withId(null)
-        .withMeta(null);
+    new ResourceIdentifierObject().withType(null).withId(null).withMeta(null);
     new ErrorsDocument().withErrors(null).withMeta(null).withJsonapi(null)
         .withLinks(null).withIncluded(null);
     new ErrorObject().withId(null).withLinks(null).withStatus(null)
@@ -113,7 +115,7 @@ public class JapisonTest {
         .withMeta(null);
     new JsonApiObject().withVersion(null).withMeta(null);
     new LinkObject().withHref(null).withMeta(null);
-    new RelationshipObject<Void>().withLinks(null).withData(null)
+    new RelationshipObject().withLinks(null).withData((ResourceIdentifier) null)
         .withMeta(null);
     new ResourceObject<Void>().withType(null).withId(null).withAttributes(null)
         .withRelationships(null).withLinks(null).withIncluded(null)
@@ -153,11 +155,10 @@ public class JapisonTest {
     assertEquals("56", ro.getId());
     ro = JsonApi.resource(new JpaEntity<String>(), "entities");
 
-    RelationshipObject<JpaEntity<String>> rel;
+    RelationshipObject rel;
     rel = JsonApi.relationship(new JpaEntity<String>(), "entities", "78");
-    assertEquals("entities", rel.getData().getType());
-    assertEquals("78", rel.getData().getId());
-    rel = JsonApi.relationship(new JpaEntity<String>(), "entities");
+    assertEquals("entities", rel.getData().getValue().getType());
+    assertEquals("78", rel.getData().getValue().getId());
 
     rd = JsonApi.resourceDocument();
     rsd = JsonApi.resourcesDocument();
@@ -172,21 +173,19 @@ public class JapisonTest {
 
   @Test
   public void testPrivateConstruct() throws Exception {
-    Constructor<JsonApi> c = JsonApi.class.getDeclaredConstructor();
-    assertTrue(Modifier.isPrivate(c.getModifiers()));
-    c.setAccessible(true);
-    c.newInstance();
+    JavaBeanTester.builder(JsonApi.class).testPrivateConstructor();
   }
 
   @Test
   public void testJsonable() throws Exception {
     ResourceDocument<JpaEntity<Long>> rd;
     ResourcesDocument<JpaEntity<Long>> rsd;
+    ResourceIdentifierObject rio;
     ErrorsDocument ed;
     ErrorObject er;
     JsonApiObject jao;
     LinkObject lo;
-    RelationshipObject<JpaEntity<Long>> relo;
+    RelationshipObject relo;
     ResourceObject<JpaEntity<Long>> ro;
     SourceObject so;
 
@@ -195,6 +194,9 @@ public class JapisonTest {
 
     rsd = new ResourcesDocument<JpaEntity<Long>>();
     assertEquals(rsd.toJson(), mapper.writeValueAsString(rsd));
+
+    rio = new ResourceIdentifierObject();
+    assertEquals(rio.toJson(), mapper.writeValueAsString(rio));
 
     ed = new ErrorsDocument();
     assertEquals(ed.toJson(), mapper.writeValueAsString(ed));
@@ -208,7 +210,7 @@ public class JapisonTest {
     lo = new LinkObject();
     assertEquals(lo.toJson(), mapper.writeValueAsString(lo));
 
-    relo = new RelationshipObject<JpaEntity<Long>>();
+    relo = new RelationshipObject();
     assertEquals(relo.toJson(), mapper.writeValueAsString(relo));
 
     ro = new ResourceObject<JpaEntity<Long>>();

@@ -30,8 +30,8 @@ import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
 @JsonInclude(NON_DEFAULT)
-public class ResourceIdentifierObject<T>
-    implements ResourceIdentifier, Jsonable<ResourceIdentifierObject<T>> {
+public class ResourceIdentifierObject
+    implements ResourceIdentifier, Jsonable<ResourceIdentifierObject> {
 
   @JsonInclude(ALWAYS)
   @NotNull
@@ -70,7 +70,7 @@ public class ResourceIdentifierObject<T>
    *          the type of resource
    * @return this {@link ResourceObject}
    */
-  public ResourceIdentifierObject<T> withType(String type) {
+  public ResourceIdentifierObject withType(String type) {
     setType(type);
     return this;
   }
@@ -101,7 +101,7 @@ public class ResourceIdentifierObject<T>
    *          the id of resource
    * @return this {@link ResourceObject}
    */
-  public ResourceIdentifierObject<T> withId(String id) {
+  public ResourceIdentifierObject withId(String id) {
     setId(id);
     return this;
   }
@@ -132,7 +132,7 @@ public class ResourceIdentifierObject<T>
    *          a meta object
    * @return this {@link ResourceObject}
    */
-  public ResourceIdentifierObject<T> withMeta(Object meta) {
+  public ResourceIdentifierObject withMeta(Object meta) {
     setMeta(meta);
     return this;
   }
@@ -141,7 +141,7 @@ public class ResourceIdentifierObject<T>
   public boolean equals(final Object other) {
     if (this == other) return true;
     if (!(other instanceof ResourceIdentifierObject)) return false;
-    ResourceIdentifierObject<?> castOther = (ResourceIdentifierObject<?>) other;
+    ResourceIdentifierObject castOther = (ResourceIdentifierObject) other;
     return Objects.equal(type, castOther.type)
         && Objects.equal(id, castOther.id)
         && Objects.equal(meta, castOther.meta);

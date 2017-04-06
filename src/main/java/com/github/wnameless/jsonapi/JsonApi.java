@@ -17,8 +17,13 @@
  */
 package com.github.wnameless.jsonapi;
 
-import java.util.List;
+import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Sets.newHashSet;
 
+import java.util.List;
+import java.util.Set;
+
+import com.github.wnameless.json.AutoArrayifyValue;
 import com.google.common.base.Function;
 
 /**
@@ -181,8 +186,8 @@ public final class JsonApi {
    */
   public static <T> ResourceObject<T> resource(T attributes, String type,
       String id) {
-    return new ResourceObject<T>().withAttributes(attributes).withType(type)
-        .withId(id);
+    return new ResourceObject<T>().withType(type).withId(id)
+        .withAttributes(attributes);
   }
 
   /**
@@ -197,28 +202,12 @@ public final class JsonApi {
    * @return a {@link ResourceObject}
    */
   public static <T> ResourceObject<T> resource(T attributes, String type) {
-    return new ResourceObject<T>().withAttributes(attributes).withType(type);
+    return new ResourceObject<T>().withType(type).withAttributes(attributes);
   }
 
-  /**
-   * Creates a {@link CompoundResource}.
-   * 
-   * @return a {@link CompoundResource}
-   */
-  public static <T> CompoundResource<T> compoundResource() {
-    return new CompoundResource<T>();
-  }
-
-  /**
-   * Creates a {@link CompoundResource} by given data list.
-   * 
-   * @param data
-   *          a list of {@link ResourceObject}s
-   * @return a {@link CompoundResource}
-   */
-  public static <T> CompoundResource<T> compoundResource(
-      List<ResourceObject<T>> data) {
-    return new CompoundResource<T>().withData(data);
+  public static ResourceIdentifierObject resourceIdentifier(String type,
+      String id) {
+    return new ResourceIdentifierObject().withType(type).withId(id);
   }
 
   /**
@@ -228,8 +217,8 @@ public final class JsonApi {
    *          the type of attributes
    * @return a {@link RelationshipObject}
    */
-  public static <T> RelationshipObject<T> relationship() {
-    return new RelationshipObject<T>();
+  public static RelationshipObject relationship() {
+    return new RelationshipObject();
   }
 
   /**
@@ -246,26 +235,11 @@ public final class JsonApi {
    *          the id of data
    * @return a {@link RelationshipObject}
    */
-  public static <T> RelationshipObject<T> relationship(T attributes,
-      String type, String id) {
-    return new RelationshipObject<T>().withData(resource(attributes, type, id));
-  }
-
-  /**
-   * Creates a {@link RelationshipObject} by given data attributes and its type.
-   * 
-   * 
-   * @param <T>
-   *          the type of attributes
-   * @param attributes
-   *          the data object
-   * @param type
-   *          the type of data
-   * @return a {@link RelationshipObject}
-   */
-  public static <T> RelationshipObject<T> relationship(T attributes,
-      String type) {
-    return new RelationshipObject<T>().withData(resource(attributes, type));
+  public static <T> RelationshipObject relationship(T attributes, String type,
+      String id) {
+    return new RelationshipObject()
+        .withData(new AutoArrayifyValue<ResourceIdentifier>(
+            resourceIdentifier(type, id)));
   }
 
   /**
@@ -293,6 +267,68 @@ public final class JsonApi {
    */
   public static JsonApiObject jsonApi() {
     return new JsonApiObject();
+  }
+
+  /**
+   * 
+   * {@link JsonApi.Utils} provides methods to access included resources
+   * information within JSON API objects in a type-safe way.
+   * 
+   * @author Wei-Ming Wu
+   *
+   */
+  public static final class Utils {
+
+    private Utils() {}
+
+    /**
+     * Returns all types in the included resources of given {@link Document}.
+     * 
+     * @param document
+     *          any {@link Document}
+     * @return a set of types
+     */
+    public Set<Class<?>> listAllIncludedTypes(Document<?> document) {
+      Set<Class<?>> types = newHashSet();
+
+      if (document.getIncluded() != null) {
+        for (ResourceObject<?> i : document.getIncluded()) {
+          if (i != null) types.add(i.getAttributes().getClass());
+        }
+      }
+
+      return types;
+    }
+
+    /**
+     * Finds all resources of certain type in the included of given
+     * {@link Document}.
+     * 
+     * @param klass
+     *          target type
+     * @param document
+     *          any {@link Document}
+     * @return a list of resources of given type
+     */
+    public <T> List<ResourceObject<T>> findIncludedByType(Class<T> klass,
+        Document<?> document) {
+      List<ResourceObject<T>> typedIncluded = newArrayList();
+      List<ResourceObject<?>> included = document.getIncluded();
+
+      if (included != null) {
+        for (ResourceObject<?> i : included) {
+          if (i != null
+              && klass.isAssignableFrom(i.getAttributes().getClass())) {
+            @SuppressWarnings("unchecked")
+            ResourceObject<T> ro = (ResourceObject<T>) i;
+            typedIncluded.add(ro);
+          }
+        }
+      }
+
+      return typedIncluded;
+    }
+
   }
 
 }

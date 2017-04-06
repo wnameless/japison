@@ -19,12 +19,14 @@ package com.github.wnameless.jsonapi;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
 
+import java.util.Collection;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.github.wnameless.json.AutoArrayifyValue;
 import com.github.wnameless.json.Jsonable;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
@@ -40,13 +42,13 @@ import com.google.common.base.Objects;
  *
  */
 @JsonInclude(NON_DEFAULT)
-public class RelationshipObject<T> implements Jsonable<RelationshipObject<T>> {
+public class RelationshipObject implements Jsonable<RelationshipObject> {
 
   @Valid
   private Map<String, LinkObject> links;
 
   @Valid
-  private ResourceObject<T> data;
+  private AutoArrayifyValue<ResourceIdentifier> data;
 
   @Valid
   private Object meta;
@@ -78,7 +80,7 @@ public class RelationshipObject<T> implements Jsonable<RelationshipObject<T>> {
    *          {@link LinkObject}s, keys are the names of links
    * @return this {@link RelationshipObject}
    */
-  public RelationshipObject<T> withLinks(Map<String, LinkObject> links) {
+  public RelationshipObject withLinks(Map<String, LinkObject> links) {
     setLinks(links);
     return this;
   }
@@ -88,7 +90,7 @@ public class RelationshipObject<T> implements Jsonable<RelationshipObject<T>> {
    * 
    * @return a {@link ResourceObject}
    */
-  public ResourceObject<T> getData() {
+  public AutoArrayifyValue<ResourceIdentifier> getData() {
     return data;
   }
 
@@ -98,7 +100,7 @@ public class RelationshipObject<T> implements Jsonable<RelationshipObject<T>> {
    * @param data
    *          a {@link ResourceObject}
    */
-  public void setData(ResourceObject<T> data) {
+  public void setData(AutoArrayifyValue<ResourceIdentifier> data) {
     this.data = data;
   }
 
@@ -109,8 +111,19 @@ public class RelationshipObject<T> implements Jsonable<RelationshipObject<T>> {
    *          a {@link ResourceObject}
    * @return this {@link RelationshipObject}
    */
-  public RelationshipObject<T> withData(ResourceObject<T> data) {
+  public RelationshipObject withData(
+      AutoArrayifyValue<ResourceIdentifier> data) {
     setData(data);
+    return this;
+  }
+
+  public RelationshipObject withData(ResourceIdentifier data) {
+    setData(new AutoArrayifyValue<ResourceIdentifier>(data));
+    return this;
+  }
+
+  public RelationshipObject withData(Collection<ResourceIdentifier> data) {
+    setData(new AutoArrayifyValue<ResourceIdentifier>(data));
     return this;
   }
 
@@ -142,7 +155,7 @@ public class RelationshipObject<T> implements Jsonable<RelationshipObject<T>> {
    *          a meta object
    * @return this {@link RelationshipObject}
    */
-  public RelationshipObject<T> withMeta(Object meta) {
+  public RelationshipObject withMeta(Object meta) {
     setMeta(meta);
     return this;
   }
@@ -151,7 +164,7 @@ public class RelationshipObject<T> implements Jsonable<RelationshipObject<T>> {
   public boolean equals(final Object other) {
     if (this == other) return true;
     if (!(other instanceof RelationshipObject)) return false;
-    RelationshipObject<?> castOther = (RelationshipObject<?>) other;
+    RelationshipObject castOther = (RelationshipObject) other;
     return Objects.equal(links, castOther.links)
         && Objects.equal(data, castOther.data)
         && Objects.equal(meta, castOther.meta);
