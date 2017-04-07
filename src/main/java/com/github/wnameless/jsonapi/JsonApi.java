@@ -73,10 +73,34 @@ public final class JsonApi {
     return document;
   }
 
+  public static <T> ResourceDocument<T> resourceDocument(
+      Collection<T> attributes, ResourceSetting<T> setting) {
+    ResourceDocument<T> document = new ResourceDocument<T>();
+    List<ResourceObject<T>> resources = newArrayList();
+    for (T attr : attributes) {
+      ResourceObject<T> resource = resource(attr);
+      if (setting != null) setting.apply(resource);
+      resources.add(resource);
+    }
+    document.setData(resources);
+    return document;
+  }
+
   public static <T> ResourceDocument<T> resourceDocument(T attributes) {
     ResourceDocument<T> document = new ResourceDocument<T>();
     List<ResourceObject<T>> resources = newArrayList();
     ResourceObject<T> resource = resource(attributes);
+    resources.add(resource);
+    document.setData(resources);
+    return document;
+  }
+
+  public static <T> ResourceDocument<T> resourceDocument(T attributes,
+      ResourceSetting<T> setting) {
+    ResourceDocument<T> document = new ResourceDocument<T>();
+    List<ResourceObject<T>> resources = newArrayList();
+    ResourceObject<T> resource = resource(attributes);
+    if (setting != null) setting.apply(resource);
     resources.add(resource);
     document.setData(resources);
     return document;

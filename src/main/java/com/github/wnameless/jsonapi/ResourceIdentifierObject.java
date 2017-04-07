@@ -20,12 +20,15 @@ package com.github.wnameless.jsonapi;
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.ALWAYS;
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
 
+import java.util.EnumMap;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.wnameless.json.Jsonable;
+import com.github.wnameless.jsonapi.annotation.AnnotatedValueType;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
@@ -43,6 +46,15 @@ public class ResourceIdentifierObject
 
   @Valid
   private Object meta;
+
+  public ResourceIdentifierObject() {}
+
+  public ResourceIdentifierObject(Object resourceIdObj) {
+    EnumMap<AnnotatedValueType, String> annotatedVals =
+        JsonApiUtils.getAllAnnotatedValues(resourceIdObj);
+    type = annotatedVals.get(AnnotatedValueType.TYPE);
+    id = annotatedVals.get(AnnotatedValueType.ID);
+  }
 
   /**
    * Returns the type of resource.
