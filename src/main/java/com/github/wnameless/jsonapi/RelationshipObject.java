@@ -48,9 +48,9 @@ public class RelationshipObject implements Jsonable<RelationshipObject> {
   @Valid
   private Map<String, LinkObject> links;
 
-  @JsonSerialize(using = CollectionSerializer.class,
+  @JsonSerialize(using = ListSerializer.class,
       contentAs = ResourceIdentifier.class)
-  @JsonDeserialize(using = CollectionDeserializer.class)
+  @JsonDeserialize(using = ListDeserializer.class)
   @Valid
   private List<ResourceIdentifier> data;
 

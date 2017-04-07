@@ -18,26 +18,26 @@
 package com.github.wnameless.jsonapi;
 
 import java.io.IOException;
-import java.util.Collection;
+import java.util.List;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
-public class CollectionSerializer<T> extends StdSerializer<Collection<T>> {
+public class ListSerializer<T> extends StdSerializer<List<T>> {
 
   private static final long serialVersionUID = 1L;
 
-  public CollectionSerializer() {
-    super(Collection.class, true);
+  public ListSerializer() {
+    super(List.class, true);
   }
 
   @Override
-  public void serialize(Collection<T> value, JsonGenerator gen,
+  public void serialize(List<T> value, JsonGenerator gen,
       SerializerProvider provider) throws IOException {
     if (value != null && value.size() == 1) {
       gen.writeRawValue(ObjectMapperFactory.getObjectMapper()
-          .writeValueAsString(value.iterator().next()));
+          .writeValueAsString(value.get(0)));
     } else {
       gen.writeRawValue(
           ObjectMapperFactory.getObjectMapper().writeValueAsString(value));

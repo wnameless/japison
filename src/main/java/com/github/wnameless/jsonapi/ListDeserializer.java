@@ -18,7 +18,6 @@
 package com.github.wnameless.jsonapi;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.List;
 
 import com.fasterxml.jackson.core.JsonParser;
@@ -27,12 +26,12 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 
-public class CollectionDeserializer<T> extends StdDeserializer<Collection<T>> {
+public class ListDeserializer<T> extends StdDeserializer<List<T>> {
 
   private static final long serialVersionUID = 1L;
 
-  public CollectionDeserializer() {
-    super(Collection.class);
+  public ListDeserializer() {
+    super(List.class);
   }
 
   @SuppressWarnings("unchecked")

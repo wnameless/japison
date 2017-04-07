@@ -49,8 +49,8 @@ import com.google.common.base.Objects;
 public class ResourceDocument<T>
     implements Document<T>, Jsonable<ResourceDocument<T>> {
 
-  @JsonSerialize(using = CollectionSerializer.class)
-  @JsonDeserialize(using = CollectionDeserializer.class)
+  @JsonSerialize(using = ListSerializer.class)
+  @JsonDeserialize(using = ListDeserializer.class)
   @JsonInclude(ALWAYS)
   @Valid
   private List<ResourceObject<T>> data = newArrayList();
