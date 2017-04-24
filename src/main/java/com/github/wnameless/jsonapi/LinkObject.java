@@ -25,6 +25,7 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.wnameless.json.Jsonable;
+import com.github.wnameless.jsonapi.jackson.ObjectMapperFactory;
 import com.google.common.base.Objects;
 
 /**

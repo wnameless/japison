@@ -15,7 +15,7 @@
  * the License.
  *
  */
-package com.github.wnameless.jsonapi;
+package com.github.wnameless.jsonapi.jackson;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.jonpeterson.jackson.module.interceptor.JsonInterceptorModule;

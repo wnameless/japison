@@ -24,6 +24,7 @@ import org.junit.Test;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.wnameless.jsonapi.jackson.ObjectMapperFactory;
 
 public class JacksonTest {
 

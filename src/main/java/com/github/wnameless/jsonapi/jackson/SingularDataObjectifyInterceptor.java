@@ -15,14 +15,14 @@
  * the License.
  *
  */
-package com.github.wnameless.jsonapi;
+package com.github.wnameless.jsonapi.jackson;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.jonpeterson.jackson.module.interceptor.JsonInterceptor;
 
-public class DataObjectifyInterceptor implements JsonInterceptor {
+public class SingularDataObjectifyInterceptor implements JsonInterceptor {
 
   @Override
   public JsonNode intercept(JsonNode jsonNode,

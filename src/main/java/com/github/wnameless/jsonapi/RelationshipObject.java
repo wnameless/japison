@@ -28,6 +28,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.jonpeterson.jackson.module.interceptor.JsonInterceptors;
 import com.github.wnameless.json.Jsonable;
+import com.github.wnameless.jsonapi.jackson.DataArrayifyInterceptor;
+import com.github.wnameless.jsonapi.jackson.ObjectMapperFactory;
+import com.github.wnameless.jsonapi.jackson.SingularDataObjectifyInterceptor;
 import com.google.common.base.Objects;
 
 /**
@@ -41,7 +44,7 @@ import com.google.common.base.Objects;
  *
  */
 @JsonInterceptors(beforeDeserialization = DataArrayifyInterceptor.class,
-    afterSerialization = DataObjectifyInterceptor.class)
+    afterSerialization = SingularDataObjectifyInterceptor.class)
 @JsonInclude(NON_DEFAULT)
 public class RelationshipObject implements Jsonable<RelationshipObject> {
 
