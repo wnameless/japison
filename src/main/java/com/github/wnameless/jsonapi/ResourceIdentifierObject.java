@@ -29,7 +29,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.wnameless.json.Jsonable;
 import com.github.wnameless.jsonapi.annotation.AnnotatedValueType;
-import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
 @JsonInclude(NON_DEFAULT)
@@ -166,8 +165,7 @@ public class ResourceIdentifierObject
 
   @Override
   public String toString() {
-    return MoreObjects.toStringHelper(this).add("type", type).add("id", id)
-        .add("meta", meta).toString();
+    return toJson();
   }
 
   @Override

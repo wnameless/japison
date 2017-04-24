@@ -18,6 +18,7 @@
 package com.github.wnameless.jsonapi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.jonpeterson.jackson.module.interceptor.JsonInterceptorModule;
 
 /**
  * 
@@ -29,9 +30,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public final class ObjectMapperFactory {
 
-  private ObjectMapperFactory() {}
+  private static ObjectMapper mapper;
+  static {
+    mapper = new ObjectMapper();
+    mapper.registerModule(new JsonInterceptorModule());
+  }
 
-  private static ObjectMapper mapper = new ObjectMapper();
+  private ObjectMapperFactory() {}
 
   /**
    * Returns the {@link ObjectMapper} for Japison library to use.

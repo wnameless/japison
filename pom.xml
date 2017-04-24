@@ -50,6 +50,11 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>com.github.jonpeterson</groupId>
+			<artifactId>jackson-module-json-interceptor</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.5</version>

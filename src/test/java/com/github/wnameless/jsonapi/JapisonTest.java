@@ -56,7 +56,7 @@ public class JapisonTest {
 
     String actual = mapper.writeValueAsString(req);
     assertEquals(
-        "{\"data\":{\"type\":\"entities\",\"attributes\":{\"data\":\"hahaha\"}}}",
+        "{\"data\":{\"type\":\"JpaEntity\",\"attributes\":{\"data\":\"hahaha\"}}}",
         actual);
   }
 
@@ -117,14 +117,14 @@ public class JapisonTest {
   public void testStaticMethods() {
     ResourceDocument<JpaEntity<String>> rd;
     rd = JsonApi.resourceDocument(new JpaEntity<String>(12L));
-    assertEquals("entities", rd.getData().get(0).getType());
+    assertEquals("JpaEntity", rd.getData().get(0).getType());
     assertEquals("12", rd.getData().get(0).getId());
     rd = JsonApi.resourceDocument(new JpaEntity<String>());
 
     ResourceObject<JpaEntity<String>> ro;
     ro = JsonApi.resource(new JpaEntity<String>());
-    assertEquals("entities", ro.getType());
-    assertEquals("56", ro.getId());
+    assertEquals("JpaEntity", ro.getType());
+    assertEquals(null, ro.getId());
     ro = JsonApi.resource(new JpaEntity<String>());
 
     RelationshipObject rel;

@@ -30,10 +30,8 @@ import javax.validation.Valid;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.github.jonpeterson.jackson.module.interceptor.JsonInterceptors;
 import com.github.wnameless.json.Jsonable;
-import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
 /**
@@ -45,12 +43,12 @@ import com.google.common.base.Objects;
  *      Specification (v1.0) Document Structure</a>
  *
  */
+@JsonInterceptors(beforeDeserialization = DataArrayifyInterceptor.class,
+    afterSerialization = DataObjectifyInterceptor.class)
 @JsonInclude(NON_DEFAULT)
 public class ResourceDocument<T>
     implements Document<T>, Jsonable<ResourceDocument<T>> {
 
-  @JsonSerialize(using = ListSerializer.class)
-  @JsonDeserialize(using = ListDeserializer.class)
   @JsonInclude(ALWAYS)
   @Valid
   private List<ResourceObject<T>> data = newArrayList();
@@ -218,9 +216,7 @@ public class ResourceDocument<T>
 
   @Override
   public String toString() {
-    return MoreObjects.toStringHelper(this).add("data", data).add("meta", meta)
-        .add("jsonapi", jsonapi).add("links", links).add("included", included)
-        .toString();
+    return toJson();
   }
 
   @Override

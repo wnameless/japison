@@ -19,7 +19,6 @@ package com.github.wnameless.jsonapi;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.ALWAYS;
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
-import static com.google.common.base.MoreObjects.firstNonNull;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newLinkedHashMap;
 
@@ -34,7 +33,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.wnameless.json.Jsonable;
 import com.github.wnameless.jsonapi.annotation.AnnotatedValueType;
-import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
 /**
@@ -151,11 +149,13 @@ public class ResourceObject<T>
   public void setAttributes(T attributes) {
     this.attributes = attributes;
 
-    if (type == null || id == null) {
-      EnumMap<AnnotatedValueType, String> annotatedVals =
-          JsonApiUtils.getAllAnnotatedValues(attributes);
-      type = firstNonNull(type, annotatedVals.get(AnnotatedValueType.TYPE));
-      id = firstNonNull(id, annotatedVals.get(AnnotatedValueType.ID));
+    if (attributes != null) {
+      if (type == null || id == null) {
+        EnumMap<AnnotatedValueType, String> annotatedVals =
+            JsonApiUtils.getAllAnnotatedValues(attributes);
+        type = type != null ? type : annotatedVals.get(AnnotatedValueType.TYPE);
+        id = id != null ? id : annotatedVals.get(AnnotatedValueType.ID);
+      }
     }
   }
 
@@ -320,10 +320,7 @@ public class ResourceObject<T>
 
   @Override
   public String toString() {
-    return MoreObjects.toStringHelper(this).add("type", type).add("id", id)
-        .add("attributes", attributes).add("relationships", relationships)
-        .add("links", links).add("included", included).add("meta", meta)
-        .toString();
+    return toJson();
   }
 
   @Override

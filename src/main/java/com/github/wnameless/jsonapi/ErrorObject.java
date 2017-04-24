@@ -27,7 +27,6 @@ import javax.validation.Valid;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.wnameless.json.Jsonable;
-import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
 /**
@@ -346,10 +345,7 @@ public class ErrorObject implements Jsonable<ErrorObject> {
 
   @Override
   public String toString() {
-    return MoreObjects.toStringHelper(this).add("id", id).add("links", links)
-        .add("status", status).add("code", code).add("title", title)
-        .add("detail", detail).add("source", source).add("meta", meta)
-        .toString();
+    return toJson();
   }
 
   @Override

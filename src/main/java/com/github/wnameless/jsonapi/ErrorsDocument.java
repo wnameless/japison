@@ -30,7 +30,6 @@ import javax.validation.Valid;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.wnameless.json.Jsonable;
-import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
 /**
@@ -199,9 +198,7 @@ public class ErrorsDocument
 
   @Override
   public String toString() {
-    return MoreObjects.toStringHelper(this).add("errors", errors)
-        .add("meta", meta).add("jsonapi", jsonapi).add("links", links)
-        .add("included", included).toString();
+    return toJson();
   }
 
   @Override

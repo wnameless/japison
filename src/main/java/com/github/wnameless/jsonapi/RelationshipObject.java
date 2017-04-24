@@ -26,10 +26,8 @@ import javax.validation.Valid;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.github.jonpeterson.jackson.module.interceptor.JsonInterceptors;
 import com.github.wnameless.json.Jsonable;
-import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
 /**
@@ -42,15 +40,14 @@ import com.google.common.base.Objects;
  *      API Specification (v1.0) Relationships</a>
  *
  */
+@JsonInterceptors(beforeDeserialization = DataArrayifyInterceptor.class,
+    afterSerialization = DataObjectifyInterceptor.class)
 @JsonInclude(NON_DEFAULT)
 public class RelationshipObject implements Jsonable<RelationshipObject> {
 
   @Valid
   private Map<String, LinkObject> links;
 
-  @JsonSerialize(using = ListSerializer.class,
-      contentAs = ResourceIdentifier.class)
-  @JsonDeserialize(using = ListDeserializer.class)
   @Valid
   private List<ResourceIdentifier> data;
 
@@ -170,8 +167,7 @@ public class RelationshipObject implements Jsonable<RelationshipObject> {
 
   @Override
   public String toString() {
-    return MoreObjects.toStringHelper(this).add("links", links)
-        .add("data", data).add("meta", meta).toString();
+    return toJson();
   }
 
   @Override

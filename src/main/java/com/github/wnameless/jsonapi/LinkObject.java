@@ -25,7 +25,6 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.wnameless.json.Jsonable;
-import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
 /**
@@ -126,8 +125,7 @@ public class LinkObject implements Jsonable<LinkObject> {
 
   @Override
   public String toString() {
-    return MoreObjects.toStringHelper(this).add("href", href).add("meta", meta)
-        .toString();
+    return toJson();
   }
 
   @Override
