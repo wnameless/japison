@@ -26,6 +26,7 @@ import java.util.EnumMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.commons.beanutils.BeanMap;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
 
@@ -80,6 +81,37 @@ public final class JsonApiUtils {
       return new StringBuilder((CharSequence) obj).toString();
 
     return obj.toString();
+  }
+
+  public static <T> T getTypedMetaObject(Class<T> klass, Object meta) {
+    return getTypedMetaObject(klass, meta, false);
+  }
+
+  @SuppressWarnings("unchecked")
+  public static <T> T getTypedMetaObject(Class<T> klass, Object meta,
+      boolean forcedConverting) {
+    if (meta == null) return null;
+
+    T typedObj;
+    try {
+      typedObj = klass.newInstance();
+    } catch (InstantiationException e) {
+      throw new RuntimeException(e);
+    } catch (IllegalAccessException e) {
+      throw new RuntimeException(e);
+    }
+
+    BeanMap typedBean = new BeanMap(typedObj);
+    BeanMap metaBean = new BeanMap(meta);
+
+    if (!forcedConverting
+        && !typedBean.keySet().containsAll(metaBean.keySet())) {
+      throw new RuntimeException("Unmatched properties found");
+    }
+
+    typedBean.putAllWriteable(metaBean);
+
+    return (T) typedBean.getBean();
   }
 
 }
