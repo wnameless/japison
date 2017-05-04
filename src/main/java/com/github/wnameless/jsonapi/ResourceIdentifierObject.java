@@ -51,7 +51,7 @@ public class ResourceIdentifierObject
 
   public ResourceIdentifierObject(Object resourceIdObj) {
     EnumMap<AnnotatedValueType, String> annotatedVals =
-        JsonApiUtils.getAllAnnotatedValues(resourceIdObj);
+        JsonApi.Utils.getAllAnnotatedValues(resourceIdObj);
     type = annotatedVals.get(AnnotatedValueType.TYPE);
     id = annotatedVals.get(AnnotatedValueType.ID);
   }

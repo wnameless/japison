@@ -153,7 +153,7 @@ public class ResourceObject<T>
     if (attributes != null) {
       if (type == null || id == null) {
         EnumMap<AnnotatedValueType, String> annotatedVals =
-            JsonApiUtils.getAllAnnotatedValues(attributes);
+            JsonApi.Utils.getAllAnnotatedValues(attributes);
         type = type != null ? type : annotatedVals.get(AnnotatedValueType.TYPE);
         id = id != null ? id : annotatedVals.get(AnnotatedValueType.ID);
       }

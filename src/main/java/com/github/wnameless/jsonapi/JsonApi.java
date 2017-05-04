@@ -17,12 +17,27 @@
  */
 package com.github.wnameless.jsonapi;
 
+import static com.github.wnameless.jsonapi.annotation.AnnotatedValueType.ID;
+import static com.github.wnameless.jsonapi.annotation.AnnotatedValueType.TYPE;
 import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Maps.newEnumMap;
 import static com.google.common.collect.Sets.newHashSet;
 
+import java.lang.reflect.Field;
 import java.util.Collection;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.apache.commons.beanutils.BeanMap;
+import org.apache.commons.lang3.reflect.FieldUtils;
+import org.apache.commons.lang3.reflect.MethodUtils;
+
+import com.github.wnameless.jsonapi.annotation.AnnotatedValueType;
+import com.github.wnameless.jsonapi.annotation.JsonApiId;
+import com.github.wnameless.jsonapi.annotation.JsonApiType;
 
 /**
  * 
@@ -113,8 +128,6 @@ public final class JsonApi {
    *          the type of attributes
    * @param attributes
    *          the data object
-   * @param type
-   *          the type of data
    * @return a {@link ResourceDocument}
    */
   public static <T> ResourceDocument<T> resourceDocument(T... attributes) {
@@ -172,6 +185,11 @@ public final class JsonApi {
 
   public static ResourceIdentifierObject resourceIdentifier() {
     return new ResourceIdentifierObject();
+  }
+
+  public static ResourceIdentifierObject resourceIdentifier(String type,
+      String id) {
+    return new ResourceIdentifierObject().withType(type).withId(id);
   }
 
   /**
@@ -298,6 +316,83 @@ public final class JsonApi {
       }
 
       return typedIncluded;
+    }
+
+    public static EnumMap<AnnotatedValueType, String> getAllAnnotatedValues(
+        Object obj) {
+      EnumMap<AnnotatedValueType, String> annotatedValues =
+          newEnumMap(AnnotatedValueType.class);
+
+      if (obj != null) {
+        JsonApiType jsonApiType =
+            obj.getClass().getAnnotation(JsonApiType.class);
+        annotatedValues.put(TYPE, jsonApiType != null ? jsonApiType.value()
+            : obj.getClass().getSimpleName());
+      }
+      if (obj != null) {
+        Field[] idFields =
+            FieldUtils.getFieldsWithAnnotation(obj.getClass(), JsonApiId.class);
+        if (idFields.length != 0) {
+          Field idField = idFields[0];
+          JsonApiId jsonApiId = idField.getAnnotation(JsonApiId.class);
+          idField.setAccessible(true);
+          try {
+            Object idObj = idField.get(obj);
+            if (jsonApiId.getterName().isEmpty()) {
+              annotatedValues.put(ID, stringify(idObj));
+            } else {
+              Object idVal =
+                  MethodUtils.invokeMethod(idObj, jsonApiId.getterName());
+              annotatedValues.put(ID, stringify(idVal));
+            }
+          } catch (Exception e) {
+            Logger.getLogger(JsonApi.Utils.class.getName()).log(Level.SEVERE,
+                null, e);
+          }
+        }
+      }
+
+      return annotatedValues;
+    }
+
+    public static String stringify(Object obj) {
+      if (obj == null) return null;
+      if (obj instanceof String) return (String) obj;
+      if (obj instanceof CharSequence)
+        return new StringBuilder((CharSequence) obj).toString();
+
+      return obj.toString();
+    }
+
+    public static <T> T getTypedMetaObject(Class<T> klass, Object meta) {
+      return getTypedMetaObject(klass, meta, false);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> T getTypedMetaObject(Class<T> klass, Object meta,
+        boolean forcedConverting) {
+      if (meta == null) return null;
+
+      T typedObj;
+      try {
+        typedObj = klass.newInstance();
+      } catch (InstantiationException e) {
+        throw new RuntimeException(e);
+      } catch (IllegalAccessException e) {
+        throw new RuntimeException(e);
+      }
+
+      BeanMap typedBean = new BeanMap(typedObj);
+      BeanMap metaBean = new BeanMap(meta);
+
+      if (!forcedConverting
+          && !typedBean.keySet().containsAll(metaBean.keySet())) {
+        throw new RuntimeException("Unmatched properties found");
+      }
+
+      typedBean.putAllWriteable(metaBean);
+
+      return (T) typedBean.getBean();
     }
 
   }
