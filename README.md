@@ -4,7 +4,7 @@ Japison
 =============
 A lightweight implementation of JSON API specification(http://jsonapi.org/).
 
-##Maven Repo
+## Maven Repo
 ```xml
 <dependency>
     <groupId>com.github.wnameless.jsonapi</groupId>
@@ -13,7 +13,7 @@ A lightweight implementation of JSON API specification(http://jsonapi.org/).
 </dependency>
 ```
 
-#Quick Start
+# Quick Start
 
 Static import first
 ```java
