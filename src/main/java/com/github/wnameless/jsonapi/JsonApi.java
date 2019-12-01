@@ -130,6 +130,7 @@ public final class JsonApi {
    *          the data object
    * @return a {@link ResourceDocument}
    */
+  @SafeVarargs
   public static <T> ResourceDocument<T> resourceDocument(T... attributes) {
     ResourceDocument<T> document = new ResourceDocument<T>();
     List<ResourceObject<T>> resources = newArrayList();
