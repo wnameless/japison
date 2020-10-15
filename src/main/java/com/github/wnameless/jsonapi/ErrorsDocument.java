@@ -19,11 +19,12 @@ package com.github.wnameless.jsonapi;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.ALWAYS;
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
-import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Maps.newLinkedHashMap;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.validation.Valid;
 
@@ -31,7 +32,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.wnameless.json.Jsonable;
 import com.github.wnameless.jsonapi.jackson.ObjectMapperFactory;
-import com.google.common.base.Objects;
 
 /**
  * 
@@ -48,7 +48,7 @@ public class ErrorsDocument
 
   @JsonInclude(ALWAYS)
   @Valid
-  private List<ErrorObject> errors = newArrayList();
+  private List<ErrorObject> errors = new ArrayList<>();
 
   @Valid
   private Object meta;
@@ -57,10 +57,10 @@ public class ErrorsDocument
   private JsonApiObject jsonapi;
 
   @Valid
-  private Map<String, LinkObject> links = newLinkedHashMap();
+  private Map<String, LinkObject> links = new LinkedHashMap<>();
 
   @Valid
-  private List<ResourceObject<?>> included = newArrayList();
+  private List<ResourceObject<?>> included = new ArrayList<>();
 
   @Override
   public List<ResourceObject<Void>> getData() {
@@ -185,16 +185,16 @@ public class ErrorsDocument
     if (this == other) return true;
     if (!(other instanceof ErrorsDocument)) return false;
     ErrorsDocument castOther = (ErrorsDocument) other;
-    return Objects.equal(errors, castOther.getErrors())
-        && Objects.equal(meta, castOther.getMeta())
-        && Objects.equal(jsonapi, castOther.getJsonapi())
-        && Objects.equal(links, castOther.getLinks())
-        && Objects.equal(included, castOther.getIncluded());
+    return Objects.equals(errors, castOther.getErrors())
+        && Objects.equals(meta, castOther.getMeta())
+        && Objects.equals(jsonapi, castOther.getJsonapi())
+        && Objects.equals(links, castOther.getLinks())
+        && Objects.equals(included, castOther.getIncluded());
   }
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(errors, meta, jsonapi, links, included);
+    return Objects.hash(errors, meta, jsonapi, links, included);
   }
 
   @Override

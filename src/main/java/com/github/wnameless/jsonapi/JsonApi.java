@@ -19,13 +19,13 @@ package com.github.wnameless.jsonapi;
 
 import static com.github.wnameless.jsonapi.annotation.AnnotatedValueType.ID;
 import static com.github.wnameless.jsonapi.annotation.AnnotatedValueType.TYPE;
-import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Maps.newEnumMap;
-import static com.google.common.collect.Sets.newHashSet;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -79,7 +79,7 @@ public final class JsonApi {
   public static <T> ResourceDocument<T> resourceDocument(
       Collection<T> attributes) {
     ResourceDocument<T> document = new ResourceDocument<T>();
-    List<ResourceObject<T>> resources = newArrayList();
+    List<ResourceObject<T>> resources = new ArrayList<>();
     for (T attr : attributes) {
       ResourceObject<T> resource = resource(attr);
       resources.add(resource);
@@ -91,7 +91,7 @@ public final class JsonApi {
   public static <T> ResourceDocument<T> resourceDocument(
       Collection<T> attributes, ResourceSetting<T> setting) {
     ResourceDocument<T> document = new ResourceDocument<T>();
-    List<ResourceObject<T>> resources = newArrayList();
+    List<ResourceObject<T>> resources = new ArrayList<>();
     for (T attr : attributes) {
       ResourceObject<T> resource = resource(attr);
       if (setting != null) setting.apply(resource);
@@ -103,7 +103,7 @@ public final class JsonApi {
 
   public static <T> ResourceDocument<T> resourceDocument(T attributes) {
     ResourceDocument<T> document = new ResourceDocument<T>();
-    List<ResourceObject<T>> resources = newArrayList();
+    List<ResourceObject<T>> resources = new ArrayList<>();
     ResourceObject<T> resource = resource(attributes);
     resources.add(resource);
     document.setData(resources);
@@ -113,7 +113,7 @@ public final class JsonApi {
   public static <T> ResourceDocument<T> resourceDocument(T attributes,
       ResourceSetting<T> setting) {
     ResourceDocument<T> document = new ResourceDocument<T>();
-    List<ResourceObject<T>> resources = newArrayList();
+    List<ResourceObject<T>> resources = new ArrayList<>();
     ResourceObject<T> resource = resource(attributes);
     if (setting != null) setting.apply(resource);
     resources.add(resource);
@@ -133,7 +133,7 @@ public final class JsonApi {
   @SafeVarargs
   public static <T> ResourceDocument<T> resourceDocument(T... attributes) {
     ResourceDocument<T> document = new ResourceDocument<T>();
-    List<ResourceObject<T>> resources = newArrayList();
+    List<ResourceObject<T>> resources = new ArrayList<>();
     for (T attr : attributes) {
       ResourceObject<T> resource = resource(attr);
       resources.add(resource);
@@ -215,7 +215,7 @@ public final class JsonApi {
    */
   public static <T> RelationshipObject relationship(
       Collection<ResourceIdentifier> data) {
-    return new RelationshipObject().withData(newArrayList(data));
+    return new RelationshipObject().withData(new ArrayList<>(data));
   }
 
   /**
@@ -229,7 +229,8 @@ public final class JsonApi {
    */
   public static <T> RelationshipObject relationship(
       ResourceIdentifier... data) {
-    return new RelationshipObject().withData(newArrayList(data));
+    return new RelationshipObject()
+        .withData(new ArrayList<>(Arrays.asList(data)));
   }
 
   /**
@@ -279,7 +280,7 @@ public final class JsonApi {
      * @return a set of types
      */
     public Set<Class<?>> listAllIncludedTypes(Document<?> document) {
-      Set<Class<?>> types = newHashSet();
+      Set<Class<?>> types = new HashSet<>();
 
       if (document.getIncluded() != null) {
         for (ResourceObject<?> i : document.getIncluded()) {
@@ -302,7 +303,7 @@ public final class JsonApi {
      */
     public <T> List<ResourceObject<T>> findIncludedByType(Class<T> klass,
         Document<?> document) {
-      List<ResourceObject<T>> typedIncluded = newArrayList();
+      List<ResourceObject<T>> typedIncluded = new ArrayList<>();
       List<ResourceObject<?>> included = document.getIncluded();
 
       if (included != null) {
@@ -322,7 +323,7 @@ public final class JsonApi {
     public static EnumMap<AnnotatedValueType, String> getAllAnnotatedValues(
         Object obj) {
       EnumMap<AnnotatedValueType, String> annotatedValues =
-          newEnumMap(AnnotatedValueType.class);
+          new EnumMap<>(AnnotatedValueType.class);
 
       if (obj != null) {
         JsonApiType jsonApiType =

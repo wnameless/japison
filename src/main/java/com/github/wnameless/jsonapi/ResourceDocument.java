@@ -19,12 +19,13 @@ package com.github.wnameless.jsonapi;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.ALWAYS;
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
-import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Maps.newLinkedHashMap;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.validation.Valid;
 
@@ -35,7 +36,6 @@ import com.github.wnameless.json.Jsonable;
 import com.github.wnameless.jsonapi.jackson.DataArrayifyInterceptor;
 import com.github.wnameless.jsonapi.jackson.ObjectMapperFactory;
 import com.github.wnameless.jsonapi.jackson.SingularDataObjectifyInterceptor;
-import com.google.common.base.Objects;
 
 /**
  * 
@@ -54,7 +54,7 @@ public class ResourceDocument<T>
 
   @JsonInclude(ALWAYS)
   @Valid
-  private List<ResourceObject<T>> data = newArrayList();
+  private List<ResourceObject<T>> data = new ArrayList<>();
 
   @Valid
   private Object meta;
@@ -63,10 +63,10 @@ public class ResourceDocument<T>
   private JsonApiObject jsonapi;
 
   @Valid
-  private Map<String, LinkObject> links = newLinkedHashMap();
+  private Map<String, LinkObject> links = new LinkedHashMap<>();
 
   @Valid
-  private List<ResourceObject<?>> included = newArrayList();
+  private List<ResourceObject<?>> included = new ArrayList<>();
 
   @Override
   public List<ResourceObject<T>> getData() {
@@ -86,7 +86,7 @@ public class ResourceDocument<T>
    * @return this {@link ResourceDocument}
    */
   public ResourceDocument<T> withData(ResourceObject<T> data) {
-    List<ResourceObject<T>> list = newArrayList();
+    List<ResourceObject<T>> list = new ArrayList<>();
     list.add(data);
     setData(list);
     return this;
@@ -100,7 +100,7 @@ public class ResourceDocument<T>
    * @return this {@link ResourceDocument}
    */
   public ResourceDocument<T> withData(Collection<ResourceObject<T>> data) {
-    setData(newArrayList(data));
+    setData(new ArrayList<>(data));
     return this;
   }
 
@@ -205,16 +205,16 @@ public class ResourceDocument<T>
     if (this == other) return true;
     if (!(other instanceof ResourceDocument)) return false;
     ResourceDocument<?> castOther = (ResourceDocument<?>) other;
-    return Objects.equal(data, castOther.getData())
-        && Objects.equal(meta, castOther.getMeta())
-        && Objects.equal(jsonapi, castOther.getJsonapi())
-        && Objects.equal(links, castOther.getLinks())
-        && Objects.equal(included, castOther.getIncluded());
+    return Objects.equals(data, castOther.getData())
+        && Objects.equals(meta, castOther.getMeta())
+        && Objects.equals(jsonapi, castOther.getJsonapi())
+        && Objects.equals(links, castOther.getLinks())
+        && Objects.equals(included, castOther.getIncluded());
   }
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(data, meta, jsonapi, links, included);
+    return Objects.hash(data, meta, jsonapi, links, included);
   }
 
   @Override

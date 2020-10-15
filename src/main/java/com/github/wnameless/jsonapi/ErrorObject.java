@@ -18,9 +18,10 @@
 package com.github.wnameless.jsonapi;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
-import static com.google.common.collect.Maps.newLinkedHashMap;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.validation.Valid;
 
@@ -28,7 +29,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.wnameless.json.Jsonable;
 import com.github.wnameless.jsonapi.jackson.ObjectMapperFactory;
-import com.google.common.base.Objects;
 
 /**
  * 
@@ -45,7 +45,7 @@ public class ErrorObject implements Jsonable<ErrorObject> {
   private String id;
 
   @Valid
-  private Map<String, LinkObject> links = newLinkedHashMap();
+  private Map<String, LinkObject> links = new LinkedHashMap<>();
 
   private String status;
 
@@ -328,20 +328,19 @@ public class ErrorObject implements Jsonable<ErrorObject> {
     if (this == other) return true;
     if (!(other instanceof ErrorObject)) return false;
     ErrorObject castOther = (ErrorObject) other;
-    return Objects.equal(id, castOther.id)
-        && Objects.equal(links, castOther.links)
-        && Objects.equal(status, castOther.status)
-        && Objects.equal(code, castOther.code)
-        && Objects.equal(title, castOther.title)
-        && Objects.equal(detail, castOther.detail)
-        && Objects.equal(source, castOther.source)
-        && Objects.equal(meta, castOther.meta);
+    return Objects.equals(id, castOther.id)
+        && Objects.equals(links, castOther.links)
+        && Objects.equals(status, castOther.status)
+        && Objects.equals(code, castOther.code)
+        && Objects.equals(title, castOther.title)
+        && Objects.equals(detail, castOther.detail)
+        && Objects.equals(source, castOther.source)
+        && Objects.equals(meta, castOther.meta);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(id, links, status, code, title, detail, source,
-        meta);
+    return Objects.hash(id, links, status, code, title, detail, source, meta);
   }
 
   @Override

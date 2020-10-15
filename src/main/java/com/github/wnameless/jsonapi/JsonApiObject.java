@@ -19,13 +19,14 @@ package com.github.wnameless.jsonapi;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
+import java.util.Objects;
+
 import javax.validation.Valid;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.wnameless.json.Jsonable;
 import com.github.wnameless.jsonapi.jackson.ObjectMapperFactory;
-import com.google.common.base.Objects;
 
 /**
  * 
@@ -111,13 +112,13 @@ public class JsonApiObject implements Jsonable<JsonApiObject> {
     if (this == other) return true;
     if (!(other instanceof JsonApiObject)) return false;
     JsonApiObject castOther = (JsonApiObject) other;
-    return Objects.equal(version, castOther.version)
-        && Objects.equal(meta, castOther.meta);
+    return Objects.equals(version, castOther.version)
+        && Objects.equals(meta, castOther.meta);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(version, meta);
+    return Objects.hash(version, meta);
   }
 
   @Override

@@ -21,6 +21,7 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.validation.Valid;
 
@@ -31,7 +32,6 @@ import com.github.wnameless.json.Jsonable;
 import com.github.wnameless.jsonapi.jackson.DataArrayifyInterceptor;
 import com.github.wnameless.jsonapi.jackson.ObjectMapperFactory;
 import com.github.wnameless.jsonapi.jackson.SingularDataObjectifyInterceptor;
-import com.google.common.base.Objects;
 
 /**
  * 
@@ -158,14 +158,14 @@ public class RelationshipObject implements Jsonable<RelationshipObject> {
     if (this == other) return true;
     if (!(other instanceof RelationshipObject)) return false;
     RelationshipObject castOther = (RelationshipObject) other;
-    return Objects.equal(links, castOther.links)
-        && Objects.equal(data, castOther.data)
-        && Objects.equal(meta, castOther.meta);
+    return Objects.equals(links, castOther.links)
+        && Objects.equals(data, castOther.data)
+        && Objects.equals(meta, castOther.meta);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(links, data, meta);
+    return Objects.hash(links, data, meta);
   }
 
   @Override

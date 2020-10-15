@@ -19,6 +19,8 @@ package com.github.wnameless.jsonapi;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
 
+import java.util.Objects;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -26,7 +28,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.wnameless.json.Jsonable;
 import com.github.wnameless.jsonapi.jackson.ObjectMapperFactory;
-import com.google.common.base.Objects;
 
 /**
  * 
@@ -115,13 +116,13 @@ public class LinkObject implements Jsonable<LinkObject> {
     if (this == other) return true;
     if (!(other instanceof LinkObject)) return false;
     LinkObject castOther = (LinkObject) other;
-    return Objects.equal(href, castOther.href)
-        && Objects.equal(meta, castOther.meta);
+    return Objects.equals(href, castOther.href)
+        && Objects.equals(meta, castOther.meta);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(href, meta);
+    return Objects.hash(href, meta);
   }
 
   @Override

@@ -19,11 +19,12 @@ package com.github.wnameless.jsonapi;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
 
+import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.wnameless.json.Jsonable;
 import com.github.wnameless.jsonapi.jackson.ObjectMapperFactory;
-import com.google.common.base.Objects;
 
 /**
  * 
@@ -108,13 +109,13 @@ public class SourceObject implements Jsonable<SourceObject> {
     if (this == other) return true;
     if (!(other instanceof SourceObject)) return false;
     SourceObject castOther = (SourceObject) other;
-    return Objects.equal(pointer, castOther.pointer)
-        && Objects.equal(parameter, castOther.parameter);
+    return Objects.equals(pointer, castOther.pointer)
+        && Objects.equals(parameter, castOther.parameter);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(pointer, parameter);
+    return Objects.hash(pointer, parameter);
   }
 
   @Override

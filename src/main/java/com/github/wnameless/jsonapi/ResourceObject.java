@@ -19,12 +19,13 @@ package com.github.wnameless.jsonapi;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.ALWAYS;
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
-import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Maps.newLinkedHashMap;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -34,7 +35,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.wnameless.json.Jsonable;
 import com.github.wnameless.jsonapi.annotation.AnnotatedValueType;
 import com.github.wnameless.jsonapi.jackson.ObjectMapperFactory;
-import com.google.common.base.Objects;
 
 /**
  * 
@@ -59,13 +59,13 @@ public class ResourceObject<T>
   private T attributes;
 
   @Valid
-  private Map<String, RelationshipObject> relationships = newLinkedHashMap();
+  private Map<String, RelationshipObject> relationships = new LinkedHashMap<>();
 
   @Valid
-  private Map<String, LinkObject> links = newLinkedHashMap();
+  private Map<String, LinkObject> links = new LinkedHashMap<>();
 
   @Valid
-  private List<ResourceObject<?>> included = newArrayList();
+  private List<ResourceObject<?>> included = new ArrayList<>();
 
   @Valid
   private Object meta;
@@ -304,19 +304,19 @@ public class ResourceObject<T>
     if (this == other) return true;
     if (!(other instanceof ResourceObject)) return false;
     ResourceObject<?> castOther = (ResourceObject<?>) other;
-    return Objects.equal(type, castOther.type)
-        && Objects.equal(id, castOther.id)
-        && Objects.equal(attributes, castOther.attributes)
-        && Objects.equal(relationships, castOther.relationships)
-        && Objects.equal(links, castOther.links)
-        && Objects.equal(included, castOther.included)
-        && Objects.equal(meta, castOther.meta);
+    return Objects.equals(type, castOther.type)
+        && Objects.equals(id, castOther.id)
+        && Objects.equals(attributes, castOther.attributes)
+        && Objects.equals(relationships, castOther.relationships)
+        && Objects.equals(links, castOther.links)
+        && Objects.equals(included, castOther.included)
+        && Objects.equals(meta, castOther.meta);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(type, id, attributes, relationships, links,
-        included, meta);
+    return Objects.hash(type, id, attributes, relationships, links, included,
+        meta);
   }
 
   @Override

@@ -21,6 +21,7 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.ALWAYS;
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
 
 import java.util.EnumMap;
+import java.util.Objects;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -30,7 +31,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.wnameless.json.Jsonable;
 import com.github.wnameless.jsonapi.annotation.AnnotatedValueType;
 import com.github.wnameless.jsonapi.jackson.ObjectMapperFactory;
-import com.google.common.base.Objects;
 
 @JsonInclude(NON_DEFAULT)
 public class ResourceIdentifierObject
@@ -154,14 +154,14 @@ public class ResourceIdentifierObject
     if (this == other) return true;
     if (!(other instanceof ResourceIdentifierObject)) return false;
     ResourceIdentifierObject castOther = (ResourceIdentifierObject) other;
-    return Objects.equal(type, castOther.type)
-        && Objects.equal(id, castOther.id)
-        && Objects.equal(meta, castOther.meta);
+    return Objects.equals(type, castOther.type)
+        && Objects.equals(id, castOther.id)
+        && Objects.equals(meta, castOther.meta);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(type, id, meta);
+    return Objects.hash(type, id, meta);
   }
 
   @Override
