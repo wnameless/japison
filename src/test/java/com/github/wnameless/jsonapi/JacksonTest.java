@@ -17,23 +17,25 @@
  */
 package com.github.wnameless.jsonapi;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.wnameless.jsonapi.jackson.ObjectMapperFactory;
+import com.google.gson.Gson;
 
 public class JacksonTest {
 
+  Gson gson = new Gson();
   ObjectMapper mapper = ObjectMapperFactory.getObjectMapper();
 
   JapisonAnnotatedEntity typeAndId;
   JapisonAnnotatedEntity typeAndId2;
 
-  @Before
+  @BeforeEach
   public void setup() {
     typeAndId = new JapisonAnnotatedEntity(123L, "ABC");
     typeAndId2 = new JapisonAnnotatedEntity(456L, "DEF");
@@ -55,44 +57,48 @@ public class JacksonTest {
         "{\"id\":123,\"content\":\"ABC\"}", JapisonAnnotatedEntity.class);
     assertEquals(typeAndId, jae);
 
-    ResourceDocument<JapisonAnnotatedEntity> rd = mapper.readValue(
-        "{\"data\":[{\"type\":\"jae\",\"id\":\"123\",\"attributes\":{\"id\":123,\"content\":\"ABC\"}},{\"type\":\"jae\",\"id\":\"456\",\"attributes\":{\"id\":456,\"content\":\"DEF\"}}]}",
+    ResourceDocument<JapisonAnnotatedEntity> r =
+        JsonApi.resourceDocument(typeAndId, typeAndId2);
+    ResourceDocument<JapisonAnnotatedEntity> rd = mapper.readValue("{\"data\":["
+        + "{\"type\":\"jae\",\"id\":\"123\",\"attributes\":{\"id\":123,\"content\":\"ABC\"}},"
+        + "{\"type\":\"jae\",\"id\":\"456\",\"attributes\":{\"id\":456,\"content\":\"DEF\"}}"
+        + "]}",
         new TypeReference<ResourceDocument<JapisonAnnotatedEntity>>() {});
 
-    ResourceObject<JapisonAnnotatedEntity> r1 =
-        JsonApi.resourceDocument(typeAndId, typeAndId2).getData().get(0);
-    ResourceObject<JapisonAnnotatedEntity> r2 = rd.getData().get(0);
-    assertEquals(r1.getType(), r2.getType());
+    assertEquals(r.getData().get(0).getType(), rd.getData().get(0).getType());
 
-    assertEquals(r1.getAttributes().getId(), r2.getAttributes().getId());
-    assertEquals(r1.getAttributes().getContent(),
-        r2.getAttributes().getContent());
-    assertEquals(r1.getAttributes(), r2.getAttributes());
+    assertEquals(r.getData().toString(), rd.getData().toString());
 
-    assertEquals(JsonApi.resourceDocument(typeAndId, typeAndId2).getData(),
-        rd.getData());
-    assertEquals(JsonApi.resourceDocument(typeAndId, typeAndId2), rd);
+    assertEquals(
+        JsonApi.resourceDocument(typeAndId, typeAndId2).getData().toString(),
+        rd.getData().toString());
+    assertEquals(JsonApi.resourceDocument(typeAndId, typeAndId2).toString(),
+        rd.toString());
 
     rd = mapper.readValue(
         "{\"data\":{\"type\":\"jae\",\"id\":\"123\",\"attributes\":{\"id\":123,\"content\":\"ABC\"}}}",
         new TypeReference<ResourceDocument<JapisonAnnotatedEntity>>() {});
 
     assertEquals(
-        JsonApi.resourceDocument(typeAndId).getData().get(0).getAttributes(),
-        JsonApi.resourceDocument(typeAndId).getData().get(0).getAttributes());
+        JsonApi.resourceDocument(typeAndId).getData().getSingular()
+            .getAttributes(),
+        JsonApi.resourceDocument(typeAndId).getData().getSingular()
+            .getAttributes());
 
-    rd.getData().get(0).getId();
-    rd.getData().get(0).getIncluded();
-    rd.getData().get(0).getLinks();
-    assertEquals(rd.getData().get(0).getAttributes(),
-        rd.getData().get(0).getAttributes());
+    assertEquals(rd.getData().getSingular().getAttributes(),
+        rd.getData().getSingular().getAttributes());
 
     assertEquals(
-        JsonApi.resourceDocument(typeAndId).getData().get(0).getAttributes(),
-        rd.getData().get(0).getAttributes());
+        JsonApi.resourceDocument(typeAndId).getData().getSingular()
+            .getAttributes().getId(),
+        rd.getData().getSingular().getAttributes().getId());
+    assertEquals(
+        JsonApi.resourceDocument(typeAndId).getData().getSingular()
+            .getAttributes().getContent(),
+        rd.getData().getSingular().getAttributes().getContent());
 
-    assertEquals(JsonApi.resourceDocument(typeAndId).getData().get(0),
-        rd.getData().get(0));
+    assertEquals(JsonApi.resourceDocument(typeAndId).getData().getSingular(),
+        rd.getData().getSingular());
     assertEquals(JsonApi.resourceDocument(typeAndId).getData(), rd.getData());
 
     assertEquals(JsonApi.resourceDocument(typeAndId), rd);

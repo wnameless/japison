@@ -20,6 +20,8 @@ package com.github.wnameless.jsonapi;
 import java.util.List;
 import java.util.Map;
 
+import com.github.wnameless.jsonapi.util.UnpackableList;
+
 /**
  * 
  * {@link Document} defines a super type of {@link ResourceDocument},
@@ -40,7 +42,7 @@ public interface Document<T> {
    * 
    * @return the document's "primary data"
    */
-  public List<ResourceObject<T>> getData();
+  public UnpackableList<ResourceObject<T>> getData();
 
   /**
    * Sets the document's "primary data".
@@ -48,7 +50,7 @@ public interface Document<T> {
    * @param data
    *          the document's "primary data".
    */
-  public void setData(List<ResourceObject<T>> data);
+  public void setData(UnpackableList<ResourceObject<T>> data);
 
   /**
    * Returns a list of error objects

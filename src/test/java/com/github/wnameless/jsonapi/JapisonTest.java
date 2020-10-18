@@ -17,10 +17,10 @@
  */
 package com.github.wnameless.jsonapi;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.codebox.bean.JavaBeanTester;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -35,7 +35,7 @@ public class JapisonTest {
 
   JpaEntity<String> entity;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     entity = new JpaEntity<String>();
     entity.setData("hahaha");
@@ -76,6 +76,8 @@ public class JapisonTest {
     EqualsVerifier.forClass(ErrorObject.class)
         .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
     EqualsVerifier.forClass(ErrorsDocument.class)
+        .withPrefabValues(ResourceObject.class, new ResourceObject<String>(),
+            JsonApi.resource(new JapisonAnnotatedEntity()))
         .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
     EqualsVerifier.forClass(JsonApiObject.class)
         .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
@@ -84,10 +86,14 @@ public class JapisonTest {
     EqualsVerifier.forClass(RelationshipObject.class)
         .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
     EqualsVerifier.forClass(ResourceDocument.class)
+        .withPrefabValues(ResourceObject.class, new ResourceObject<String>(),
+            JsonApi.resource(new JapisonAnnotatedEntity()))
         .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
     EqualsVerifier.forClass(ResourceIdentifierObject.class)
         .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
     EqualsVerifier.forClass(ResourceObject.class)
+        .withPrefabValues(ResourceObject.class, new ResourceObject<String>(),
+            JsonApi.resource(new JapisonAnnotatedEntity()))
         .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
     EqualsVerifier.forClass(SourceObject.class)
         .suppress(Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE).verify();
@@ -105,7 +111,8 @@ public class JapisonTest {
         .withMeta(null);
     new JsonApiObject().withVersion(null).withMeta(null);
     new LinkObject().withHref(null).withMeta(null);
-    new RelationshipObject().withLinks(null).withData(null).withMeta(null);
+    new RelationshipObject().withLinks(null).withData((ResourceIdentifier) null)
+        .withMeta(null);
     new ResourceObject<Void>().withType(null).withId(null).withAttributes(null)
         .withRelationships(null).withLinks(null).withIncluded(null)
         .withMeta(null);
@@ -117,8 +124,8 @@ public class JapisonTest {
   public void testStaticMethods() {
     ResourceDocument<JpaEntity<String>> rd;
     rd = JsonApi.resourceDocument(new JpaEntity<String>(12L));
-    assertEquals("JpaEntity", rd.getData().get(0).getType());
-    assertEquals("12", rd.getData().get(0).getId());
+    assertEquals("JpaEntity", rd.getData().getSingular().getType());
+    assertEquals("12", rd.getData().getSingular().getId());
     rd = JsonApi.resourceDocument(new JpaEntity<String>());
 
     ResourceObject<JpaEntity<String>> ro;

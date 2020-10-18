@@ -31,11 +31,13 @@ import javax.validation.Valid;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.github.jonpeterson.jackson.module.interceptor.JsonInterceptors;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.github.wnameless.json.Jsonable;
-import com.github.wnameless.jsonapi.jackson.DataArrayifyInterceptor;
 import com.github.wnameless.jsonapi.jackson.ObjectMapperFactory;
-import com.github.wnameless.jsonapi.jackson.SingularDataObjectifyInterceptor;
+import com.github.wnameless.jsonapi.jackson.UnpackableListDeserializer;
+import com.github.wnameless.jsonapi.jackson.UnpackableListSerializer;
+import com.github.wnameless.jsonapi.util.UnpackableList;
 
 /**
  * 
@@ -46,15 +48,17 @@ import com.github.wnameless.jsonapi.jackson.SingularDataObjectifyInterceptor;
  *      Specification (v1.0) Document Structure</a>
  *
  */
-@JsonInterceptors(beforeDeserialization = DataArrayifyInterceptor.class,
-    afterSerialization = SingularDataObjectifyInterceptor.class)
+// @JsonInterceptors(beforeDeserialization = DataArrayifyInterceptor.class,
+// afterSerialization = SingularDataObjectifyInterceptor.class)
 @JsonInclude(NON_DEFAULT)
 public class ResourceDocument<T>
     implements Document<T>, Jsonable<ResourceDocument<T>> {
 
+  @JsonSerialize(using = UnpackableListSerializer.class)
+  @JsonDeserialize(using = UnpackableListDeserializer.class)
   @JsonInclude(ALWAYS)
   @Valid
-  private List<ResourceObject<T>> data = new ArrayList<>();
+  private UnpackableList<ResourceObject<T>> data = new UnpackableList<>();
 
   @Valid
   private Object meta;
@@ -69,12 +73,12 @@ public class ResourceDocument<T>
   private List<ResourceObject<?>> included = new ArrayList<>();
 
   @Override
-  public List<ResourceObject<T>> getData() {
+  public UnpackableList<ResourceObject<T>> getData() {
     return data;
   }
 
   @Override
-  public void setData(List<ResourceObject<T>> data) {
+  public void setData(UnpackableList<ResourceObject<T>> data) {
     this.data = data;
   }
 
@@ -86,8 +90,8 @@ public class ResourceDocument<T>
    * @return this {@link ResourceDocument}
    */
   public ResourceDocument<T> withData(ResourceObject<T> data) {
-    List<ResourceObject<T>> list = new ArrayList<>();
-    list.add(data);
+    UnpackableList<ResourceObject<T>> list = new UnpackableList<>();
+    list.addSingular(data);
     setData(list);
     return this;
   }
@@ -100,7 +104,9 @@ public class ResourceDocument<T>
    * @return this {@link ResourceDocument}
    */
   public ResourceDocument<T> withData(Collection<ResourceObject<T>> data) {
-    setData(new ArrayList<>(data));
+    UnpackableList<ResourceObject<T>> list = new UnpackableList<>();
+    list.addAll(data);
+    setData(list);
     return this;
   }
 

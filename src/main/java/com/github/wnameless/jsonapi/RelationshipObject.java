@@ -19,7 +19,7 @@ package com.github.wnameless.jsonapi;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
 
@@ -27,11 +27,9 @@ import javax.validation.Valid;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.github.jonpeterson.jackson.module.interceptor.JsonInterceptors;
 import com.github.wnameless.json.Jsonable;
-import com.github.wnameless.jsonapi.jackson.DataArrayifyInterceptor;
 import com.github.wnameless.jsonapi.jackson.ObjectMapperFactory;
-import com.github.wnameless.jsonapi.jackson.SingularDataObjectifyInterceptor;
+import com.github.wnameless.jsonapi.util.UnpackableList;
 
 /**
  * 
@@ -43,8 +41,8 @@ import com.github.wnameless.jsonapi.jackson.SingularDataObjectifyInterceptor;
  *      API Specification (v1.0) Relationships</a>
  *
  */
-@JsonInterceptors(beforeDeserialization = DataArrayifyInterceptor.class,
-    afterSerialization = SingularDataObjectifyInterceptor.class)
+// @JsonInterceptors(beforeDeserialization = DataArrayifyInterceptor.class,
+// afterSerialization = SingularDataObjectifyInterceptor.class)
 @JsonInclude(NON_DEFAULT)
 public class RelationshipObject implements Jsonable<RelationshipObject> {
 
@@ -52,7 +50,7 @@ public class RelationshipObject implements Jsonable<RelationshipObject> {
   private Map<String, LinkObject> links;
 
   @Valid
-  private List<ResourceIdentifier> data;
+  private UnpackableList<ResourceIdentifier> data;
 
   @Valid
   private Object meta;
@@ -94,7 +92,7 @@ public class RelationshipObject implements Jsonable<RelationshipObject> {
    * 
    * @return a {@link ResourceObject}
    */
-  public List<ResourceIdentifier> getData() {
+  public UnpackableList<ResourceIdentifier> getData() {
     return data;
   }
 
@@ -104,19 +102,35 @@ public class RelationshipObject implements Jsonable<RelationshipObject> {
    * @param data
    *          a {@link ResourceObject}
    */
-  public void setData(List<ResourceIdentifier> data) {
+  public void setData(UnpackableList<ResourceIdentifier> data) {
     this.data = data;
   }
 
   /**
-   * A chaining method for {@link setData}.
+   * A chaining method for {@link #setData}.
    * 
    * @param data
-   *          an array of {@link ResourceObject}
+   *          a {@link ResourceIdentifier}
    * @return this {@link RelationshipObject}
    */
-  public RelationshipObject withData(List<ResourceIdentifier> data) {
-    setData(data);
+  public RelationshipObject withData(ResourceIdentifier data) {
+    UnpackableList<ResourceIdentifier> list = new UnpackableList<>();
+    list.addSingular(data);
+    setData(list);
+    return this;
+  }
+
+  /**
+   * A chaining method for {@link #setData}.
+   * 
+   * @param data
+   *          a collection of {@link ResourceIdentifier}
+   * @return this {@link RelationshipObject}
+   */
+  public RelationshipObject withData(Collection<ResourceIdentifier> data) {
+    UnpackableList<ResourceIdentifier> list = new UnpackableList<>();
+    list.addAll(data);
+    setData(list);
     return this;
   }
 

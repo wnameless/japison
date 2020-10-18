@@ -18,7 +18,6 @@
 package com.github.wnameless.jsonapi.jackson;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.jonpeterson.jackson.module.interceptor.JsonInterceptorModule;
 
 /**
  * 
@@ -30,11 +29,7 @@ import com.github.jonpeterson.jackson.module.interceptor.JsonInterceptorModule;
  */
 public final class ObjectMapperFactory {
 
-  private static ObjectMapper mapper;
-  static {
-    mapper = new ObjectMapper();
-    mapper.registerModule(new JsonInterceptorModule());
-  }
+  private static ObjectMapper mapper = new ObjectMapper();
 
   private ObjectMapperFactory() {}
 
