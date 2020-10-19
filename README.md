@@ -7,9 +7,9 @@ A lightweight implementation of JSON API specification(http://jsonapi.org/).
 ##Maven Repo
 ```xml
 <dependency>
-    <groupId>com.github.wnameless.jsonapi</groupId>
+    <groupId>com.github.wnameless.json</groupId>
     <artifactId>japison</artifactId>
-    <version>0.2.0</version>
+    <version>0.3.0</version>
 </dependency>
 ```
 
@@ -17,7 +17,7 @@ A lightweight implementation of JSON API specification(http://jsonapi.org/).
 
 Static import first
 ```java
-import static com.github.wnameless.jsonapi.JsonApi.*;
+import static com.github.wnameless.json.japison.JsonApi.*;
 ```
 
 Example resource

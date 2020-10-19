@@ -15,7 +15,7 @@
  * the License.
  *
  */
-package com.github.wnameless.jsonapi;
+package com.github.wnameless.json.japison;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
 
@@ -27,9 +27,9 @@ import javax.validation.Valid;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.github.wnameless.json.Jsonable;
-import com.github.wnameless.jsonapi.jackson.ObjectMapperFactory;
-import com.github.wnameless.jsonapi.util.UnpackableList;
+import com.github.wnameless.json.base.Jsonable;
+import com.github.wnameless.json.japison.jackson.ObjectMapperFactory;
+import com.github.wnameless.json.japison.util.UnpackableList;
 
 /**
  * 
@@ -41,10 +41,8 @@ import com.github.wnameless.jsonapi.util.UnpackableList;
  *      API Specification (v1.0) Relationships</a>
  *
  */
-// @JsonInterceptors(beforeDeserialization = DataArrayifyInterceptor.class,
-// afterSerialization = SingularDataObjectifyInterceptor.class)
 @JsonInclude(NON_DEFAULT)
-public class RelationshipObject implements Jsonable<RelationshipObject> {
+public class RelationshipObject implements Jsonable {
 
   @Valid
   private Map<String, LinkObject> links;

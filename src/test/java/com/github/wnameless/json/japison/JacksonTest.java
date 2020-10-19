@@ -15,7 +15,7 @@
  * the License.
  *
  */
-package com.github.wnameless.jsonapi;
+package com.github.wnameless.json.japison;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -24,7 +24,9 @@ import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.wnameless.jsonapi.jackson.ObjectMapperFactory;
+import com.github.wnameless.json.japison.JsonApi;
+import com.github.wnameless.json.japison.ResourceDocument;
+import com.github.wnameless.json.japison.jackson.ObjectMapperFactory;
 import com.google.gson.Gson;
 
 public class JacksonTest {

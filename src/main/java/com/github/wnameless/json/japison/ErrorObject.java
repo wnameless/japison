@@ -15,7 +15,7 @@
  * the License.
  *
  */
-package com.github.wnameless.jsonapi;
+package com.github.wnameless.json.japison;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
 
@@ -27,8 +27,8 @@ import javax.validation.Valid;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.github.wnameless.json.Jsonable;
-import com.github.wnameless.jsonapi.jackson.ObjectMapperFactory;
+import com.github.wnameless.json.base.Jsonable;
+import com.github.wnameless.json.japison.jackson.ObjectMapperFactory;
 
 /**
  * 
@@ -40,7 +40,7 @@ import com.github.wnameless.jsonapi.jackson.ObjectMapperFactory;
  *
  */
 @JsonInclude(NON_DEFAULT)
-public class ErrorObject implements Jsonable<ErrorObject> {
+public class ErrorObject implements Jsonable {
 
   private String id;
 

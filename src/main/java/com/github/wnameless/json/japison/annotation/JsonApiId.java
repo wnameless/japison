@@ -15,10 +15,25 @@
  * the License.
  *
  */
-package com.github.wnameless.jsonapi.annotation;
+package com.github.wnameless.json.japison.annotation;
 
-public enum AnnotatedValueType {
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-  ID, TYPE;
+/**
+ * 
+ * {@link JsonApiId} is used to identify the ID of a Java object for JSON API
+ * resource to use.
+ * 
+ * @author Wei-Ming Wu
+ *
+ */
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ ElementType.FIELD, ElementType.METHOD })
+public @interface JsonApiId {
+
+  String getterName() default "";
 
 }

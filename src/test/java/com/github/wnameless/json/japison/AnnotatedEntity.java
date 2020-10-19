@@ -1,6 +1,6 @@
 /*
  *
- * Copyright 2015 Wei-Ming Wu
+ * Copyright 2017 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -15,37 +15,19 @@
  * the License.
  *
  */
-package com.github.wnameless.jsonapi;
+package com.github.wnameless.json.japison;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import com.github.wnameless.json.japison.annotation.JsonApiId;
+import com.github.wnameless.json.japison.annotation.JsonApiType;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.github.wnameless.jsonapi.annotation.JsonApiId;
-
-@JsonInclude(Include.NON_DEFAULT)
-@Entity
-public class JpaEntity<T> {
+@JsonApiType("AE")
+public class AnnotatedEntity {
 
   @JsonApiId
-  @Id
-  private Long id;
+  private String id;
 
-  private T data;
-
-  public JpaEntity() {}
-
-  public JpaEntity(Long id) {
+  public AnnotatedEntity(String id) {
     this.id = id;
-  }
-
-  public T getData() {
-    return data;
-  }
-
-  public void setData(T data) {
-    this.data = data;
   }
 
 }

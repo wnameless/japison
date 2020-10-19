@@ -15,7 +15,7 @@
  * the License.
  *
  */
-package com.github.wnameless.jsonapi;
+package com.github.wnameless.json.japison;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -25,6 +25,17 @@ import org.junit.jupiter.api.Test;
 import com.codebox.bean.JavaBeanTester;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.wnameless.json.japison.ErrorObject;
+import com.github.wnameless.json.japison.ErrorsDocument;
+import com.github.wnameless.json.japison.JsonApi;
+import com.github.wnameless.json.japison.JsonApiObject;
+import com.github.wnameless.json.japison.LinkObject;
+import com.github.wnameless.json.japison.RelationshipObject;
+import com.github.wnameless.json.japison.ResourceDocument;
+import com.github.wnameless.json.japison.ResourceIdentifier;
+import com.github.wnameless.json.japison.ResourceIdentifierObject;
+import com.github.wnameless.json.japison.ResourceObject;
+import com.github.wnameless.json.japison.SourceObject;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;

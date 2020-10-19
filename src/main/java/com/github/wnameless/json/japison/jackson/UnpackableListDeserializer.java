@@ -13,7 +13,7 @@
  * the License.
  *
  */
-package com.github.wnameless.jsonapi.jackson;
+package com.github.wnameless.json.japison.jackson;
 
 import java.io.IOException;
 import java.util.List;
@@ -28,7 +28,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
-import com.github.wnameless.jsonapi.util.UnpackableList;
+import com.github.wnameless.json.japison.util.UnpackableList;
 
 public class UnpackableListDeserializer<T> extends
     JsonDeserializer<UnpackableList<T>> implements ContextualDeserializer {

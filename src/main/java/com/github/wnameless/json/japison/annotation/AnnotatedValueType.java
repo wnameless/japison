@@ -15,10 +15,10 @@
  * the License.
  *
  */
-package com.github.wnameless.jsonapi;
+package com.github.wnameless.json.japison.annotation;
 
-public interface ResourceSetting<T> {
+public enum AnnotatedValueType {
 
-  void apply(ResourceObject<T> resource);
+  ID, TYPE;
 
 }

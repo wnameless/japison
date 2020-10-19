@@ -1,6 +1,6 @@
 /*
  *
- * Copyright 2015 Wei-Ming Wu
+ * Copyright 2017 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -15,23 +15,25 @@
  * the License.
  *
  */
-package com.github.wnameless.json;
+package com.github.wnameless.json.japison.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * 
- * {@link Jsonable} is an interface which allows implementing class to be
- * converted to JSON string.
+ * {@link JsonApiType} is used to provide the default type name of a Java object
+ * for JSON API resource to use.
+ * 
+ * @author Wei-Ming Wu
  *
- * @param <T>
- *          the type of jsonable object
  */
-public interface Jsonable<T> {
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+public @interface JsonApiType {
 
-  /**
-   * Returns a JSON string which represents this object.
-   * 
-   * @return a JSON string
-   */
-  String toJson();
+  String value();
 
 }

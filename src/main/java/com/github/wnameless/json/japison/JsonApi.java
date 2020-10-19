@@ -15,10 +15,10 @@
  * the License.
  *
  */
-package com.github.wnameless.jsonapi;
+package com.github.wnameless.json.japison;
 
-import static com.github.wnameless.jsonapi.annotation.AnnotatedValueType.ID;
-import static com.github.wnameless.jsonapi.annotation.AnnotatedValueType.TYPE;
+import static com.github.wnameless.json.japison.annotation.AnnotatedValueType.ID;
+import static com.github.wnameless.json.japison.annotation.AnnotatedValueType.TYPE;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -35,10 +35,10 @@ import org.apache.commons.beanutils.BeanMap;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
 
-import com.github.wnameless.jsonapi.annotation.AnnotatedValueType;
-import com.github.wnameless.jsonapi.annotation.JsonApiId;
-import com.github.wnameless.jsonapi.annotation.JsonApiType;
-import com.github.wnameless.jsonapi.util.UnpackableList;
+import com.github.wnameless.json.japison.annotation.AnnotatedValueType;
+import com.github.wnameless.json.japison.annotation.JsonApiId;
+import com.github.wnameless.json.japison.annotation.JsonApiType;
+import com.github.wnameless.json.japison.util.UnpackableList;
 
 /**
  * 

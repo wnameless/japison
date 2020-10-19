@@ -15,10 +15,10 @@
  * the License.
  *
  */
-package com.github.wnameless.jsonapi;
+package com.github.wnameless.json.japison;
 
-import com.github.wnameless.jsonapi.annotation.JsonApiId;
-import com.github.wnameless.jsonapi.annotation.JsonApiType;
+import com.github.wnameless.json.japison.annotation.JsonApiId;
+import com.github.wnameless.json.japison.annotation.JsonApiType;
 
 @JsonApiType("jae")
 public class JapisonAnnotatedEntity {

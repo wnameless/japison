@@ -13,7 +13,7 @@
  * the License.
  *
  */
-package com.github.wnameless.jsonapi.util;
+package com.github.wnameless.json.japison.util;
 
 import java.util.AbstractList;
 import java.util.ArrayList;

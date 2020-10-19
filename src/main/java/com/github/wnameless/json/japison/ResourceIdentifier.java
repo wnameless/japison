@@ -15,25 +15,14 @@
  * the License.
  *
  */
-package com.github.wnameless.jsonapi.annotation;
+package com.github.wnameless.json.japison;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+public interface ResourceIdentifier {
 
-/**
- * 
- * {@link JsonApiType} is used to provide the default type name of a Java object
- * for JSON API resource to use.
- * 
- * @author Wei-Ming Wu
- *
- */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface JsonApiType {
+  String getType();
 
-  String value();
+  String getId();
+
+  Object getMeta();
 
 }

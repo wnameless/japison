@@ -15,12 +15,12 @@
  * the License.
  *
  */
-package com.github.wnameless.jsonapi;
+package com.github.wnameless.json.japison;
 
 import java.util.List;
 import java.util.Map;
 
-import com.github.wnameless.jsonapi.util.UnpackableList;
+import com.github.wnameless.json.japison.util.UnpackableList;
 
 /**
  * 

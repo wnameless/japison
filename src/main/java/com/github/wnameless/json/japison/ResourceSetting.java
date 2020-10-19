@@ -15,14 +15,10 @@
  * the License.
  *
  */
-package com.github.wnameless.jsonapi;
+package com.github.wnameless.json.japison;
 
-public interface ResourceIdentifier {
+public interface ResourceSetting<T> {
 
-  String getType();
-
-  String getId();
-
-  Object getMeta();
+  void apply(ResourceObject<T> resource);
 
 }
