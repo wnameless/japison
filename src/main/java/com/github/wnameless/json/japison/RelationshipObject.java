@@ -113,7 +113,7 @@ public class RelationshipObject implements Jsonable {
    */
   public RelationshipObject withData(ResourceIdentifier data) {
     UnpackableList<ResourceIdentifier> list = new UnpackableList<>();
-    list.addSingular(data);
+    list.setSingular(data);
     setData(list);
     return this;
   }

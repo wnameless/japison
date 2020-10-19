@@ -64,10 +64,10 @@ public class UnpackableListDeserializer<T> extends
     } else {
       if (node == null) {
         T item = null;
-        list.addSingular(item);
+        list.setSingular(item);
       } else {
         T item = mapper.convertValue(node, elementType);
-        list.addSingular(item);
+        list.setSingular(item);
       }
     }
     return list;

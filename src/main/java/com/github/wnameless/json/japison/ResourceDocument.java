@@ -48,8 +48,6 @@ import com.github.wnameless.json.japison.util.UnpackableList;
  *      Specification (v1.0) Document Structure</a>
  *
  */
-// @JsonInterceptors(beforeDeserialization = DataArrayifyInterceptor.class,
-// afterSerialization = SingularDataObjectifyInterceptor.class)
 @JsonInclude(NON_DEFAULT)
 public class ResourceDocument<T> implements Document<T>, Jsonable {
 
@@ -90,7 +88,7 @@ public class ResourceDocument<T> implements Document<T>, Jsonable {
    */
   public ResourceDocument<T> withData(ResourceObject<T> data) {
     UnpackableList<ResourceObject<T>> list = new UnpackableList<>();
-    list.addSingular(data);
+    list.setSingular(data);
     setData(list);
     return this;
   }

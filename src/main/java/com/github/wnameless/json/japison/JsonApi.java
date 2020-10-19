@@ -106,7 +106,7 @@ public final class JsonApi {
     ResourceDocument<T> document = new ResourceDocument<T>();
     UnpackableList<ResourceObject<T>> resources = new UnpackableList<>();
     ResourceObject<T> resource = resource(attributes);
-    resources.addSingular(resource);
+    resources.setSingular(resource);
     document.setData(resources);
     return document;
   }
@@ -117,7 +117,7 @@ public final class JsonApi {
     UnpackableList<ResourceObject<T>> resources = new UnpackableList<>();
     ResourceObject<T> resource = resource(attributes);
     if (setting != null) setting.apply(resource);
-    resources.addSingular(resource);
+    resources.setSingular(resource);
     document.setData(resources);
     return document;
   }
