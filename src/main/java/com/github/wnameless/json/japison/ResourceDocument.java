@@ -35,9 +35,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.github.wnameless.json.base.Jsonable;
 import com.github.wnameless.json.japison.jackson.ObjectMapperFactory;
-import com.github.wnameless.json.japison.jackson.UnpackableListDeserializer;
-import com.github.wnameless.json.japison.jackson.UnpackableListSerializer;
-import com.github.wnameless.json.japison.util.UnpackableList;
+import com.github.wnameless.json.japison.jackson.PrimaryDataDeserializer;
+import com.github.wnameless.json.japison.jackson.PrimaryDataSerializer;
+import com.github.wnameless.json.japison.util.PrimaryData;
 
 /**
  * 
@@ -51,11 +51,11 @@ import com.github.wnameless.json.japison.util.UnpackableList;
 @JsonInclude(NON_DEFAULT)
 public class ResourceDocument<T> implements Document<T>, Jsonable {
 
-  @JsonSerialize(using = UnpackableListSerializer.class)
-  @JsonDeserialize(using = UnpackableListDeserializer.class)
+  @JsonSerialize(using = PrimaryDataSerializer.class)
+  @JsonDeserialize(using = PrimaryDataDeserializer.class)
   @JsonInclude(ALWAYS)
   @Valid
-  private UnpackableList<ResourceObject<T>> data = new UnpackableList<>();
+  private PrimaryData<ResourceObject<T>> data = new PrimaryData<>();
 
   @Valid
   private Object meta;
@@ -70,12 +70,12 @@ public class ResourceDocument<T> implements Document<T>, Jsonable {
   private List<ResourceObject<?>> included = new ArrayList<>();
 
   @Override
-  public UnpackableList<ResourceObject<T>> getData() {
+  public PrimaryData<ResourceObject<T>> getData() {
     return data;
   }
 
   @Override
-  public void setData(UnpackableList<ResourceObject<T>> data) {
+  public void setData(PrimaryData<ResourceObject<T>> data) {
     this.data = data;
   }
 
@@ -87,7 +87,7 @@ public class ResourceDocument<T> implements Document<T>, Jsonable {
    * @return this {@link ResourceDocument}
    */
   public ResourceDocument<T> withData(ResourceObject<T> data) {
-    UnpackableList<ResourceObject<T>> list = new UnpackableList<>();
+    PrimaryData<ResourceObject<T>> list = new PrimaryData<>();
     list.setSingular(data);
     setData(list);
     return this;
@@ -101,7 +101,7 @@ public class ResourceDocument<T> implements Document<T>, Jsonable {
    * @return this {@link ResourceDocument}
    */
   public ResourceDocument<T> withData(Collection<ResourceObject<T>> data) {
-    UnpackableList<ResourceObject<T>> list = new UnpackableList<>();
+    PrimaryData<ResourceObject<T>> list = new PrimaryData<>();
     list.addAll(data);
     setData(list);
     return this;

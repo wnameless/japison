@@ -29,7 +29,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.wnameless.json.base.Jsonable;
 import com.github.wnameless.json.japison.jackson.ObjectMapperFactory;
-import com.github.wnameless.json.japison.util.UnpackableList;
+import com.github.wnameless.json.japison.util.PrimaryData;
 
 /**
  * 
@@ -48,7 +48,7 @@ public class RelationshipObject implements Jsonable {
   private Map<String, LinkObject> links;
 
   @Valid
-  private UnpackableList<ResourceIdentifier> data;
+  private PrimaryData<ResourceIdentifier> data;
 
   @Valid
   private Object meta;
@@ -90,7 +90,7 @@ public class RelationshipObject implements Jsonable {
    * 
    * @return a {@link ResourceObject}
    */
-  public UnpackableList<ResourceIdentifier> getData() {
+  public PrimaryData<ResourceIdentifier> getData() {
     return data;
   }
 
@@ -100,7 +100,7 @@ public class RelationshipObject implements Jsonable {
    * @param data
    *          a {@link ResourceObject}
    */
-  public void setData(UnpackableList<ResourceIdentifier> data) {
+  public void setData(PrimaryData<ResourceIdentifier> data) {
     this.data = data;
   }
 
@@ -112,7 +112,7 @@ public class RelationshipObject implements Jsonable {
    * @return this {@link RelationshipObject}
    */
   public RelationshipObject withData(ResourceIdentifier data) {
-    UnpackableList<ResourceIdentifier> list = new UnpackableList<>();
+    PrimaryData<ResourceIdentifier> list = new PrimaryData<>();
     list.setSingular(data);
     setData(list);
     return this;
@@ -126,7 +126,7 @@ public class RelationshipObject implements Jsonable {
    * @return this {@link RelationshipObject}
    */
   public RelationshipObject withData(Collection<ResourceIdentifier> data) {
-    UnpackableList<ResourceIdentifier> list = new UnpackableList<>();
+    PrimaryData<ResourceIdentifier> list = new PrimaryData<>();
     list.addAll(data);
     setData(list);
     return this;

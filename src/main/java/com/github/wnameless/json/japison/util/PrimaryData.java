@@ -20,12 +20,15 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Objects;
 
-public final class UnpackableList<E> implements List<E> {
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
-  private final List<E> list = new ArrayList<>();
+public final class PrimaryData<E> implements List<E> {
 
-  private E element;
+  private final List<E> collection = new ArrayList<>();
+
+  private E resource;
   private boolean singular = false;
 
   public boolean isSingular() {
@@ -33,147 +36,164 @@ public final class UnpackableList<E> implements List<E> {
   }
 
   public void setSingular(E element) {
-    this.element = element;
+    this.resource = element;
     singular = true;
   }
 
   public void removeSingular() {
-    element = null;
+    resource = null;
     singular = false;
   }
 
   public E getSingular() {
-    return element;
+    return resource;
   }
 
   @Override
   public int size() {
-    return list.size();
+    return collection.size();
   }
 
   @Override
   public boolean isEmpty() {
-    return list.isEmpty();
+    return collection.isEmpty();
   }
 
   @Override
   public boolean contains(Object o) {
-    return list.contains(o);
+    return collection.contains(o);
   }
 
   @Override
   public Iterator<E> iterator() {
-    return list.iterator();
+    return collection.iterator();
   }
 
   @Override
   public Object[] toArray() {
-    return list.toArray();
+    return collection.toArray();
   }
 
   @Override
   public <T> T[] toArray(T[] a) {
-    return list.toArray(a);
+    return collection.toArray(a);
   }
 
   @Override
   public boolean add(E e) {
-    return list.add(e);
+    return collection.add(e);
   }
 
   @Override
   public boolean remove(Object o) {
-    return list.remove(o);
+    return collection.remove(o);
   }
 
   @Override
   public boolean containsAll(Collection<?> c) {
-    return list.containsAll(c);
+    return collection.containsAll(c);
   }
 
   @Override
   public boolean addAll(Collection<? extends E> c) {
-    return list.addAll(c);
+    return collection.addAll(c);
   }
 
   @Override
   public boolean addAll(int index, Collection<? extends E> c) {
-    return list.addAll(index, c);
+    return collection.addAll(index, c);
   }
 
   @Override
   public boolean removeAll(Collection<?> c) {
-    return list.removeAll(c);
+    return collection.removeAll(c);
   }
 
   @Override
   public boolean retainAll(Collection<?> c) {
-    return list.retainAll(c);
+    return collection.retainAll(c);
   }
 
   @Override
   public void clear() {
-    list.clear();
+    collection.clear();
   }
 
   @Override
   public E get(int index) {
-    return list.get(index);
+    return collection.get(index);
   }
 
   @Override
   public E set(int index, E element) {
-    return list.set(index, element);
+    return collection.set(index, element);
   }
 
   @Override
   public void add(int index, E element) {
-    list.add(index, element);
+    collection.add(index, element);
   }
 
   @Override
   public E remove(int index) {
-    return list.remove(index);
+    return collection.remove(index);
   }
 
   @Override
   public int indexOf(Object o) {
-    return list.indexOf(o);
+    return collection.indexOf(o);
   }
 
   @Override
   public int lastIndexOf(Object o) {
-    return list.lastIndexOf(o);
+    return collection.lastIndexOf(o);
   }
 
   @Override
   public ListIterator<E> listIterator() {
-    return list.listIterator();
+    return collection.listIterator();
   }
 
   @Override
   public ListIterator<E> listIterator(int index) {
-    return list.listIterator();
+    return collection.listIterator();
   }
 
   @Override
   public List<E> subList(int fromIndex, int toIndex) {
-    return list.subList(fromIndex, toIndex);
+    return collection.subList(fromIndex, toIndex);
   }
 
   @Override
   public int hashCode() {
-    return list.hashCode();
+    if (singular) {
+      return Objects.hash(resource);
+    } else {
+      return Objects.hash(collection);
+    }
   }
 
   @Override
-  public boolean equals(Object o) {
-    return list.equals(o);
+  public boolean equals(Object obj) {
+    if (obj == null) return false;
+    if (obj == this) return true;
+    if (!(obj instanceof PrimaryData)) return false;
+    PrimaryData<?> other = (PrimaryData<?>) obj;
+    if (singular) {
+      return Objects.equals(resource, other.resource);
+    } else {
+      return Objects.equals(collection, other.collection);
+    }
   }
 
   @Override
   public String toString() {
-    return list.toString();
+    if (singular) {
+      return new ToStringBuilder(this).append("resource", resource).toString();
+    } else {
+      return new ToStringBuilder(this).append("collection", collection)
+          .toString();
+    }
   }
 
 }

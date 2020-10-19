@@ -20,7 +20,7 @@ package com.github.wnameless.json.japison;
 import java.util.List;
 import java.util.Map;
 
-import com.github.wnameless.json.japison.util.UnpackableList;
+import com.github.wnameless.json.japison.util.PrimaryData;
 
 /**
  * 
@@ -42,7 +42,7 @@ public interface Document<T> {
    * 
    * @return the document's "primary data"
    */
-  public UnpackableList<ResourceObject<T>> getData();
+  public PrimaryData<ResourceObject<T>> getData();
 
   /**
    * Sets the document's "primary data".
@@ -50,7 +50,7 @@ public interface Document<T> {
    * @param data
    *          the document's "primary data".
    */
-  public void setData(UnpackableList<ResourceObject<T>> data);
+  public void setData(PrimaryData<ResourceObject<T>> data);
 
   /**
    * Returns a list of error objects

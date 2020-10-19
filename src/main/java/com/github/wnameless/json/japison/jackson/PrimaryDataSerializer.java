@@ -22,23 +22,23 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.github.wnameless.json.japison.ResourceObject;
-import com.github.wnameless.json.japison.util.UnpackableList;
+import com.github.wnameless.json.japison.util.PrimaryData;
 
-public class UnpackableListSerializer
-    extends StdSerializer<UnpackableList<ResourceObject<?>>> {
+public class PrimaryDataSerializer
+    extends StdSerializer<PrimaryData<ResourceObject<?>>> {
 
   private static final long serialVersionUID = 1L;
 
-  public UnpackableListSerializer() {
+  public PrimaryDataSerializer() {
     this(null);
   }
 
-  public UnpackableListSerializer(Class<UnpackableList<ResourceObject<?>>> t) {
+  public PrimaryDataSerializer(Class<PrimaryData<ResourceObject<?>>> t) {
     super(t);
   }
 
   @Override
-  public void serialize(UnpackableList<ResourceObject<?>> value,
+  public void serialize(PrimaryData<ResourceObject<?>> value,
       JsonGenerator jgen, SerializerProvider provider)
       throws IOException, JsonProcessingException {
     if (value == null) jgen.writeNull();

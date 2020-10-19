@@ -38,7 +38,7 @@ import org.apache.commons.lang3.reflect.MethodUtils;
 import com.github.wnameless.json.japison.annotation.AnnotatedValueType;
 import com.github.wnameless.json.japison.annotation.JsonApiId;
 import com.github.wnameless.json.japison.annotation.JsonApiType;
-import com.github.wnameless.json.japison.util.UnpackableList;
+import com.github.wnameless.json.japison.util.PrimaryData;
 
 /**
  * 
@@ -80,7 +80,7 @@ public final class JsonApi {
   public static <T> ResourceDocument<T> resourceDocument(
       Collection<T> attributes) {
     ResourceDocument<T> document = new ResourceDocument<T>();
-    UnpackableList<ResourceObject<T>> resources = new UnpackableList<>();
+    PrimaryData<ResourceObject<T>> resources = new PrimaryData<>();
     for (T attr : attributes) {
       ResourceObject<T> resource = resource(attr);
       resources.add(resource);
@@ -92,7 +92,7 @@ public final class JsonApi {
   public static <T> ResourceDocument<T> resourceDocument(
       Collection<T> attributes, ResourceSetting<T> setting) {
     ResourceDocument<T> document = new ResourceDocument<T>();
-    UnpackableList<ResourceObject<T>> resources = new UnpackableList<>();
+    PrimaryData<ResourceObject<T>> resources = new PrimaryData<>();
     for (T attr : attributes) {
       ResourceObject<T> resource = resource(attr);
       if (setting != null) setting.apply(resource);
@@ -104,7 +104,7 @@ public final class JsonApi {
 
   public static <T> ResourceDocument<T> resourceDocument(T attributes) {
     ResourceDocument<T> document = new ResourceDocument<T>();
-    UnpackableList<ResourceObject<T>> resources = new UnpackableList<>();
+    PrimaryData<ResourceObject<T>> resources = new PrimaryData<>();
     ResourceObject<T> resource = resource(attributes);
     resources.setSingular(resource);
     document.setData(resources);
@@ -114,7 +114,7 @@ public final class JsonApi {
   public static <T> ResourceDocument<T> resourceDocument(T attributes,
       ResourceSetting<T> setting) {
     ResourceDocument<T> document = new ResourceDocument<T>();
-    UnpackableList<ResourceObject<T>> resources = new UnpackableList<>();
+    PrimaryData<ResourceObject<T>> resources = new PrimaryData<>();
     ResourceObject<T> resource = resource(attributes);
     if (setting != null) setting.apply(resource);
     resources.setSingular(resource);
@@ -134,7 +134,7 @@ public final class JsonApi {
   @SafeVarargs
   public static <T> ResourceDocument<T> resourceDocument(T... attributes) {
     ResourceDocument<T> document = new ResourceDocument<T>();
-    UnpackableList<ResourceObject<T>> resources = new UnpackableList<>();
+    PrimaryData<ResourceObject<T>> resources = new PrimaryData<>();
     for (T attr : attributes) {
       ResourceObject<T> resource = resource(attr);
       resources.add(resource);

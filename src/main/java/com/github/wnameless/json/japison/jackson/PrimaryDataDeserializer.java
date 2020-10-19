@@ -28,31 +28,30 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
-import com.github.wnameless.json.japison.util.UnpackableList;
+import com.github.wnameless.json.japison.util.PrimaryData;
 
-public class UnpackableListDeserializer<T> extends
-    JsonDeserializer<UnpackableList<T>> implements ContextualDeserializer {
+public class PrimaryDataDeserializer<T> extends JsonDeserializer<PrimaryData<T>>
+    implements ContextualDeserializer {
 
   private JavaType elementType;
 
-  public UnpackableListDeserializer() {}
+  public PrimaryDataDeserializer() {}
 
-  public UnpackableListDeserializer(JavaType elementType) {
+  public PrimaryDataDeserializer(JavaType elementType) {
     this.elementType = elementType;
   }
 
   @Override
-  public UnpackableListDeserializer<T> createContextual(
+  public PrimaryDataDeserializer<T> createContextual(
       DeserializationContext ctxt, BeanProperty property)
       throws JsonMappingException {
-    return new UnpackableListDeserializer<T>(
-        property.getType().containedType(0));
+    return new PrimaryDataDeserializer<T>(property.getType().containedType(0));
   }
 
   @Override
-  public UnpackableList<T> deserialize(JsonParser p,
-      DeserializationContext ctxt) throws IOException, JsonProcessingException {
-    UnpackableList<T> list = new UnpackableList<>();
+  public PrimaryData<T> deserialize(JsonParser p, DeserializationContext ctxt)
+      throws IOException, JsonProcessingException {
+    PrimaryData<T> list = new PrimaryData<>();
 
     ObjectMapper mapper = ObjectMapperFactory.getObjectMapper();
     JsonNode node = p.readValueAsTree();

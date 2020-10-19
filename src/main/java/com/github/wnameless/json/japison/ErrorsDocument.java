@@ -32,7 +32,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.wnameless.json.base.Jsonable;
 import com.github.wnameless.json.japison.jackson.ObjectMapperFactory;
-import com.github.wnameless.json.japison.util.UnpackableList;
+import com.github.wnameless.json.japison.util.PrimaryData;
 
 /**
  * 
@@ -63,12 +63,12 @@ public class ErrorsDocument implements Document<Void>, Jsonable {
   private List<ResourceObject<?>> included = new ArrayList<>();
 
   @Override
-  public UnpackableList<ResourceObject<Void>> getData() {
+  public PrimaryData<ResourceObject<Void>> getData() {
     return null;
   }
 
   @Override
-  public void setData(UnpackableList<ResourceObject<Void>> data) {}
+  public void setData(PrimaryData<ResourceObject<Void>> data) {}
 
   @Override
   public List<ErrorObject> getErrors() {
