@@ -24,8 +24,6 @@ import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.wnameless.json.japison.JsonApi;
-import com.github.wnameless.json.japison.ResourceDocument;
 import com.github.wnameless.json.japison.jackson.ObjectMapperFactory;
 import com.google.gson.Gson;
 
