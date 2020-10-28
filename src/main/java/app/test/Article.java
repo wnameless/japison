@@ -22,14 +22,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.annotation.Id;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import com.github.imifou.jsonschema.module.addon.annotation.JsonSchema;
 import com.github.wnameless.json.japison.util.JsonSchemaGenerable;
 import com.github.wnameless.spring.boot.up.web.RestfulItem;
 
 import lombok.Data;
 
-@JsonAppend(attrs = { @JsonAppend.Attr(propName = "title", value = "title") })
 @Data
 public class Article implements RestfulItem<String>, JsonSchemaGenerable {
 
