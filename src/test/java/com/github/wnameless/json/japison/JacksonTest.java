@@ -24,13 +24,13 @@ import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.wnameless.json.japison.jackson.ObjectMapperFactory;
+import com.github.wnameless.json.japison.jackson.JapisonFactory;
 import com.google.gson.Gson;
 
 public class JacksonTest {
 
   Gson gson = new Gson();
-  ObjectMapper mapper = ObjectMapperFactory.getObjectMapper();
+  ObjectMapper mapper = JapisonFactory.getObjectMapper();
 
   JapisonAnnotatedEntity typeAndId;
   JapisonAnnotatedEntity typeAndId2;

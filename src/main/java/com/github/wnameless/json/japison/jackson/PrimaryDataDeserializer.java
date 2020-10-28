@@ -53,7 +53,7 @@ public class PrimaryDataDeserializer<T> extends JsonDeserializer<PrimaryData<T>>
       throws IOException, JsonProcessingException {
     PrimaryData<T> list = new PrimaryData<>();
 
-    ObjectMapper mapper = ObjectMapperFactory.getObjectMapper();
+    ObjectMapper mapper = JapisonFactory.getObjectMapper();
     JsonNode node = p.readValueAsTree();
     if (node != null && node.isArray()) {
       @SuppressWarnings("unchecked")

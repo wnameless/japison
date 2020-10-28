@@ -17,8 +17,7 @@
  */
 package com.github.wnameless.json.japison;
 
-public interface ResourceSetting<T> {
+import java.util.function.Consumer;
 
-  void apply(ResourceObject<T> resource);
-
-}
+@FunctionalInterface
+public interface ResourceSetting<T> extends Consumer<ResourceObject<T>> {}

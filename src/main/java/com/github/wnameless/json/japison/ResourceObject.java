@@ -30,11 +30,14 @@ import java.util.Objects;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.wnameless.json.base.Jsonable;
 import com.github.wnameless.json.japison.annotation.AnnotatedValueType;
-import com.github.wnameless.json.japison.jackson.ObjectMapperFactory;
+import com.github.wnameless.json.japison.jackson.JapisonFactory;
+import com.github.wnameless.json.japison.util.JsonSchemaGenerable;
+import com.github.wnameless.spring.boot.up.web.RestfulItem;
 
 /**
  * 
@@ -55,6 +58,8 @@ public class ResourceObject<T> implements ResourceIdentifier, Jsonable {
   private String id;
 
   @Valid
+  @JsonIgnoreProperties({ "id", "indexPath", "showPath", "createPath",
+      "newPath", "editPath", "rootPath", "updatePath", "destroyPath" })
   private T attributes;
 
   @Valid
@@ -67,7 +72,7 @@ public class ResourceObject<T> implements ResourceIdentifier, Jsonable {
   private List<ResourceObject<?>> included = new ArrayList<>();
 
   @Valid
-  private Object meta;
+  private Map<String, Object> meta;
 
   /**
    * Returns the type of resource.
@@ -156,6 +161,16 @@ public class ResourceObject<T> implements ResourceIdentifier, Jsonable {
         type = type != null ? type : annotatedVals.get(AnnotatedValueType.TYPE);
         id = id != null ? id : annotatedVals.get(AnnotatedValueType.ID);
       }
+    }
+
+    if (attributes instanceof RestfulItem) {
+      RestfulItem<?> self = (RestfulItem<?>) attributes;
+      getLinks().put("self", new LinkObject().withHref(self.getShowPath()));
+    }
+
+    if (attributes instanceof JsonSchemaGenerable) {
+      withMeta("schema",
+          ((JsonSchemaGenerable) attributes).generateJsonSchema());
     }
   }
 
@@ -282,7 +297,7 @@ public class ResourceObject<T> implements ResourceIdentifier, Jsonable {
    * @param meta
    *          a meta object
    */
-  public void setMeta(Object meta) {
+  public void setMeta(Map<String, Object> meta) {
     this.meta = meta;
   }
 
@@ -293,8 +308,25 @@ public class ResourceObject<T> implements ResourceIdentifier, Jsonable {
    *          a meta object
    * @return this {@link ResourceObject}
    */
-  public ResourceObject<T> withMeta(Object meta) {
+  public ResourceObject<T> withMeta(Map<String, Object> meta) {
     setMeta(meta);
+    return this;
+  }
+
+  /**
+   * A chaining object for {@link #setMeta}.
+   * 
+   * @param key
+   *          a meta data name
+   * @param value
+   *          a meta data value
+   * @return this {@link ResourceObject}
+   */
+  public ResourceObject<T> withMeta(String key, Object value) {
+    Map<String, Object> metaMap = meta;
+    if (metaMap == null) metaMap = new LinkedHashMap<>();
+    metaMap.put(key, value);
+    setMeta(metaMap);
     return this;
   }
 
@@ -327,7 +359,7 @@ public class ResourceObject<T> implements ResourceIdentifier, Jsonable {
   public String toJson() {
     String json = null;
     try {
-      json = ObjectMapperFactory.getObjectMapper().writeValueAsString(this);
+      json = JapisonFactory.getObjectMapper().writeValueAsString(this);
     } catch (JsonProcessingException e) {
       throw new RuntimeException(e);
     }

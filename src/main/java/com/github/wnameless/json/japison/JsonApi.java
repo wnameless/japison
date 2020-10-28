@@ -34,6 +34,7 @@ import java.util.logging.Logger;
 import org.apache.commons.beanutils.BeanMap;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
+import org.springframework.data.annotation.Id;
 
 import com.github.wnameless.json.japison.annotation.AnnotatedValueType;
 import com.github.wnameless.json.japison.annotation.JsonApiId;
@@ -78,7 +79,7 @@ public final class JsonApi {
    * @return a {@link ResourceDocument}
    */
   public static <T> ResourceDocument<T> resourceDocument(
-      Collection<T> attributes) {
+      Iterable<T> attributes) {
     ResourceDocument<T> document = new ResourceDocument<T>();
     PrimaryData<ResourceObject<T>> resources = new PrimaryData<>();
     for (T attr : attributes) {
@@ -89,13 +90,13 @@ public final class JsonApi {
     return document;
   }
 
-  public static <T> ResourceDocument<T> resourceDocument(
-      Collection<T> attributes, ResourceSetting<T> setting) {
+  public static <T> ResourceDocument<T> resourceDocument(Iterable<T> attributes,
+      ResourceSetting<T> setting) {
     ResourceDocument<T> document = new ResourceDocument<T>();
     PrimaryData<ResourceObject<T>> resources = new PrimaryData<>();
     for (T attr : attributes) {
       ResourceObject<T> resource = resource(attr);
-      if (setting != null) setting.apply(resource);
+      if (setting != null) setting.accept(resource);
       resources.add(resource);
     }
     document.setData(resources);
@@ -116,7 +117,7 @@ public final class JsonApi {
     ResourceDocument<T> document = new ResourceDocument<T>();
     PrimaryData<ResourceObject<T>> resources = new PrimaryData<>();
     ResourceObject<T> resource = resource(attributes);
-    if (setting != null) setting.apply(resource);
+    if (setting != null) setting.accept(resource);
     resources.setSingular(resource);
     document.setData(resources);
     return document;
@@ -348,6 +349,20 @@ public final class JsonApi {
                   MethodUtils.invokeMethod(idObj, jsonApiId.getterName());
               annotatedValues.put(ID, stringify(idVal));
             }
+          } catch (Exception e) {
+            Logger.getLogger(JsonApi.Utils.class.getName()).log(Level.SEVERE,
+                null, e);
+          }
+        }
+
+        if (!annotatedValues.containsKey(ID)) {
+          idFields =
+              FieldUtils.getFieldsWithAnnotation(obj.getClass(), Id.class);
+          Field idField = idFields[0];
+          idField.setAccessible(true);
+          try {
+            Object idObj = idField.get(obj);
+            annotatedValues.put(ID, stringify(idObj));
           } catch (Exception e) {
             Logger.getLogger(JsonApi.Utils.class.getName()).log(Level.SEVERE,
                 null, e);

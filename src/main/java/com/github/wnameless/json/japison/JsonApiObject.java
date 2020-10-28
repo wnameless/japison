@@ -26,7 +26,7 @@ import javax.validation.Valid;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.wnameless.json.base.Jsonable;
-import com.github.wnameless.json.japison.jackson.ObjectMapperFactory;
+import com.github.wnameless.json.japison.jackson.JapisonFactory;
 
 /**
  * 
@@ -130,7 +130,7 @@ public class JsonApiObject implements Jsonable {
   public String toJson() {
     String json = null;
     try {
-      json = ObjectMapperFactory.getObjectMapper().writeValueAsString(this);
+      json = JapisonFactory.getObjectMapper().writeValueAsString(this);
     } catch (JsonProcessingException e) {
       throw new RuntimeException(e);
     }

@@ -31,7 +31,7 @@ import javax.validation.Valid;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.wnameless.json.base.Jsonable;
-import com.github.wnameless.json.japison.jackson.ObjectMapperFactory;
+import com.github.wnameless.json.japison.jackson.JapisonFactory;
 import com.github.wnameless.json.japison.util.PrimaryData;
 
 /**
@@ -51,7 +51,7 @@ public class ErrorsDocument implements Document<Void>, Jsonable {
   private List<ErrorObject> errors = new ArrayList<>();
 
   @Valid
-  private Object meta;
+  private Map<String, Object> meta;
 
   @Valid
   private JsonApiObject jsonapi;
@@ -93,12 +93,12 @@ public class ErrorsDocument implements Document<Void>, Jsonable {
   }
 
   @Override
-  public Object getMeta() {
+  public Map<String, Object> getMeta() {
     return meta;
   }
 
   @Override
-  public void setMeta(Object meta) {
+  public void setMeta(Map<String, Object> meta) {
     this.meta = meta;
   }
 
@@ -109,8 +109,25 @@ public class ErrorsDocument implements Document<Void>, Jsonable {
    *          a meta object
    * @return this {@link ErrorsDocument}
    */
-  public ErrorsDocument withMeta(Object meta) {
+  public ErrorsDocument withMeta(Map<String, Object> meta) {
     setMeta(meta);
+    return this;
+  }
+
+  /**
+   * A chaining object for {@link #setMeta}.
+   * 
+   * @param key
+   *          a meta data name
+   * @param value
+   *          a meta data value
+   * @return this {@link ErrorsDocument}
+   */
+  public ErrorsDocument withMeta(String key, Object value) {
+    Map<String, Object> metaMap = meta;
+    if (metaMap == null) metaMap = new LinkedHashMap<>();
+    metaMap.put(key, value);
+    setMeta(metaMap);
     return this;
   }
 
@@ -206,7 +223,7 @@ public class ErrorsDocument implements Document<Void>, Jsonable {
   public String toJson() {
     String json = null;
     try {
-      json = ObjectMapperFactory.getObjectMapper().writeValueAsString(this);
+      json = JapisonFactory.getObjectMapper().writeValueAsString(this);
     } catch (JsonProcessingException e) {
       throw new RuntimeException(e);
     }

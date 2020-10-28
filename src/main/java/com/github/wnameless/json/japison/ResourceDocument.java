@@ -34,7 +34,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.github.wnameless.json.base.Jsonable;
-import com.github.wnameless.json.japison.jackson.ObjectMapperFactory;
+import com.github.wnameless.json.japison.jackson.JapisonFactory;
 import com.github.wnameless.json.japison.jackson.PrimaryDataDeserializer;
 import com.github.wnameless.json.japison.jackson.PrimaryDataSerializer;
 import com.github.wnameless.json.japison.util.PrimaryData;
@@ -58,7 +58,7 @@ public class ResourceDocument<T> implements Document<T>, Jsonable {
   private PrimaryData<ResourceObject<T>> data = new PrimaryData<>();
 
   @Valid
-  private Object meta;
+  private Map<String, Object> meta;
 
   @Valid
   private JsonApiObject jsonapi;
@@ -116,12 +116,12 @@ public class ResourceDocument<T> implements Document<T>, Jsonable {
   public void setErrors(List<ErrorObject> errors) {}
 
   @Override
-  public Object getMeta() {
+  public Map<String, Object> getMeta() {
     return meta;
   }
 
   @Override
-  public void setMeta(Object meta) {
+  public void setMeta(Map<String, Object> meta) {
     this.meta = meta;
   }
 
@@ -132,8 +132,25 @@ public class ResourceDocument<T> implements Document<T>, Jsonable {
    *          a meta object
    * @return this {@link ErrorsDocument}
    */
-  public ResourceDocument<T> withMeta(Object meta) {
+  public ResourceDocument<T> withMeta(Map<String, Object> meta) {
     setMeta(meta);
+    return this;
+  }
+
+  /**
+   * A chaining object for {@link #setMeta}.
+   * 
+   * @param key
+   *          a meta data name
+   * @param value
+   *          a meta data value
+   * @return this {@link ResourceDocument}
+   */
+  public ResourceDocument<T> withMeta(String key, Object value) {
+    Map<String, Object> metaMap = meta;
+    if (metaMap == null) metaMap = new LinkedHashMap<>();
+    metaMap.put(key, value);
+    setMeta(metaMap);
     return this;
   }
 
@@ -229,7 +246,7 @@ public class ResourceDocument<T> implements Document<T>, Jsonable {
   public String toJson() {
     String json = null;
     try {
-      json = ObjectMapperFactory.getObjectMapper().writeValueAsString(this);
+      json = JapisonFactory.getObjectMapper().writeValueAsString(this);
     } catch (JsonProcessingException e) {
       throw new RuntimeException(e);
     }

@@ -72,7 +72,7 @@ public interface Document<T> {
    * 
    * @return a meta object
    */
-  public Object getMeta();
+  public Map<String, Object> getMeta();
 
   /**
    * Sets a meta object that contains non-standard meta-information.
@@ -80,7 +80,7 @@ public interface Document<T> {
    * @param meta
    *          a meta object
    */
-  public void setMeta(Object meta);
+  public void setMeta(Map<String, Object> meta);
 
   /**
    * Returns a {@link JsonApiObject} describing the server's implementation.

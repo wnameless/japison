@@ -20,6 +20,7 @@ package com.github.wnameless.json.japison;
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
 
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -28,7 +29,7 @@ import javax.validation.Valid;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.wnameless.json.base.Jsonable;
-import com.github.wnameless.json.japison.jackson.ObjectMapperFactory;
+import com.github.wnameless.json.japison.jackson.JapisonFactory;
 import com.github.wnameless.json.japison.util.PrimaryData;
 
 /**
@@ -51,7 +52,7 @@ public class RelationshipObject implements Jsonable {
   private PrimaryData<ResourceIdentifier> data;
 
   @Valid
-  private Object meta;
+  private Map<String, Object> meta;
 
   /**
    * Returns {@link LinkObject}s.
@@ -149,7 +150,7 @@ public class RelationshipObject implements Jsonable {
    * @param meta
    *          a meta object
    */
-  public void setMeta(Object meta) {
+  public void setMeta(Map<String, Object> meta) {
     this.meta = meta;
   }
 
@@ -160,8 +161,25 @@ public class RelationshipObject implements Jsonable {
    *          a meta object
    * @return this {@link RelationshipObject}
    */
-  public RelationshipObject withMeta(Object meta) {
+  public RelationshipObject withMeta(Map<String, Object> meta) {
     setMeta(meta);
+    return this;
+  }
+
+  /**
+   * A chaining object for {@link #setMeta}.
+   * 
+   * @param key
+   *          a meta data name
+   * @param value
+   *          a meta data value
+   * @return this {@link RelationshipObject}
+   */
+  public RelationshipObject withMeta(String key, Object value) {
+    Map<String, Object> metaMap = meta;
+    if (metaMap == null) metaMap = new LinkedHashMap<>();
+    metaMap.put(key, value);
+    setMeta(metaMap);
     return this;
   }
 
@@ -189,7 +207,7 @@ public class RelationshipObject implements Jsonable {
   public String toJson() {
     String json = null;
     try {
-      json = ObjectMapperFactory.getObjectMapper().writeValueAsString(this);
+      json = JapisonFactory.getObjectMapper().writeValueAsString(this);
     } catch (JsonProcessingException e) {
       throw new RuntimeException(e);
     }
