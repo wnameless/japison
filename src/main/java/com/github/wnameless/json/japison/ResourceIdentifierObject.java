@@ -60,6 +60,7 @@ public class ResourceIdentifierObject implements ResourceIdentifier, Jsonable {
    * 
    * @return the type of resource
    */
+  @Override
   public String getType() {
     return type;
   }
@@ -91,6 +92,7 @@ public class ResourceIdentifierObject implements ResourceIdentifier, Jsonable {
    * 
    * @return the id of resource
    */
+  @Override
   public String getId() {
     return id;
   }
@@ -122,6 +124,7 @@ public class ResourceIdentifierObject implements ResourceIdentifier, Jsonable {
    * 
    * @return a meta object
    */
+  @Override
   public Object getMeta() {
     return meta;
   }
